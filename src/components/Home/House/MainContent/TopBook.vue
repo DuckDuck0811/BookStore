@@ -52,7 +52,7 @@ const filteredBooks = computed(() => {
   if (!props.searchKeyword) return sciFiBooks.value
   return sciFiBooks.value.filter(book =>
     book.title.toLowerCase().includes(props.searchKeyword.toLowerCase())
-  )
+  ) 
 })
 </script>
 

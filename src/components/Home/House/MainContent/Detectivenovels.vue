@@ -9,17 +9,13 @@
     <div class="row g-3" v-else>
       <div class="col-md-3" v-for="book in filteredBooks" :key="book.id">
         <div class="card h-100">
-          <img
-            :src="book.img"
-            class="card-img-top"
-            :style="{
-              width: '100%',
-              aspectRatio: book.aspect,
-              objectFit: 'cover',
-              borderTopLeftRadius: '.5rem',
-              borderTopRightRadius: '.5rem'
-            }"
-          />
+          <img :src="book.img" class="card-img-top" :style="{
+            width: '100%',
+            aspectRatio: book.aspect,
+            objectFit: 'cover',
+            borderTopLeftRadius: '.5rem',
+            borderTopRightRadius: '.5rem'
+          }" />
           <div class="card-body text-center">
             <p class="card-text">{{ book.title }}</p>
             <div class="price">
