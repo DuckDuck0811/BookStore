@@ -2,8 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import House from "../House.vue";
 import NewBook from "../MainContent/NewBook.vue";
-import ProductList from "../../ProductList/ProductList.vue"; // đây là đường dẫn đúng
-
+import ProductList from "../../ProductList/ProductList.vue";
 const routes = [
   {
     path: "/",
@@ -18,7 +17,7 @@ const routes = [
   {
     path: "/san-pham",
     name: "ProductList",
-    component: ProductList, 
+    component: ProductList,
   },
 ];
 

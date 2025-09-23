@@ -1,28 +1,22 @@
 <template>
-  <div
-    class="top-bar d-flex justify-content-center align-items-center px-4"
-    style="height: 40px; background-color:#d3d3d3;"
-  >
+  <div class="top-bar d-flex justify-content-center align-items-center px-4"
+    style="height: 40px; background-color:#d3d3d3;">
     <div class="d-flex align-items-center gap-5 fw-bold">
       <!-- Dropdown trái -->
       <div class="dropdown">
-        <a
-          class="dropdown-toggle fw-bold text-dark text-decoration-none"
-          href="#"
-          role="button"
-          data-bs-toggle="dropdown"
-        >
+        <a class="dropdown-toggle fw-bold text-dark text-decoration-none" href="#" role="button"
+          data-bs-toggle="dropdown">
           DANH MỤC SÁCH
         </a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Truyện tranh</a></li>
-          <li><a class="dropdown-item" href="#">Sách khoa học viễn tưởng</a></li>
-          <li><a class="dropdown-item" href="#">Tiểu thuyết trinh thám</a></li>
-          <li><a class="dropdown-item" href="#">Sách kỹ năng sống</a></li>
+          <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'comic')">Truyện tranh</a></li>
+          <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'sciFi')">Sách khoa học viễn
+              tưởng</a></li>
+          <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'detective')">Tiểu thuyết trinh
+              thám</a></li>
         </ul>
       </div>
 
-      <!-- Links khác: đổi sang router-link -->
       <router-link to="/" class="text-decoration-none text-dark">Home</router-link>
       <router-link to="/san-pham" class="text-decoration-none text-dark">Sản phẩm</router-link>
 
@@ -38,3 +32,7 @@
     </div>
   </div>
 </template>
+
+<script setup>
+defineEmits(['update-category'])
+</script>
