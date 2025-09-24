@@ -41,11 +41,6 @@ const books = ref([])
 const currentPage = ref(1)
 const perPage = 4
 
-onMounted(async () => {
-  const res = await axios.get("http://localhost:3000/books")
-  books.value = res.data
-})
-
 // Reset trang khi searchKeyword thay đổi
 watch(() => props.searchKeyword, () => {
   currentPage.value = 1
