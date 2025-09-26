@@ -32,7 +32,9 @@
 
           <!-- overlay -->
           <div class="overlay d-flex justify-content-center align-items-end">
-            <button class="btn btn-danger mb-4">Thêm vô giỏ hàng</button>
+            <button class="btn btn-danger mb-4" @click.stop="addToCart(book)">
+              Thêm vô giỏ hàng
+            </button>
           </div>
         </div>
       </div>
@@ -48,14 +50,14 @@ const props = defineProps({
 })
 
 const books = ref([
-  { id: 1, img: "sherlock1.jpg", title: "Sherlock Holmes", aspect: "3/4", oldPrice: "120,000₫", newPrice: "90,000₫", width: '100%', height: '300px',cardHeight: '450px' },
-  { id: 2, img: "sherlock2.jpg", title: "Sherlock Holmes", aspect: "3/4", oldPrice: "130,000₫", newPrice: "97,500₫", width: '100%', height: '300px',cardHeight: '450px' },
-  { id: 3, img: "danbrown1.jpg", title: "Mật Mã Da Vinci", aspect: "2/3", oldPrice: "200,000₫", newPrice: "150,000₫", width: '100%', height: '300px',cardHeight: '450px' },
-  { id: 4, img: "danbrown2.jpg", title: "Thiên Thần và Ác Quỷ", aspect: "2/3", oldPrice: "210,000₫", newPrice: "157,500₫", width: '100%', height: '300px',cardHeight: '450px' },
-  { id: 5, img: "agatha1.jpg", title: "Án Mạng Trên Sông Nile ", aspect: "3/4", oldPrice: "180,000₫", newPrice: "135,000₫",width: '100%', height: '300px',cardHeight: '450px' },
-  { id: 6, img: "agatha2.jpg", title: "Mười Người Da Đen Nhỏ ", aspect: "3/4", oldPrice: "150,000₫", newPrice: "112,500₫",width: '100%', height: '300px',cardHeight: '450px' },
-  { id: 7, img: "trinhtham1.jpg", title: "Phía Sau Nghi Can X ", aspect: "3/4", oldPrice: "170,000₫", newPrice: "127,500₫",width: '100%', height: '300px',cardHeight: '450px' },
-  { id: 8, img: "trinhtham2.jpg", title: "Tiệm Tạp Hóa Namiya", aspect: "3/4", oldPrice: "140,000₫", newPrice: "105,000₫",width: '100%', height: '300px',cardHeight: '450px' }
+  { id: 1, img: "sherlock1.jpg", title: "Sherlock Holmes", aspect: "3/4", oldPrice: "120,000₫", newPrice: "90,000₫", width: '100%', height: '300px', cardHeight: '450px' },
+  { id: 2, img: "sherlock2.jpg", title: "Sherlock Holmes", aspect: "3/4", oldPrice: "130,000₫", newPrice: "97,500₫", width: '100%', height: '300px', cardHeight: '450px' },
+  { id: 3, img: "danbrown1.jpg", title: "Mật Mã Da Vinci", aspect: "2/3", oldPrice: "200,000₫", newPrice: "150,000₫", width: '100%', height: '300px', cardHeight: '450px' },
+  { id: 4, img: "danbrown2.jpg", title: "Thiên Thần và Ác Quỷ", aspect: "2/3", oldPrice: "210,000₫", newPrice: "157,500₫", width: '100%', height: '300px', cardHeight: '450px' },
+  { id: 5, img: "agatha1.jpg", title: "Án Mạng Trên Sông Nile ", aspect: "3/4", oldPrice: "180,000₫", newPrice: "135,000₫", width: '100%', height: '300px', cardHeight: '450px' },
+  { id: 6, img: "agatha2.jpg", title: "Mười Người Da Đen Nhỏ ", aspect: "3/4", oldPrice: "150,000₫", newPrice: "112,500₫", width: '100%', height: '300px', cardHeight: '450px' },
+  { id: 7, img: "trinhtham1.jpg", title: "Phía Sau Nghi Can X ", aspect: "3/4", oldPrice: "170,000₫", newPrice: "127,500₫", width: '100%', height: '300px', cardHeight: '450px' },
+  { id: 8, img: "trinhtham2.jpg", title: "Tiệm Tạp Hóa Namiya", aspect: "3/4", oldPrice: "140,000₫", newPrice: "105,000₫", width: '100%', height: '300px', cardHeight: '450px' }
 ])
 
 const filteredBooks = computed(() => {
@@ -64,6 +66,11 @@ const filteredBooks = computed(() => {
     book.title.toLowerCase().includes(props.searchKeyword.toLowerCase())
   )
 })
+
+function addToCart(book) {
+    alert(`Đã thêm "${book.title}" vào giỏ hàng!`);
+    cartStore.addToCart(book)   
+}
 </script>
 
 <style scoped>

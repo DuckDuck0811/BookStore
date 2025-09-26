@@ -6,19 +6,9 @@
 
       <!-- Search -->
       <div class="d-flex flex-grow-1 mx-4" style="max-width: 600px;">
-        <input 
-          type="text" 
-          class="form-control me-2" 
-          placeholder="Tìm kiếm sản phẩm..." 
-          style="width: 600px; height: 50px;"
-          v-model="keyword"
-          @keyup.enter="search"
-        />
-        <button 
-          class="btn btn-success" 
-          style="width: 150px;"
-          @click="search"
-        >
+        <input type="text" class="form-control me-2" placeholder="Tìm kiếm sản phẩm..."
+          style="width: 600px; height: 50px;" v-model="keyword" @keyup.enter="search" />
+        <button class="btn btn-success" style="width: 150px;" @click="search">
           Tìm kiếm
         </button>
       </div>
@@ -27,7 +17,9 @@
       <ol class="breadcrumb d-flex align-items-center gap-4 mb-0">
         <li class="breadcrumb-item d-flex align-items-center gap-2">
           <img src="/giohang.png" alt="Giỏ hàng" width="30" />
-          <a href="#" class="text-decoration-none text-dark fw-bold">Giỏ hàng</a>
+          <router-link to="/cart" class="text-decoration-none text-dark fw-bold">
+            Giỏ hàng
+          </router-link>
         </li>
         <li class="breadcrumb-item d-flex align-items-center gap-2">
           <img src="/login.png" alt="Login" width="30" />

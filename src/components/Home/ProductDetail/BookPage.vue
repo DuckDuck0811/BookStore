@@ -2,7 +2,11 @@
 import { ref } from 'vue';
 import ProductDetail from './ProductDetail.vue';
 import ProductList from '../ProductList/ProductList.vue';
-function openDetail() {
+import House from '../House/House.vue';
+
+const selectedBook = ref(null);
+
+function openDetail(book) {
     selectedBook.value = book;
 }
 

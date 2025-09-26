@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="overlay d-flex justify-content-center align-items-end">
-            <button class="btn btn-danger mb-4">Thêm vô giỏ hàng</button>
+            <button class="btn btn-danger mb-4" @click.stop="addToCart(book)">Thêm vô giỏ hàng</button>
           </div>
         </div>
       </div>
@@ -59,6 +59,11 @@ const filteredBooks = computed(() => {
     book.title.toLowerCase().includes(props.searchKeyword.toLowerCase())
   )
 })
+
+function addToCart(book) {
+  alert(`Đã thêm "${book.title}" vào giỏ hàng!`);
+  cartStore.addToCart(book)
+}
 </script>
 
 <style scoped>

@@ -24,14 +24,13 @@
                     <button class="btn-cart">Thêm Vào Giỏ Hàng</button>
                     <button class="btn-buy">Mua Ngay</button>
                 </div>
+                <div class="description">
+                    <h3>Mô tả</h3>
+                    <p>
+                        {{ book.description }}
+                    </p>
+                </div>
             </div>
-        </div>
-
-        <div class="description">
-            <h3>Mô tả</h3>
-            <p>
-                {{ book.description }}
-            </p>
         </div>
     </div>
 </template>
