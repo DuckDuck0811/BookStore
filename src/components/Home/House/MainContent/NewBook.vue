@@ -5,7 +5,7 @@
       Không tìm thấy truyện tranh nào phù hợp.
     </div>
     <div class="row g-3" v-else>
-      <div class="col-12" v-for="(comic, index) in filteredComics" :key="index">
+      <div class="col-12" v-for="(comic, index) in filteredComics" :key="comic.id || index">
         <div class="card text-center position-relative product-card" :style="{ height: comic.cardHeight }">
           <img :src="comic.img" class="card-img-top" :class="comic.className" />
           <div class="card-body">
@@ -17,7 +17,10 @@
           </div>
 
           <div class="overlay d-flex justify-content-center align-items-end">
-            <button class="btn btn-danger mb-4" style="height: 40px;width: 170px;">Thêm vô giỏ hàng</button>
+            <!-- thêm @click, .stop để ko bubble nếu cần -->
+            <button class="btn btn-danger mb-4" style="height: 40px;width: 170px;" @click.stop="addToCart(comic)">
+              Thêm vô giỏ hàng
+            </button>
           </div>
         </div>
       </div>
@@ -27,15 +30,20 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useCartStore } from '@/components/Cart/CartStore'
 
 const props = defineProps({
   searchKeyword: String
 })
 
+const router = useRouter()
+const cartStore = useCartStore()
+
 const listComics = ref([
-  { title: 'One Piece', price: '25,000₫', discount: '-20%', img: 'onepiece.jpg', className: 'onepiece-img', cardHeight: '470px' },
-  { title: 'Naruto', price: '30,000₫', discount: '-15%', img: 'naruto.jpg', className: 'naruto-img', cardHeight: '450px' },
-  { title: 'Dragon Ball', price: '28,000₫', discount: '-10%', img: 'dragonball.png', className: 'dragonball-img', cardHeight: '450px' }
+  { id: 11, title: 'One Piece', price: '25,000₫', discount: '-20%', img: 'onepiece.jpg', className: 'onepiece-img', cardHeight: '470px' },
+  { id: 12, title: 'Naruto', price: '30,000₫', discount: '-15%', img: 'naruto.jpg', className: 'naruto-img', cardHeight: '450px' },
+  { id: 13, title: 'Dragon Ball', price: '28,000₫', discount: '-10%', img: 'dragonball.png', className: 'dragonball-img', cardHeight: '450px' }
 ])
 
 const filteredComics = computed(() => {
@@ -44,6 +52,20 @@ const filteredComics = computed(() => {
     comic.title.toLowerCase().includes(props.searchKeyword.toLowerCase())
   )
 })
+
+function addToCart(comic) {
+  const priceNumber = Number(String(comic.price).replace(/[^\d]/g, '')) || 0
+
+  cartStore.addToCart({
+    id: comic.id,
+    title: comic.title,
+    price: priceNumber,
+    img: comic.img,
+    quantity: 1
+  })
+
+  router.push('/cart')
+}
 </script>
 
 <style scoped>
@@ -62,7 +84,6 @@ const filteredComics = computed(() => {
   border-radius: 10px;
   margin: auto;
   margin-top: 10px;
-
 }
 
 .dragonball-img {
@@ -93,6 +114,5 @@ const filteredComics = computed(() => {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-
 }
 </style>

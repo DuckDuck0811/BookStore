@@ -35,10 +35,15 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useCartStore } from '@/components/Cart/CartStore'
 
 const props = defineProps({
   searchKeyword: String
 })
+
+const router = useRouter()
+const cartStore = useCartStore()
 
 const sciFiBooks = ref([
   { id: 1, img: "harrypotter1.jpg", title: "Harry Potter và Hòn Đá Phù Thủy", oldPrice: "120,000₫", newPrice: "90,000₫", discount: "-25%", aspect: "3/4", cardHeight: '470px', width: '100%', height: '300px' },
@@ -61,10 +66,19 @@ const filteredBooks = computed(() => {
 })
 
 function addToCart(book) {
-  alert(`Đã thêm "${book.title}" vào giỏ hàng!`);
-  cartStore.addToCart(book)
+  const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0
+
+  cartStore.addToCart({
+    id: book.id,
+    title: book.title,
+    price: priceNumber,
+    img: book.img,
+    quantity: 1
+  })
+  router.push("/cart")
 }
 </script>
+
 
 <style scoped>
 .price {

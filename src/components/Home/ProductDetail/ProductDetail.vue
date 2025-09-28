@@ -21,7 +21,7 @@
                     <input type="number" v-model="qty" min="1" />
                 </div>
                 <div class="actions">
-                    <button class="btn-cart">Thêm Vào Giỏ Hàng</button>
+                    <button class="btn-cart" @click.stop="addToCart(book)">Thêm vô giỏ hàng</button>
                     <button class="btn-buy">Mua Ngay</button>
                 </div>
                 <div class="description">
@@ -37,12 +37,30 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useCartStore } from '@/components/Cart/CartStore'
+
+const router = useRouter()
+const cartStore = useCartStore()
 
 const props = defineProps({
     book: Object
 })
 
 const qty = ref(1)
+
+function addToCart(book) {
+    const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0
+
+    cartStore.addToCart({
+        id: book.id,
+        title: book.title,
+        price: priceNumber,
+        img: book.img,
+        quantity: 1
+    })
+    router.push("/cart")
+}
 </script>
 
 <style scoped>
