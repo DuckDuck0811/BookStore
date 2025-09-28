@@ -17,7 +17,6 @@
           </div>
 
           <div class="overlay d-flex justify-content-center align-items-end">
-            <!-- thêm @click, .stop để ko bubble nếu cần -->
             <button class="btn btn-danger mb-4" style="height: 40px;width: 170px;" @click.stop="addToCart(comic)">
               Thêm vô giỏ hàng
             </button>
