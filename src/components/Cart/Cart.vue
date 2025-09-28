@@ -18,10 +18,10 @@
                 <tr v-for="item in cartStore.items" :key="item.id">
                     <td>{{ item.title }}</td>
                     <td>{{ item.price.toLocaleString() }}₫</td>
-                    <input type="number" min="1" v-model.number="item.quantity" class="form-control text-center"
-                        style="width: 80px; margin: auto;" @input="validateQuantity(item)" />
-
-
+                    <td>
+                        <input type="number" min="1" v-model.number="item.quantity" class="form-control text-center"
+                            style="width: 80px; margin: auto;" @input="validateQuantity(item)" />
+                    </td>
                     <td>{{ (item.price * item.quantity).toLocaleString() }}₫</td>
                     <td>
                         <button class="btn btn-sm btn-danger" @click="cartStore.removeItem(item.id)">
@@ -29,6 +29,7 @@
                         </button>
                     </td>
                 </tr>
+
             </tbody>
         </table>
         <div class="text-end fw-bold fs-5 mt-3" style="color: red;">
