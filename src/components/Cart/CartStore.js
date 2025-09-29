@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useToast } from "vue-toastification";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
@@ -27,5 +28,7 @@ export const useCartStore = defineStore("cart", {
     clearItems() {
       this.items = [];
     },
+
+
   },
 });

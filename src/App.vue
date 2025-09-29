@@ -1,29 +1,17 @@
 <script setup>
-import Navbar from './components/Home/House/Hearder/Navbar.vue'
-import TopBar from './components/Home/House/Hearder/TopBar.vue'
-import Footer from './components/Home/House/Footer/Footer.vue'
-import { ref } from 'vue'
+import { useRoute } from "vue-router";
+import { computed } from "vue";
+import DefaultLayout from "./components/Home/DefaultLayout.vue";
+import AuthLayout from "./components/Home/House/AuthLayout.vue";
+const route = useRoute();
 
-const searchKeyword = ref('')
-const selectedCategory = ref('')
-
-const handleSearch = (keyword) => {
-  searchKeyword.value = keyword
-}
-
-const handleCategory = (category) => {
-  selectedCategory.value = (selectedCategory.value === category) ? '' : category
-}
+const layout = computed(() =>
+  route.meta.layout === "auth" ? AuthLayout : DefaultLayout
+);
 </script>
 
 <template>
-  <Navbar @search="handleSearch" />
-  <TopBar @update-category="handleCategory" />
-
-  <router-view 
-    :searchKeyword="searchKeyword" 
-    :category="selectedCategory"
-  />
-
-  <Footer></Footer>
+  <component :is="layout">
+    <router-view />
+  </component>
 </template>

@@ -67,7 +67,6 @@ const filteredBooks = computed(() => {
 
 function addToCart(book) {
   const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0
-
   cartStore.addToCart({
     id: book.id,
     title: book.title,
@@ -77,6 +76,8 @@ function addToCart(book) {
   })
   router.push("/cart")
 }
+
+
 </script>
 
 

@@ -13,7 +13,6 @@
         </button>
       </div>
 
-      <!-- User actions -->
       <ol class="breadcrumb d-flex align-items-center gap-4 mb-0">
         <li class="breadcrumb-item d-flex align-items-center gap-2">
           <img src="/giohang.png" alt="Giỏ hàng" width="30" />
@@ -23,11 +22,15 @@
         </li>
         <li class="breadcrumb-item d-flex align-items-center gap-2">
           <img src="/login.png" alt="Login" width="30" />
-          <a href="#" class="text-decoration-none text-dark fw-bold">Đăng nhập</a>
+          <router-link to="/login" class="text-decoration-none text-dark fw-bold">
+            Đăng nhập
+          </router-link>
         </li>
         <li class="breadcrumb-item d-flex align-items-center gap-2">
           <img src="/dangky.png" alt="Đăng ký" width="30" />
-          <a href="#" class="text-decoration-none text-dark fw-bold">Đăng ký</a>
+          <router-link to="/register" class="text-decoration-none text-dark fw-bold">
+            Đăng ký
+          </router-link>
         </li>
       </ol>
     </div>
