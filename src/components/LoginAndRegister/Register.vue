@@ -3,7 +3,8 @@
         <div class="card shadow p-4" style="width: 400px; border-radius: 12px;">
             <h3 class="text-center mb-4">Đăng Ký</h3>
 
-            <form @submit="handleSubmit">
+            <!-- Sửa handleSubmit -> handleRegister -->
+            <form @submit="handleRegister">
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
                     <input v-model="username" type="text" class="form-control" id="username"
@@ -33,14 +34,23 @@ const email = ref("");
 const password = ref("");
 const router = useRouter();
 
-const handleSubmit = (e) => {
+const handleRegister = (e) => {
     e.preventDefault();
+
     if (!username.value.trim() || !email.value.trim() || !password.value.trim()) {
         alert("Vui lòng nhập đầy đủ thông tin!");
         return;
     }
 
-    alert("Đăng ký thành công!");
-    router.push("/login"); 
+    const newUser = {
+        username: username.value,
+        email: email.value,
+        password: password.value,
+    };
+
+    localStorage.setItem("registeredUser", JSON.stringify(newUser));
+
+    alert("Đăng ký thành công, vui lòng đăng nhập!");
+    router.push("/login"); // chuyển sang trang login
 };
 </script>

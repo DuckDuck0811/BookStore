@@ -20,32 +20,51 @@
             Giỏ hàng
           </router-link>
         </li>
-        <li class="breadcrumb-item d-flex align-items-center gap-2">
-          <img src="/login.png" alt="Login" width="30" />
-          <router-link to="/login" class="text-decoration-none text-dark fw-bold">
-            Đăng nhập
-          </router-link>
+
+        <!-- Đã đăng nhập -->
+        <li v-if="auth.user" class="breadcrumb-item d-flex align-items-center gap-2">
+          <img src="/login.png" alt="User" width="30" />
+          <span class="fw-bold text-success">
+            Xin chào, {{ auth.user.username }}
+          </span>
+          <button class="btn btn-sm btn-outline-danger ms-2" @click="auth.logout()">Đăng xuất</button>
         </li>
-        <li class="breadcrumb-item d-flex align-items-center gap-2">
-          <img src="/dangky.png" alt="Đăng ký" width="30" />
-          <router-link to="/register" class="text-decoration-none text-dark fw-bold">
-            Đăng ký
-          </router-link>
-        </li>
+
+        <!-- Chưa đăng nhập -->
+        <template v-else>
+          <li class="breadcrumb-item d-flex align-items-center gap-2">
+            <img src="/login.png" alt="Login" width="30" />
+            <router-link to="/login" class="text-decoration-none text-dark fw-bold">
+              Đăng nhập
+            </router-link>
+          </li>
+          <li class="breadcrumb-item d-flex align-items-center gap-2">
+            <img src="/dangky.png" alt="Đăng ký" width="30" />
+            <router-link to="/register" class="text-decoration-none text-dark fw-bold">
+              Đăng ký
+            </router-link>
+          </li>
+        </template>
       </ol>
     </div>
   </nav>
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, onMounted } from "vue";
+import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
 
-const keyword = ref("")
-const emit = defineEmits(["search"])
+const keyword = ref("");
+const emit = defineEmits(["search"]);
+const auth = useAuthStore();
+
+onMounted(() => {
+  auth.loadUser();
+});
 
 const search = () => {
-  emit("search", keyword.value)
-}
+  emit("search", keyword.value);
+};
 </script>
 
 <style scoped>
