@@ -9,7 +9,7 @@ export const useAuthStore = defineStore("auth", {
     },
     login(user) {
       this.user = user;
-      sessionStorage.setItem("user", JSON.stringify(user)); // chỉ sessionStorage
+      sessionStorage.setItem("user", JSON.stringify(user)); 
     },
     logout() {
       this.user = null;
