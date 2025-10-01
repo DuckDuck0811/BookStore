@@ -54,7 +54,7 @@ const routes = [
     meta: { layout: "auth" },
   },
   {
-    path: "/thankkiu",
+    path: "/thank-you",
     name: "ThankYou",
     component: ThankYou,
     meta: { layout: "auth" },

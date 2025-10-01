@@ -29,6 +29,21 @@ export const useCartStore = defineStore("cart", {
       this.items = [];
     },
 
+    async postOrder(customerInfo) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const order = {
+            success: true,
+            orderId: Date.now(),
+            customer: customerInfo,
+            items: this.items,
+            total: this.totalPrice,
+          };
 
+          this.clearItems();
+          resolve(order);
+        }, 1000);
+      });
+    },
   },
 });

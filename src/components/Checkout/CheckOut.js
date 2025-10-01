@@ -2,17 +2,14 @@ import { defineStore } from "pinia";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
-    items: [
-      { id: 1, title: "Harry Potter và Hòn Đá Phù Thủy", price: 90000, quantity: 1 },
-      { id: 2, title: "Harry Potter và Phòng Chứa Bí Mật", price: 95000, quantity: 2 },
-    ],
+    items: [],
   }),
   getters: {
     totalPrice: (state) =>
       state.items.reduce((sum, item) => sum + item.price * item.quantity, 0),
   },
   actions: {
-    clearCart() {   
+    clearCart() {
       this.items = [];
     },
     async postOrder(customerInfo) {
