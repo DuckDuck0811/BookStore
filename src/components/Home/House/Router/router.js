@@ -5,10 +5,12 @@ import ProductList from "../../ProductList/ProductList.vue";
 import Cart from "@/components/Cart/Cart.vue";
 import Login from "@/components/LoginAndRegister/Login.vue";
 import Register from "@/components/LoginAndRegister/Register.vue";
+import CheckOut from "@/components/Checkout/CheckOut.vue";
+import ThankYou from "@/components/Checkout/ThankYou.vue";
 import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
 
 const routes = [
-  { path: "/", redirect: "/home" }, // Mở web ra Home luôn
+  { path: "/", redirect: "/home" },
   {
     path: "/home",
     name: "Home",
@@ -34,6 +36,12 @@ const routes = [
     meta: { layout: "default", requiresAuth: true },
   },
   {
+    path: "/checkout",
+    name: "CheckOut",
+    component: CheckOut,
+    meta: { layout: "default", requiresAuth: true }, // bắt buộc login mới checkout
+  },
+  {
     path: "/login",
     name: "Login",
     component: Login,
@@ -43,6 +51,12 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register,
+    meta: { layout: "auth" },
+  },
+  {
+    path: "/thankkiu",
+    name: "ThankYou",
+    component: ThankYou,
     meta: { layout: "auth" },
   },
 ];

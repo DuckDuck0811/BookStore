@@ -29,23 +29,36 @@
                         </button>
                     </td>
                 </tr>
-
             </tbody>
         </table>
+
         <div class="text-end fw-bold fs-5 mt-3" style="color: red;">
             Tổng: {{ cartStore.totalPrice.toLocaleString() }}₫
         </div>
+        <div class="text-end mt-3">
+            <button class="btn btn-success" @click="goToCheckout" :disabled="cartStore.items.length === 0">
+                Thanh toán
+            </button>
+        </div>
+
         <br>
     </div>
 </template>
 
 <script setup>
 import { useCartStore } from './CartStore';
+import { useRouter } from 'vue-router';
+
 const cartStore = useCartStore();
+const router = useRouter();
 
 function validateQuantity(item) {
     if (item.quantity < 1) {
         item.quantity = 1;
     }
+}
+
+function goToCheckout() {
+    router.push('/checkout'); 
 }
 </script>

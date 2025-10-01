@@ -88,6 +88,7 @@ import ProductDetail from "../ProductDetail/ProductDetail.vue"
 import { useCartStore } from "@/components/Cart/CartStore"
 import { useRouter } from "vue-router"
 
+
 const cartStore = useCartStore()
 const router = useRouter()
 
@@ -95,6 +96,7 @@ const props = defineProps({
     searchKeyword: String,
     category: String,
 })
+
 
 const product = ref([
     { id: 1, img: "harrypotter1.jpg", title: "Harry Potter và Hòn Đá Phù Thủy", oldPrice: "120,000₫", newPrice: "90,000₫", discount: "-25%", aspect: "3/4", category: "sciFi", cardHeight: '500px', width: '100%', height: '300px', description: "Cuốn mở đầu hành trình kỳ diệu của Harry Potter – cậu bé phù thủy mồ côi sống với gia đình Dursley khắc nghiệt, bỗng nhận được thư mời nhập học Hogwarts. Ở đây, Harry khám phá sức mạnh phép thuật tiềm ẩn, làm quen Ron và Hermione, phát hiện những bí mật về cha mẹ mình và đối mặt với thế lực hắc ám đe dọa thế giới phù thủy ngay trong năm học đầu tiên." },

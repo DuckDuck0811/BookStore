@@ -11,7 +11,6 @@ const layout = computed(() =>
   route.meta.layout === "auth" ? AuthLayout : DefaultLayout
 );
 
-// load user 1 lần khi app khởi động
 const auth = useAuthStore();
 onMounted(() => {
   auth.loadUser();
