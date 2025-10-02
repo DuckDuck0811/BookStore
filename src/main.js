@@ -8,8 +8,17 @@ import Toast from "vue-toastification";
 import router from "./components/Home/House/Router/Router.js";
 const app = createApp(App);
 const pinia = createPinia();
-app.use(Toast);
 
+// if (!localStorage.getItem("users")) {
+//   localStorage.setItem("users"
+//     JSON.stringify([
+//         {username:"admin",password:"123",role:"admin"},
+//         {username:"user",password:"123",role:"user"},
+//     ])
+//   );
+// }
+
+app.use(Toast);
 app.use(pinia);
 app.use(router);
 app.mount("#app");

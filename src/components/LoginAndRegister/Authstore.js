@@ -1,12 +1,15 @@
 import { defineStore } from "pinia";
 
+//localStorage : Chỗ để nhớ user lâu dài
+//auth store: Bộ nhớ để biết đang đăng nhập
+//role: Dùng để phân biệt giữa admin và user
+
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    user: null, // user đang đăng nhập
+    user: null, 
   }),
   actions: {
     loadUser() {
-      // Ưu tiên lấy currentUser từ localStorage, nếu không có thì từ sessionStorage
       const raw =
         localStorage.getItem("currentUser") ||
         sessionStorage.getItem("currentUser");

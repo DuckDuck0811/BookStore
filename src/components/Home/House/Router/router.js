@@ -39,7 +39,7 @@ const routes = [
     path: "/checkout",
     name: "CheckOut",
     component: CheckOut,
-    meta: { layout: "default", requiresAuth: true }, // bắt buộc login mới checkout
+    meta: { layout: "default", requiresAuth: true },
   },
   {
     path: "/login",

@@ -4,21 +4,24 @@ import { computed, onMounted } from "vue";
 import DefaultLayout from "./components/Home/DefaultLayout.vue";
 import AuthLayout from "./components/Home/House/AuthLayout.vue";
 import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
+import HomeAdmin from "./components/Admin/Product.vue";
 
-// chọn layout
-const route = useRoute();
-const layout = computed(() =>
-  route.meta.layout === "auth" ? AuthLayout : DefaultLayout
-);
 
-const auth = useAuthStore();
-onMounted(() => {
-  auth.loadUser();
-});
+// // chọn layout
+// const route = useRoute();
+// const layout = computed(() =>
+//   route.meta.layout === "auth" ? AuthLayout : DefaultLayout
+// );
+
+// const auth = useAuthStore();
+// onMounted(() => {
+//   auth.loadUser();
+// });
 </script>
 
 <template>
-  <component :is="layout">
+  <!-- <component :is="layout">
     <router-view />
-  </component>
+  </component> -->
+  <HomeAdmin></HomeAdmin>
 </template>
