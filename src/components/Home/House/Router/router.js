@@ -7,6 +7,7 @@ import Login from "@/components/LoginAndRegister/Login.vue";
 import Register from "@/components/LoginAndRegister/Register.vue";
 import CheckOut from "@/components/Checkout/CheckOut.vue";
 import ThankYou from "@/components/Checkout/ThankYou.vue";
+import Product from "@/components/Admin/Product/Product.vue";
 import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
 
 const routes = [
@@ -58,6 +59,11 @@ const routes = [
     name: "ThankYou",
     component: ThankYou,
     meta: { layout: "auth" },
+  },
+  {
+    path: "/admin/home",
+    name: "admin",
+    component: Product,
   },
 ];
 

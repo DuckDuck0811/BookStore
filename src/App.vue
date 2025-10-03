@@ -4,7 +4,7 @@ import { computed, onMounted } from "vue";
 import DefaultLayout from "./components/Home/DefaultLayout.vue";
 import AuthLayout from "./components/Home/House/AuthLayout.vue";
 import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
-import HomeAdmin from "./components/Admin/Product.vue";
+import HomeAdmin from "./components/Admin/Product/Product.vue";
 
 
 // // chọn layout
