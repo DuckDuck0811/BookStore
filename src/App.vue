@@ -4,9 +4,7 @@ import { computed, onMounted } from "vue";
 import DefaultLayout from "./components/Home/DefaultLayout.vue";
 import AuthLayout from "./components/Home/House/AuthLayout.vue";
 import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
-import HomeAdmin from "./components/Admin/Product/Product.vue";
-
-
+import AdminLayout from "./components/Admin/AdminLayout/AdminLayout.vue";
 // // chọn layout
 // const route = useRoute();
 // const layout = computed(() =>
@@ -23,5 +21,5 @@ import HomeAdmin from "./components/Admin/Product/Product.vue";
   <!-- <component :is="layout">
     <router-view />
   </component> -->
-  <HomeAdmin></HomeAdmin>
+  <AdminLayout/>
 </template>

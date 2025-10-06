@@ -7,8 +7,10 @@ import Login from "@/components/LoginAndRegister/Login.vue";
 import Register from "@/components/LoginAndRegister/Register.vue";
 import CheckOut from "@/components/Checkout/CheckOut.vue";
 import ThankYou from "@/components/Checkout/ThankYou.vue";
-import Product from "@/components/Admin/Product/Product.vue";
 import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
+import Product from "@/components/Admin/Product/Product.vue";
+import Order from "@/components/Admin/Order/Order.vue";
+import Statistical from "@/components/Admin/Statistical/Statistical.vue";
 
 const routes = [
   { path: "/", redirect: "/home" },
@@ -61,10 +63,20 @@ const routes = [
     meta: { layout: "auth" },
   },
   {
-    path: "/admin/home",
-    name: "admin",
+    path: "/admin/product",
+    name: "AdminProduct",
     component: Product,
   },
+  {
+    path: "/admin/order",
+    name: "AdminOrder",
+    component: Order,
+  },
+  {
+    path: "/admin/chart",
+    name: "Statistical",
+    component: Statistical,
+  }
 ];
 
 const router = createRouter({
