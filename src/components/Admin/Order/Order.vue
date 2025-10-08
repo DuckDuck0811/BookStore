@@ -10,6 +10,7 @@
           <th>Số điện thoại</th>
           <th>Địa chỉ</th>
           <th>Ngày đặt</th>
+          <th>Tên sách</th>
           <th>Tổng tiền</th>
         </tr>
       </thead>
@@ -20,13 +21,18 @@
           <td>{{ order.customer.phone }}</td>
           <td>{{ order.customer.address }}</td>
           <td>{{ order.date }}</td>
+          <td class="text-start">
+            <ul class="mb-0">
+              <li v-for="item in order.items" :key="item.name">
+                {{ item.title }} (x{{ item.quantity }})
+              </li>
+            </ul>
+          </td>
           <td>{{ order.total.toLocaleString() }}₫</td>
         </tr>
 
         <tr v-if="orders.length === 0">
-          <td colspan="6" class="text-center text-muted py-3">
-            Chưa có đơn hàng nào.
-          </td>
+          <td colspan="6" class="text-center text-muted py-3">Chưa có đơn hàng nào.</td>
         </tr>
       </tbody>
     </table>
@@ -43,11 +49,6 @@ onMounted(() => {
 });
 </script>
 
+<script setup></script>
 
-<script setup>
-
-</script>
-
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -3,23 +3,26 @@ import { useRoute } from "vue-router";
 import { computed, onMounted } from "vue";
 import DefaultLayout from "./components/Home/DefaultLayout.vue";
 import AuthLayout from "./components/Home/House/AuthLayout.vue";
-import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
 import AdminLayout from "./components/Admin/AdminLayout/AdminLayout.vue";
-// // chọn layout
-// const route = useRoute();
-// const layout = computed(() =>
-//   route.meta.layout === "auth" ? AuthLayout : DefaultLayout
-// );
+import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
 
-// const auth = useAuthStore();
-// onMounted(() => {
-//   auth.loadUser();
-// });
+const route = useRoute();
+const auth = useAuthStore();
+
+onMounted(() => {
+  auth.loadUser();
+});
+
+const layout = computed(() => {
+  if (route?.meta?.layout === "auth") return AuthLayout;
+  if (route.path.startsWith("/admin") || auth.user?.role === "admin")
+    return AdminLayout;
+  return DefaultLayout;
+});
 </script>
 
 <template>
-  <!-- <component :is="layout">
+  <component :is="layout">
     <router-view />
-  </component> -->
-  <AdminLayout/>
+  </component>
 </template>

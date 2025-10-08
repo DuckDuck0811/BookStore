@@ -8,12 +8,17 @@ import Register from "@/components/LoginAndRegister/Register.vue";
 import CheckOut from "@/components/Checkout/CheckOut.vue";
 import ThankYou from "@/components/Checkout/ThankYou.vue";
 import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
+
+// Admin 
 import Product from "@/components/Admin/Product/Product.vue";
 import Order from "@/components/Admin/Order/Order.vue";
-import Statistical from "@/components/Admin/Statistical/Statistical.vue";
+import Bestseller from "@/components/Admin/Statistical/Bestseller.vue";
+import Revenue from "@/components/Admin/Statistical/Revenue.vue";
+import Dashboard from "@/components/Admin/Dashboard/Dashboard.vue";
 
 const routes = [
   { path: "/", redirect: "/home" },
+
   {
     path: "/home",
     name: "Home",
@@ -36,14 +41,21 @@ const routes = [
     path: "/cart",
     name: "Cart",
     component: Cart,
-    meta: { layout: "default", requiresAuth: true },
+    meta: { layout: "default", requiresAuth: true, userOnly: true },
   },
   {
     path: "/checkout",
     name: "CheckOut",
     component: CheckOut,
-    meta: { layout: "default", requiresAuth: true },
+    meta: { layout: "default", requiresAuth: true, userOnly: true },
   },
+  {
+    path: "/thank-you",
+    name: "ThankYou",
+    component: ThankYou,
+    meta: { layout: "auth", requiresAuth: true, userOnly: true },
+  },
+
   {
     path: "/login",
     name: "Login",
@@ -56,27 +68,37 @@ const routes = [
     component: Register,
     meta: { layout: "auth" },
   },
+
   {
-    path: "/thank-you",
-    name: "ThankYou",
-    component: ThankYou,
-    meta: { layout: "auth" },
+    path: "/admin/home",
+    name: "Dashboard",
+    component: Bestseller,
+    meta: { requiresAdmin: true },
   },
   {
     path: "/admin/product",
     name: "AdminProduct",
     component: Product,
+    meta: { requiresAdmin: true },
   },
   {
     path: "/admin/order",
     name: "AdminOrder",
     component: Order,
+    meta: { requiresAdmin: true },
   },
   {
     path: "/admin/chart",
-    name: "Statistical",
-    component: Statistical,
-  }
+    name: "Bestseller",
+    component: Bestseller,
+    meta: { requiresAdmin: true },
+  },
+  {
+    path: "/admin/revenue",
+    name: "Revenue",
+    component: Revenue,
+    meta: { requiresAdmin: true },
+  },
 ];
 
 const router = createRouter({
@@ -84,17 +106,32 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to) => {
+router.beforeEach((to, from, next) => {
   const auth = useAuthStore();
   auth.loadUser();
+  const user = auth.user;
 
-  if (to.meta.requiresAuth && !auth.user) {
-    return { name: "Login" };
+  if (to.meta.requiresAuth && !user) {
+    next({ name: "Login" });
+    return;
   }
 
-  if ((to.name === "Login" || to.name === "Register") && auth.user) {
-    return { name: "Home" };
+  if ((to.name === "Login" || to.name === "Register") && user) {
+    next({ name: "Home" });
+    return;
   }
+
+  if (to.meta.requiresAdmin && user?.role !== "admin") {
+    next({ name: "Home" });
+    return;
+  }
+
+  if (to.meta.userOnly && user?.role === "admin") {
+    next({ name: "Dashboard" });
+    return;
+  }
+
+  next();
 });
 
 export default router;

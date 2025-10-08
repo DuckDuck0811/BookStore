@@ -1,11 +1,11 @@
 <template>
   <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
-    <div class="card shadow p-4" style="width: 400px; border-radius: 12px;">
+    <div class="card shadow p-4" style="width: 400px; border-radius: 12px">
       <h3 class="text-center mb-4">Đăng nhập</h3>
 
       <form @submit="handleLogin">
         <div class="mb-3">
-          <label for="username" class="form-label">Username:</label>
+          <label for="username" class="form-label">Tên đăng nhập:</label>
           <input
             v-model="username"
             type="text"
@@ -15,6 +15,7 @@
             required
           />
         </div>
+
         <div class="mb-3">
           <label for="password" class="form-label">Mật khẩu:</label>
           <input
@@ -26,6 +27,7 @@
             required
           />
         </div>
+
         <div class="form-check mb-3">
           <input
             v-model="remember"
@@ -35,6 +37,7 @@
           />
           <label class="form-check-label" for="remember">Ghi nhớ đăng nhập</label>
         </div>
+
         <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
       </form>
 
@@ -48,26 +51,25 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
+import { useAuthStore } from "@/components/LoginAndRegister/AuthStore";
 
 const username = ref("");
 const password = ref("");
 const remember = ref(false);
-
 const router = useRouter();
 const auth = useAuthStore();
+
+onMounted(() => {
+  auth.loadUser();
+});
 
 const handleLogin = (e) => {
   e.preventDefault();
 
-  if (!username.value.trim() || !password.value.trim()) {
-    alert("Vui lòng nhập đầy đủ username và mật khẩu!");
-    return;
-  }
-
   const users = JSON.parse(localStorage.getItem("users")) || [];
+
   const matchedUser = users.find(
     (u) => u.username === username.value && u.password === password.value
   );
@@ -75,9 +77,14 @@ const handleLogin = (e) => {
   if (matchedUser) {
     auth.login(matchedUser, remember.value);
     alert("Đăng nhập thành công!");
-    router.push("/home");
+
+    if (matchedUser.role === "admin") {
+      router.push("/admin/home");
+    } else {
+      router.push("/home");
+    }
   } else {
-    alert("Sai username hoặc mật khẩu!");
+    alert("Sai tên đăng nhập hoặc mật khẩu!");
   }
 };
 </script>

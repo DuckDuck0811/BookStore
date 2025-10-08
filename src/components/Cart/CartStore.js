@@ -49,7 +49,7 @@ export const useCartStore = defineStore("cart", {
       return new Promise((resolve) => {
         setTimeout(() => {
           const order = {
-            orderId: this.getNextOrderId(), // dùng ID tự tăng
+            orderId: this.getNextOrderId(), 
             customer: customerInfo,
             items: this.items,
             total: this.totalPrice,
