@@ -197,6 +197,7 @@ const productStore = useProductStore();
 productStore.loadDefaultProducts();
 
 const products = computed(() => productStore.products);
+const loading = ref(false);
 
 const isEdit = ref(false);
 const editingId = ref(null);

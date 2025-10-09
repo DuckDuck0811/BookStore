@@ -9,7 +9,7 @@ import CheckOut from "@/components/Checkout/CheckOut.vue";
 import ThankYou from "@/components/Checkout/ThankYou.vue";
 import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
 
-// Admin 
+// Admin
 import Product from "@/components/Admin/Product/Product.vue";
 import Order from "@/components/Admin/Order/Order.vue";
 import Bestseller from "@/components/Admin/Statistical/Bestseller.vue";
@@ -131,6 +131,10 @@ router.beforeEach((to, from, next) => {
     return;
   }
 
+  if (to.meta.userOnly && user?.role === "admin") {
+    next({ name: "Dashboard" });
+    return;
+  }
   next();
 });
 

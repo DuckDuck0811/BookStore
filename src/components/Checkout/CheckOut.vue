@@ -86,6 +86,5 @@ const handleOrder = async () => {
   window.location.href = "/thank-you";
 };
 
-console.log("DEBUG cart.items:", cart.items);
-console.log("DEBUG cart.totalPrice:", cart.totalPrice);
+
 </script>

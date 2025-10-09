@@ -83,7 +83,7 @@ function renderChart() {
           title: { display: true, text: "Tên sản phẩm" },
           ticks: {
             maxRotation: 0,
-            font: { size: 6.25 },
+            font: { size: 5.75 },
           },
         },
       },
