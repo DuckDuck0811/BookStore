@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+// User
 import House from "../House.vue";
 import NewBook from "../MainContent/NewBook.vue";
 import ProductList from "../../ProductList/ProductList.vue";
@@ -17,8 +18,9 @@ import Revenue from "@/components/Admin/Statistical/Revenue.vue";
 import Dashboard from "@/components/Admin/Dashboard/Dashboard.vue";
 
 const routes = [
+  // User
   { path: "/", redirect: "/home" },
-
+  
   {
     path: "/home",
     name: "Home",

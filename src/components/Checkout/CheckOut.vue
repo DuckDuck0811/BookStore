@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-4">
     <h3 class="mb-4">Thanh toán</h3>
-
+    <!-- Form thanh toán -->
     <form @submit.prevent="handleOrder">
       <div class="mb-3">
         <label class="form-label">Họ và tên</label>
@@ -13,7 +13,7 @@
           required
         />
       </div>
-
+      <!-- Thanh toán -->
       <div class="mb-3">
         <label class="form-label">Số điện thoại</label>
         <input
@@ -25,7 +25,7 @@
           required
         />
       </div>
-
+      <!-- Địa chỉ giao hàng -->
       <div class="mb-3">
         <label class="form-label">Địa chỉ giao hàng</label>
         <textarea
@@ -37,6 +37,7 @@
         ></textarea>
       </div>
 
+      <!-- Danh sách sản phẩm cart.item và sẽ hiện tên sản phẩm và số lượng sản phẩm đặt hàng -->
       <div class="mb-3">
         <label class="form-label fw-bold">Sản phẩm</label>
         <ul class="list-group">
@@ -46,10 +47,12 @@
         </ul>
       </div>
 
+      <!-- Tổng số tiền của sản phẩm đặt hàng và có định dạng tiền VND -->
       <div class="text-end fw-bold fs-5 mb-3 text-danger">
         Tổng: {{ cart.totalPrice.toLocaleString() }}₫
       </div>
 
+      <!-- Nút đặt hàng -->
       <div class="text-end">
         <button type="submit" class="btn btn-success">Đặt hàng</button>
       </div>
@@ -63,28 +66,30 @@ import { ref } from "vue";
 import { useCartStore } from "../Cart/CartStore";
 
 const cart = useCartStore();
+// lấy dữ liệu sản phẩm trong giỏ hàng
 
 const name = ref("");
 const address = ref("");
 const phone = ref("");
+// name, address, phone: lưu thông tin nhập của khách hàng.
 
 const handleOrder = async () => {
   if (!name.value || !address.value || !phone.value) {
     alert("Vui lòng điền đầy đủ thông tin");
     return;
   }
-
+  // validate phần form nhập liệu
   const customerInfo = {
     name: name.value,
     address: address.value,
     phone: phone.value,
   };
+  //tạo đối tượng customerInfo để lưu thông tin khách hàng
 
   const result = await cart.postOrder(customerInfo);
   console.log("Order created:", result);
 
   window.location.href = "/thank-you";
+  //Sau khi thành công sẽ chuyển hướng đến trang cảm ơn
 };
-
-
 </script>

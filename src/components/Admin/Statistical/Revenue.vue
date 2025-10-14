@@ -9,12 +9,12 @@
 import { ref, onMounted } from "vue";
 import {
   Chart,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
+  BarElement, //Các thanh biểu đồ
+  CategoryScale, //Danh mục tung
+  LinearScale, //Danh mục trục hoành
+  Tooltip, //Hiển thi thông tin khi hover tới cột bất kỳ
   Legend,
-  Title,
+  Title, //Hiển thị tên biểu đồ
 } from "chart.js";
 
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
@@ -22,6 +22,7 @@ Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
 const chartCanvas = ref(null);
 let chartInstance = null;
 
+//Hàm lấy dữ liệu sách từu localStorage
 function getProductSalesData() {
   const orders = JSON.parse(localStorage.getItem("orders")) || [];
   const salesMap = {};
@@ -45,7 +46,7 @@ function getProductSalesData() {
     data: sorted.map(([, qty]) => qty),
   };
 }
-
+// Hiển thị biểu đồ
 function renderChart() {
   const { labels, data } = getProductSalesData();
   if (chartInstance) chartInstance.destroy();
@@ -55,46 +56,47 @@ function renderChart() {
       labels,
       datasets: [
         {
-          label: "Số lượng bán",
-          data,
-          backgroundColor: "rgba(54, 162, 235, 0.6)",
-          borderColor: "rgba(54, 162, 235, 1)",
-          borderWidth: 1,
+          label: "Số lượng bán", //Số lượng bán sản phẩm
+          data, //dữ liệu trong localStorage
+          backgroundColor: "rgba(54, 162, 235, 0.6)", //màu sắc của cột
+          borderColor: "rgba(54, 162, 235, 1)", //màu bo góc của cột
+          borderWidth: 1, //chỉnh kiểu cột
         },
       ],
     },
     options: {
-      responsive: true,
+      responsive: true, //biểu đồ co giãn theo trang web
       plugins: {
         legend: { display: false },
         title: {
-          display: true,
-          text: "Top sản phẩm bán chạy nhất",
-          font: { size: 10 },
+          display: true, //tiêu đề của biểu đồ
+          text: "Top sản phẩm bán chạy nhất", //Nội dung
+          font: { size: 10 }, //Cỡ chữ
         },
         tooltip: { enabled: true },
       },
       scales: {
         y: {
-          beginAtZero: true,
-          title: { display: true, text: "Số lượng bán" },
+          beginAtZero: true, //trục tung bắt đầu từ 0
+          title: { display: true, text: "Số lượng bán" }, //tiêu đề trục tung
         },
         x: {
-          title: { display: true, text: "Tên sản phẩm" },
+          title: { display: true, text: "Tên sản phẩm" }, //tiêu đề trục hoành
           ticks: {
-            maxRotation: 0,
-            font: { size: 5.75 },
+            maxRotation: 0, //độ xoay của tiêu đề
+            font: { size: 5.75 }, //cỡ chữ
           },
         },
       },
     },
   });
 }
-
+// vẽ biểu đồ theo dữ liệu cũ
 onMounted(() => {
   renderChart();
 });
 
+// vẽ biểu đồ theo dữ liệu mới
 function reloadData() {
   renderChart();
 }

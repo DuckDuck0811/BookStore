@@ -96,7 +96,7 @@
     </div>
 
     <ProductDetail v-else :book="selectedBook" @back="selectedBook = null" />
-    <br/><br />
+    <br /><br />
   </div>
 </template>
 
@@ -106,6 +106,7 @@ import ProductDetail from "../ProductDetail/ProductDetail.vue";
 import { useCartStore } from "@/components/Cart/CartStore";
 import { useRouter } from "vue-router";
 import { useProductStore } from "./ProductStore";
+import { toast } from "vue3-toastify";
 const cartStore = useCartStore();
 const router = useRouter();
 const productStore = useProductStore();
@@ -161,14 +162,18 @@ function viewBookDetail(book) {
   selectedBook.value = book;
 }
 
-function addToCart(book) {
+function addToCart(book) {//Thêm sản phẩm vô giỏ hàng lấy từ id của sản phẩm 
   cartStore.addToCart({
     id: book.id,
     title: book.title,
     price: Number(book.newPrice.replace(/[^\d]/g, "")),
     img: book.img,
   });
-  router.push("/cart");
+  toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 });//Và tự tắt trong 2 giây
+
+  setTimeout(() => {
+    router.push("/cart");
+  }, 2000);  //Khi bấm vô thêm giỏ hàng thì sẽ hiện ra thông báo nhỏ trong 2 giây và router sẽ chuyển trang
 }
 </script>
 

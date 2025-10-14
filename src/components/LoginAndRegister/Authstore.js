@@ -1,14 +1,14 @@
 import { defineStore } from "pinia";
-// localStorage: lưu đăng nhập lâu dài (nếu chọn “ghi nhớ”)
-// sessionStorage: chỉ lưu trong 1 phiên làm việc
-// role: dùng để phân quyền giữa admin và user
+import router from "@/components/Home/House/Router/Router.js";
+
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    user: null,
+    user: null, // người dùng hiện tại
   }),
 
   actions: {
     loadUser() {
+      // Tạo sẵn tài khoản mẫu nếu chưa có
       if (!localStorage.getItem("users")) {
         const sampleUsers = [
           {
@@ -27,6 +27,7 @@ export const useAuthStore = defineStore("auth", {
         localStorage.setItem("users", JSON.stringify(sampleUsers));
       }
 
+      // Kiểm tra user đang đăng nhập từ localStorage
       const raw =
         localStorage.getItem("currentUser") ||
         sessionStorage.getItem("currentUser");
@@ -38,21 +39,38 @@ export const useAuthStore = defineStore("auth", {
 
       if (remember) {
         localStorage.setItem("currentUser", JSON.stringify(user));
+        sessionStorage.removeItem("currentUser");
       } else {
         sessionStorage.setItem("currentUser", JSON.stringify(user));
+        localStorage.removeItem("currentUser");
       }
     },
 
+    //Đăng xuất
     logout() {
       this.user = null;
       localStorage.removeItem("currentUser");
       sessionStorage.removeItem("currentUser");
+      router.push({ name: "Login" });
+    },
+
+    // Chặn router khi chưa đăng nhập
+    requireLogin(redirectPath = "/") {
+      if (!this.user) {
+        router.push({ name: "Login", query: { redirect: redirectPath } });
+        return false;
+      }
+      return true;
     },
   },
 
   getters: {
+    // Check đăng nhập chưa
     isLoggedIn: (state) => !!state.user,
+
+    // Lấy role, mặc định là “guest”
     role: (state) => state.user?.role || "guest",
+    // Các hàm phân quyền nhanh
     isAdmin: (state) => state.user?.role === "admin",
     isUser: (state) => state.user?.role === "user",
   },

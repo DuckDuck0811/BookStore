@@ -10,15 +10,20 @@
         </a>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'comic')">Truyện tranh</a></li>
+          <!-- Gọi thành phần comic từ cha -->
           <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'sciFi')">Sách khoa học viễn
               tưởng</a></li>
+          <!-- Gọi thành phần sciFi từ cha -->
           <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'detective')">Tiểu thuyết trinh
               thám</a></li>
+          <!-- Gọi thành phần detective từ cha -->
         </ul>
       </div>
 
       <router-link to="/" class="text-decoration-none text-dark">Home</router-link>
+      <!-- Điều hướng về trang Home -->
       <router-link to="/san-pham" class="text-decoration-none text-dark">Sản phẩm</router-link>
+      <!-- Điều hướng về trang Sản phẩm -->
 
       <div class="d-flex align-items-center gap-2">
         <img src="/shipper.png" alt="shipper" width="70" />
@@ -34,5 +39,6 @@
 </template>
 
 <script setup>
+// Khai báo sự kiện update-category để gửi danh mục sách đã chọn lên component cha
 defineEmits(['update-category'])
 </script>

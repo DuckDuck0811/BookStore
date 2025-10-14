@@ -1,4 +1,5 @@
 <template>
+    <!-- Footer -->
     <footer class="text-light py-4 mt-auto" style="background-color:gray;">
         <div class="container">
             <div class="row">
