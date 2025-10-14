@@ -5,10 +5,11 @@
         <br /><br />
         <h5 class="fw-bold mb-3">TẤT CẢ CÁC SẢN PHẨM</h5>
 
+        <!-- Hiển thị khi không tìm thấy sách -->
         <div v-if="paginatedBooks.length === 0" class="text-center text-muted">
           Không tìm thấy sách nào phù hợp.
         </div>
-
+        <!-- Hiển thị danh sách sách -->
         <div class="row g-3" v-else>
           <div class="col-md-3" v-for="book in paginatedBooks" :key="book.id">
             <div
@@ -16,7 +17,7 @@
               :style="{ height: book.cardHeight || '500px' }"
               @click="viewBookDetail(book)"
             >
-              <!-- ảnh -->
+              <!-- Ảnh -->
               <img
                 :src="book.img"
                 :class="{
@@ -111,17 +112,21 @@ const cartStore = useCartStore();
 const router = useRouter();
 const productStore = useProductStore();
 
+// Nhận props từ component cha
 const props = defineProps({
   searchKeyword: String,
   category: String,
 });
 
+// Load sản phẩm mặc định
 onMounted(() => {
   productStore.loadDefaultProducts();
 });
 
+// Lưu sách được chọn để xem chi tiết
 const selectedBook = ref(null);
 
+// Lọc sách theo searchKeyword và category
 const filteredBooks = computed(() => {
   return productStore.products.filter((book) => {
     const matchKeyword =
@@ -133,7 +138,10 @@ const filteredBooks = computed(() => {
 });
 
 const currentPage = ref(1);
+// Mặc định hiển thị trang 1
 const itemsPerPage = ref(8);
+// Mỗi trang hiển thị 8 sản phẩm
+
 
 const totalPages = computed(() =>
   Math.max(1, Math.ceil(filteredBooks.value.length / itemsPerPage.value))
@@ -162,18 +170,19 @@ function viewBookDetail(book) {
   selectedBook.value = book;
 }
 
-function addToCart(book) {//Thêm sản phẩm vô giỏ hàng lấy từ id của sản phẩm 
+function addToCart(book) {
+  //Thêm sản phẩm vô giỏ hàng lấy từ id của sản phẩm
   cartStore.addToCart({
     id: book.id,
     title: book.title,
     price: Number(book.newPrice.replace(/[^\d]/g, "")),
     img: book.img,
   });
-  toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 });//Và tự tắt trong 2 giây
+  toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 }); //Và tự tắt trong 2 giây
 
   setTimeout(() => {
     router.push("/cart");
-  }, 2000);  //Khi bấm vô thêm giỏ hàng thì sẽ hiện ra thông báo nhỏ trong 2 giây và router sẽ chuyển trang
+  }, 2000); //Khi bấm vô thêm giỏ hàng thì sẽ hiện ra thông báo nhỏ trong 2 giây và router sẽ chuyển trang
 }
 </script>
 

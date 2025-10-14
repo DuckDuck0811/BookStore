@@ -1,5 +1,7 @@
 <template>
+  <!-- Trang sách chi tiết khi chọn sách -->
   <div class="product-detail">
+    <!-- Dùng đề gửi sự kiện từ lên phần back -->
     <button class="btn btn-secondary back-btn" @click="$emit('back')">Quay lại</button>
     <br />
     <br />
@@ -7,7 +9,7 @@
       <div class="detail-image">
         <img :src="book.img" alt="Book" />
       </div>
-
+      <!-- CHi tiết sách sẽ gồm tên giá cũ giá mới số lượng mô tả -->
       <div class="detail-info">
         <h2 class="title">{{ book.title }}</h2>
         <div class="price">
@@ -21,7 +23,9 @@
         </div>
         <div class="actions">
           <button class="btn-cart" @click.stop="addToCart(book)">Thêm vô giỏ hàng</button>
+          <!-- Thêm vô giỏ hàng bằng cách dùng @click khi gọi sách và chuyển sang giỏ hàng-->
           <button class="btn-buy" @click.stop="buyNow(book)">Mua Ngay</button>
+          <!-- Mua sách bằng cách dùng @click khi gọi sách và sẽ chuyển sang trang mua ngay-->
         </div>
         <div class="description">
           <h3>Mô tả</h3>
@@ -39,15 +43,20 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "@/components/Cart/CartStore";
 
+// Sử dụng router để chuyển hướng
 const router = useRouter();
+// Sử dụng store giỏ hàng
 const cartStore = useCartStore();
 
+// Nhận props từ component cha
 const props = defineProps({
   book: Object,
 });
 
+// Số lượng mua
 const qty = ref(1);
 
+// Thêm vào giỏ hàng
 function addToCart(book) {
   const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
 
@@ -61,6 +70,7 @@ function addToCart(book) {
   router.push("/cart");
 }
 
+// Mua ngay
 function buyNow(book) {
   const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
 
