@@ -98,10 +98,11 @@ BookStore/
 └── README.md # Tài liệu mô tả dự án
 
 ##### Training skills
-- Xây dựng ứng dụng theo **mô hình component-based**  
-- Quản lý trạng thái với **Pinia**  
-- Điều hướng & bảo vệ route bằng **Vue Router**  
-- Thực hiện **CRUD** với dữ liệu mô phỏng (JSON Server)  
-- Thiết kế **responsive** bằng Bootstrap 5  
-- Quản lý logic **đăng nhập / đăng ký / giỏ hàng**  
+
+- Xây dựng ứng dụng theo **mô hình component-based**
+- Quản lý trạng thái với **Pinia**
+- Điều hướng & bảo vệ route bằng **Vue Router**
+- Thực hiện **CRUD** với dữ liệu mô phỏng (JSON Server)
+- Thiết kế **responsive** bằng Bootstrap 5
+- Quản lý logic **đăng nhập / đăng ký / giỏ hàng**
 - Viết mã **sạch, có chú thích, dễ mở rộng**

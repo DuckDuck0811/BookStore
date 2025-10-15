@@ -204,25 +204,46 @@ function addToCart(book) {
   font-size: 16px;
 }
 
+/* Hiệu ứng overlay giống các phần khác */
 .product-card {
   position: relative;
   overflow: hidden;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Lớp phủ mờ khi hover */
 .product-card .overlay {
   position: absolute;
   inset: 0;
+  background: rgba(0, 0, 0, 0.35);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
+/* Khi hover card thì overlay hiện dần */
 .product-card:hover .overlay {
   opacity: 1;
 }
 
+/* Nút hiện ở giữa dưới cùng khi hover */
 .card .overlay button {
   position: absolute;
-  top: 390px;
-  transform: none;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+/* Khi hover thì nút trượt lên nhẹ và hiện ra */
+.product-card:hover .overlay button {
+  opacity: 1;
+  transform: translate(-50%, -10px);
 }
 </style>

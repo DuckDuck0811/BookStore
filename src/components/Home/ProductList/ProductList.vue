@@ -142,7 +142,6 @@ const currentPage = ref(1);
 const itemsPerPage = ref(8);
 // Mỗi trang hiển thị 8 sản phẩm
 
-
 const totalPages = computed(() =>
   Math.max(1, Math.ceil(filteredBooks.value.length / itemsPerPage.value))
 );
