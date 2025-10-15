@@ -9,12 +9,12 @@
           DANH MỤC SÁCH
         </a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'comic')">Truyện tranh</a></li>
+          <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'Comic')">Truyện tranh</a></li>
           <!-- Gọi thành phần comic từ cha -->
-          <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'sciFi')">Sách khoa học viễn
+          <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'Science fiction')">Sách khoa học viễn
               tưởng</a></li>
           <!-- Gọi thành phần sciFi từ cha -->
-          <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'detective')">Tiểu thuyết trinh
+          <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'Detective')">Tiểu thuyết trinh
               thám</a></li>
           <!-- Gọi thành phần detective từ cha -->
         </ul>

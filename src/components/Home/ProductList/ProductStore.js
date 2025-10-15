@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-
+// localStorage: lưu đăng nhập lâu dài (nếu chọn “ghi nhớ”)
 // Quản lý sản phẩm
 export const useProductStore = defineStore("products", {
   // Lấy dữ liệu sản phẩm từ localStorage hoặc khởi tạo mảng rỗng
@@ -8,7 +8,7 @@ export const useProductStore = defineStore("products", {
   }),
 
   actions: {
-    // Tải sản phẩm mặc định nếu chưa có trong localStorage
+    // Hàm khởi tạo sản phẩm nếu localStorage trống
     loadDefaultProducts() {
       if (this.products.length === 0) {
         this.products = [
