@@ -142,7 +142,6 @@ function addToCart(comic) {
   margin-top: 10px;
 }
 
-/* Card hiệu ứng hover mượt */
 .product-card {
   position: relative;
   overflow: hidden;
@@ -155,7 +154,6 @@ function addToCart(comic) {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Lớp phủ mờ */
 .product-card .overlay {
   position: absolute;
   inset: 0;
@@ -164,12 +162,10 @@ function addToCart(comic) {
   transition: opacity 0.3s ease;
 }
 
-/* Khi hover thì overlay hiện dần */
 .product-card:hover .overlay {
   opacity: 1;
 }
 
-/* Nút trong overlay */
 .card .overlay button {
   position: absolute;
   bottom: 20px;
@@ -179,7 +175,6 @@ function addToCart(comic) {
   opacity: 0;
 }
 
-/* Hiệu ứng nút trượt lên + mờ dần */
 .product-card:hover .overlay button {
   opacity: 1;
   transform: translate(-50%, 0);

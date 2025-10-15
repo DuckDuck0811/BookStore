@@ -182,7 +182,7 @@ function addToCart(book) {
   border-radius: 4px;
 }
 
-/* Card styling */
+
 .product-card {
   position: relative;
   overflow: hidden;
@@ -195,7 +195,7 @@ function addToCart(book) {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Overlay hiệu ứng mờ khi hover */
+
 .product-card .overlay {
   position: absolute;
   inset: 0;
@@ -208,7 +208,7 @@ function addToCart(book) {
   opacity: 1;
 }
 
-/* Nút hiện dần khi hover */
+
 .add-btn {
   opacity: 0;
   transform: translateY(20px);

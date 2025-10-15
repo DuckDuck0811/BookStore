@@ -204,7 +204,6 @@ function addToCart(book) {
   font-size: 16px;
 }
 
-/* Hiệu ứng overlay giống các phần khác */
 .product-card {
   position: relative;
   overflow: hidden;
@@ -217,7 +216,6 @@ function addToCart(book) {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Lớp phủ mờ khi hover */
 .product-card .overlay {
   position: absolute;
   inset: 0;
@@ -226,12 +224,10 @@ function addToCart(book) {
   transition: opacity 0.3s ease;
 }
 
-/* Khi hover card thì overlay hiện dần */
 .product-card:hover .overlay {
   opacity: 1;
 }
 
-/* Nút hiện ở giữa dưới cùng khi hover */
 .card .overlay button {
   position: absolute;
   bottom: 20px;
@@ -241,7 +237,6 @@ function addToCart(book) {
   opacity: 0;
 }
 
-/* Khi hover thì nút trượt lên nhẹ và hiện ra */
 .product-card:hover .overlay button {
   opacity: 1;
   transform: translate(-50%, -10px);
