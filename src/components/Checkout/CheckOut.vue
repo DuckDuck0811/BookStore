@@ -10,7 +10,6 @@
           type="text"
           class="form-control"
           placeholder="Nhập họ tên"
-          required
         />
       </div>
       <!-- Thanh toán -->
@@ -21,8 +20,6 @@
           type="tel"
           class="form-control"
           placeholder="Nhập số điện thoại"
-          pattern="^[0-9]{9,11}$"
-          required
         />
       </div>
       <!-- Địa chỉ giao hàng -->
@@ -33,7 +30,6 @@
           class="form-control"
           rows="2"
           placeholder="Nhập địa chỉ chi tiết"
-          required
         ></textarea>
       </div>
 
@@ -79,6 +75,33 @@ const handleOrder = async () => {
     return;
   }
   // validate phần form nhập liệu
+
+  if (phone.value.length < 10 || phone.value.length > 11 || !/^\d+$/.test(phone.value)) {
+    alert("Số điện thoại không hợp lệ");
+    return;
+  }
+  // validate số điện thoại
+
+  // Validate họ và tên
+  if (
+    name.value.length < 3 ||
+    name.value.length > 50 ||
+    !/^[A-Za-z\s]+$/.test(name.value)
+  ) {
+    alert(
+      "Họ và tên phải từ 3-50 ký tự và chỉ được nhập chữ" || "Họ và tên không hợp lệ"
+    );
+    return;
+  }
+
+  const add = address.value.trim();
+  if (add.length < 10 || add.length > 100 || !/^[a-zA-ZÀ-ỹ0-9\s,]+$/.test(add)) {
+    alert(
+      "Địa chỉ phải từ 10-100 ký tự và chỉ được phép dùng chữ, số, khoảng trắng và dấu ,"
+    );
+    return;
+  }
+
   const customerInfo = {
     name: name.value,
     address: address.value,
