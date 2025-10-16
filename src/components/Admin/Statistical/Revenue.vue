@@ -22,7 +22,7 @@ Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
 const chartCanvas = ref(null);
 let chartInstance = null;
 
-//Hàm lấy dữ liệu sách từu localStorage
+//Hàm lấy dữ liệu sách từ localStorage
 function getProductSalesData() {
   const orders = JSON.parse(localStorage.getItem("orders")) || [];
   const salesMap = {};

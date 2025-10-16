@@ -51,7 +51,7 @@ export const useAuthStore = defineStore("auth", {
       this.user = null;
       localStorage.removeItem("currentUser");
       sessionStorage.removeItem("currentUser");
-      router.push({ name: "Login" });
+      router.push({ name: "Home" });
     },
 
     // Chặn router khi chưa đăng nhập

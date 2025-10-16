@@ -180,4 +180,3 @@ function addToCart(comic) {
   transform: translate(-50%, 0);
 }
 </style>
-

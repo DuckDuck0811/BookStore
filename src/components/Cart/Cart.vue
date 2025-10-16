@@ -39,7 +39,7 @@
         </tr>
       </tbody>
     </table>
-
+    <!-- Hiện tổng số tiền của sản phẩm trong giỏ hàng -->
     <div class="text-end fw-bold fs-5 mt-3" style="color: red">
       Tổng: {{ cartStore.totalPrice.toLocaleString() }}₫
     </div>

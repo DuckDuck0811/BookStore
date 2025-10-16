@@ -9,7 +9,7 @@
       <div class="detail-image">
         <img :src="book.img" alt="Book" />
       </div>
-      <!-- CHi tiết sách sẽ gồm tên giá cũ giá mới số lượng mô tả -->
+      <!-- Chi tiết sách sẽ gồm tên giá cũ giá mới số lượng mô tả -->
       <div class="detail-info">
         <h2 class="title">{{ book.title }}</h2>
         <div class="price">

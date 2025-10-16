@@ -166,22 +166,19 @@ const filteredBooks = computed(() => {
   );
 });
 // Lọc sách dựa trên từ khóa tìm kiếm
-function addToCart(book) {
-  const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
-  //Giá sách dạng số
+async function addToCart(book) {
+  //Thêm sản phẩm vô giỏ hàng lấy từ id của sản phẩm
   cartStore.addToCart({
     id: book.id,
     title: book.title,
-    price: priceNumber,
+    price: Number(book.newPrice.replace(/[^\d]/g, "")),
     img: book.img,
-    quantity: 1,
   });
-  // Thêm sản phẩm sách vào giỏ hàng
   toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 }); //Và tự tắt trong 2 giây
-  //Thông báo đã thêm sản phẩm vào giỏ hàng
-  setTimeout(() => {
-    router.push("/cart");
-  }, 2000); //Khi bấm vô thêm giỏ hàng thì sẽ hiện ra thông báo nhỏ trong 2 giây và router sẽ chuyển trang
+
+  await new Promise((resolve) => setTimeout(resolve, 2000)); //Chờ 2 giây
+  //Sau 2 giây thì chuyển trang
+  router.push("/cart");
 }
 </script>
 

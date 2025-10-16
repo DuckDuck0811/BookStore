@@ -1,6 +1,6 @@
 <template>
   <div class="navbar-wrapper">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary py-3 shadow-sm rounded-3">
+    <nav class="navbar navbar-expand-lg py-3 rounded-3">
       <div class="container d-flex justify-content-between align-items-center">
         <!-- Logo -->
         <a class="navbar-brand d-flex align-items-center me-3" href="#">
@@ -19,7 +19,9 @@
             v-model="keyword"
             @keyup.enter="search"
           />
-          <button class="btn btn-success" style="width: 200px;" @click="search">Tìm kiếm</button>
+          <button class="btn btn-success" style="width: 200px" @click="search">
+            Tìm kiếm
+          </button>
         </div>
 
         <!-- Giỏ hàng & đăng nhập -->
