@@ -169,7 +169,7 @@ function viewBookDetail(book) {
   selectedBook.value = book;
 }
 
-function addToCart(book) {
+async function addToCart(book) {
   //Thêm sản phẩm vô giỏ hàng lấy từ id của sản phẩm
   cartStore.addToCart({
     id: book.id,
@@ -179,9 +179,9 @@ function addToCart(book) {
   });
   toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 }); //Và tự tắt trong 2 giây
 
-  setTimeout(() => {
-    router.push("/cart");
-  }, 2000); //Khi bấm vô thêm giỏ hàng thì sẽ hiện ra thông báo nhỏ trong 2 giây và router sẽ chuyển trang
+  await new Promise((resolve) => setTimeout(resolve, 2000)); //Chờ 2 giây
+  //Sau 2 giây thì chuyển trang
+  router.push("/cart");
 }
 </script>
 

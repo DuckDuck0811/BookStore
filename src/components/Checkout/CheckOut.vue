@@ -22,6 +22,7 @@
           placeholder="Nhập số điện thoại"
         />
       </div>
+
       <!-- Địa chỉ giao hàng -->
       <div class="mb-3">
         <label class="form-label">Địa chỉ giao hàng</label>
