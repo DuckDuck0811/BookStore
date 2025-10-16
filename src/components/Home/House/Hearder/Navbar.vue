@@ -15,7 +15,7 @@
           <input
             type="text"
             class="form-control me-2"
-            placeholder="Tìm kiếm sản phẩm..."
+            placeholder="Tìm kiếm sản phẩm..."  
             v-model="keyword"
             @keyup.enter="search"
           />
@@ -83,21 +83,18 @@ const search = () => {
 </script>
 
 <style scoped>
-/* Gói cả navbar vào giữa màn hình */
 .navbar-wrapper {
   display: flex;
   justify-content: center;
   margin-top: 15px;
 }
 
-/* Giới hạn chiều rộng toàn khối */
 .navbar {
   width: 100%;
   max-width: 1200px;
   border-radius: 12px;
 }
 
-/* Giảm khoảng cách, cho gọn */
 .search-box input {
   height: 45px;
 }
