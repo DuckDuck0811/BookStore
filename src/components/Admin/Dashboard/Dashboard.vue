@@ -1,19 +1,14 @@
 <template>
   <div class="container mt-4">
     <div class="row">
-      <div class="col-md-3">
-        <NewBook :books="paginatedBooks" :searchKeyword="searchKeyword" />
+      <div class="col-12">
+        <House :books="paginatedBooks" :searchKeyword="searchKeyword" />
       </div>
-      <div class="col-md-9">
-        <TopBook :books="paginatedBooks" :searchKeyword="searchKeyword" class="mb-4" />
-        <DetectiveNovels
-          :books="paginatedBooks"
-          :searchKeyword="searchKeyword"
-          class="mb-4"
-        />
-        <!-- Phân trang -->
+
+      <!-- Phân trang -->
+      <div class="col-12">
         <nav class="mt-3" v-if="totalPages > 1">
-          <ul class="pagination">
+          <ul class="pagination justify-content-center">
             <li class="page-item" :class="{ disabled: currentPage === 1 }">
               <a class="page-link" href="#" @click.prevent="currentPage = currentPage - 1"
                 >Trước</a
@@ -25,9 +20,9 @@
               :key="page"
               :class="{ active: currentPage === page }"
             >
-              <a class="page-link" href="#" @click.prevent="currentPage = page">{{
-                page
-              }}</a>
+              <a class="page-link" href="#" @click.prevent="currentPage = page">
+                {{ page }}
+              </a>
             </li>
             <li class="page-item" :class="{ disabled: currentPage === totalPages }">
               <a class="page-link" href="#" @click.prevent="currentPage = currentPage + 1"
@@ -42,12 +37,9 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import axios from "axios";
-import NewBook from "@/components/Home/House/MainContent/NewBook.vue";
-import TopBook from "@/components/Home/House/MainContent/TopBook.vue";
-import DetectiveNovels from "@/components/Home/House/MainContent/DetectiveNovels.vue";
-
+import House from "@/components/Home/House/House.vue";
 const props = defineProps({
   searchKeyword: String,
 });
@@ -55,6 +47,16 @@ const props = defineProps({
 const books = ref([]);
 const currentPage = ref(1);
 const perPage = 4;
+
+// Gọi API lấy danh sách sách
+onMounted(async () => {
+  try {
+    const res = await axios.get("http://localhost:3000/books");
+    books.value = res.data;
+  } catch (err) {
+    console.error("Lỗi tải dữ liệu sách:", err);
+  }
+});
 
 // Reset trang khi searchKeyword thay đổi
 watch(
@@ -81,3 +83,9 @@ const paginatedBooks = computed(() => {
 // Tổng số trang
 const totalPages = computed(() => Math.ceil(filteredBooks.value.length / perPage));
 </script>
+
+<style scoped>
+.pagination {
+  margin-top: 20px;
+}
+</style>

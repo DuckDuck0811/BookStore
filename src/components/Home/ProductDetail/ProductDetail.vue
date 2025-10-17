@@ -1,65 +1,75 @@
 <template>
-  <!-- Trang sách chi tiết khi chọn sách -->
-  <div class="product-detail">
-    <!-- Dùng đề gửi sự kiện từ lên phần back -->
+  <div v-if="bookData" class="product-detail">
     <button class="btn btn-secondary back-btn" @click="$emit('back')">Quay lại</button>
-    <br />
-    <br />
+    <br /><br />
+
     <div class="detail-body">
       <div class="detail-image">
-        <img :src="book.img" alt="Book" />
+        <img :src="bookData.img" alt="books" />
       </div>
-      <!-- Chi tiết sách sẽ gồm tên giá cũ giá mới số lượng mô tả -->
+
       <div class="detail-info">
-        <h2 class="title">{{ book.title }}</h2>
+        <h2 class="title">{{ bookData.title }}</h2>
+
         <div class="price">
-          <span class="new">{{ book.newPrice }}</span>
-          <span class="old">{{ book.oldPrice }}</span>
+          <span class="new">{{ bookData.newPrice }}</span>
+          <span class="old">{{ bookData.oldPrice }}</span>
         </div>
+
         <p class="ship">Miễn phí vận chuyển</p>
+
         <div class="quantity">
           <label>Số lượng:</label>
           <input type="number" v-model="qty" min="1" />
         </div>
+
         <div class="actions">
-          <button class="btn-cart" @click.stop="addToCart(book)">Thêm vô giỏ hàng</button>
-          <!-- Thêm vô giỏ hàng bằng cách dùng @click khi gọi sách và chuyển sang giỏ hàng-->
-          <button class="btn-buy" @click.stop="buyNow(book)">Mua Ngay</button>
-          <!-- Mua sách bằng cách dùng @click khi gọi sách và sẽ chuyển sang trang mua ngay-->
+          <button class="btn-cart" @click.stop="addToCart(bookData)">Thêm vô giỏ hàng</button>
+          <button class="btn-buy" @click.stop="buyNow(bookData)">Mua Ngay</button>
         </div>
+
         <div class="description">
           <h3>Mô tả</h3>
-          <p>
-            {{ book.description }}
-          </p>
+          <p>{{ bookData.description }}</p>
         </div>
       </div>
     </div>
   </div>
+
+  <div v-else class="text-center mt-5">
+    <p>Đang tải thông tin sản phẩm...</p>
+  </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { useCartStore } from "@/components/Cart/CartStore";
+import House from "../House/House.vue";
 
-// Sử dụng router để chuyển hướng
 const router = useRouter();
-// Sử dụng store giỏ hàng
+const route = useRoute();
 const cartStore = useCartStore();
+const routeParams = route.params;
 
-// Nhận props từ component cha
 const props = defineProps({
   book: Object,
 });
 
-// Số lượng mua
+const bookData = ref(props.book || null);
 const qty = ref(1);
 
-// Thêm vào giỏ hàng
+onMounted(() => {
+  // Nếu không có prop -> lấy từ route param
+  if (!bookData.value) {
+    const id = route.params.id;
+    const books = JSON.parse(localStorage.getItem("books")) || [];
+    bookData.value = books.find((b) => b.id == id);
+  }
+});
+
 function addToCart(book) {
   const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
-
   cartStore.addToCart({
     id: book.id,
     title: book.title,
@@ -70,10 +80,8 @@ function addToCart(book) {
   router.push("/cart");
 }
 
-// Mua ngay
 function buyNow(book) {
   const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
-
   cartStore.addToCart({
     id: book.id,
     title: book.title,
@@ -84,6 +92,7 @@ function buyNow(book) {
   router.push("/checkout");
 }
 </script>
+
 
 <style scoped>
 .product-detail {

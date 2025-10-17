@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
-// User
+
+// ===== USER COMPONENTS =====
 import House from "../House.vue";
-import NewBook from "../MainContent/NewBook.vue";
 import ProductList from "../../ProductList/ProductList.vue";
+import DetectiveDetail from "../MainContent/Detectienovels/DetectiveDetail.vue";
 import Cart from "@/components/Cart/Cart.vue";
 import Login from "@/components/LoginAndRegister/Login.vue";
 import Register from "@/components/LoginAndRegister/Register.vue";
@@ -10,15 +11,15 @@ import CheckOut from "@/components/Checkout/CheckOut.vue";
 import ThankYou from "@/components/Checkout/ThankYou.vue";
 import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
 
-// Admin
+// ===== ADMIN COMPONENTS =====
 import Product from "@/components/Admin/Product/Product.vue";
 import Order from "@/components/Admin/Order/Order.vue";
 import Bestseller from "@/components/Admin/Statistical/Bestseller.vue";
 import Revenue from "@/components/Admin/Statistical/Revenue.vue";
-import Dashboard from "@/components/Admin/Dashboard/Dashboard.vue";
 
+// ===== ROUTES CONFIG =====
 const routes = [
-  // User
+  // Default redirect
   { path: "/", redirect: "/home" },
 
   // Home page
@@ -28,20 +29,31 @@ const routes = [
     component: House,
     meta: { layout: "default" },
   },
-  // New book page
-  {
-    path: "/new-book",
-    name: "NewBook",
-    component: NewBook,
-    meta: { layout: "default" },
-  },
-  // Product list page
+
+  // Product list
   {
     path: "/san-pham",
     name: "ProductList",
     component: ProductList,
     meta: { layout: "default" },
   },
+
+  // Product detail (DÙNG DetectiveDetail)
+  {
+    path: "/san-pham/:id",
+    name: "DetectiveDetail",
+    component: DetectiveDetail,
+    meta: { layout: "default" },
+  },
+
+  // Alias cho /book/:id (nếu có link kiểu khác)
+  {
+    path: "/book/:id",
+    name: "BookDetailAlias",
+    component: DetectiveDetail,
+    meta: { layout: "default" },
+  },
+
   // Cart page
   {
     path: "/cart",
@@ -49,6 +61,7 @@ const routes = [
     component: Cart,
     meta: { layout: "default", requiresAuth: true, userOnly: true },
   },
+
   // Checkout page
   {
     path: "/checkout",
@@ -56,6 +69,7 @@ const routes = [
     component: CheckOut,
     meta: { layout: "default", requiresAuth: true, userOnly: true },
   },
+
   // Thank you page
   {
     path: "/thank-you",
@@ -63,6 +77,7 @@ const routes = [
     component: ThankYou,
     meta: { layout: "auth", requiresAuth: true, userOnly: true },
   },
+
   // Login page
   {
     path: "/login",
@@ -70,6 +85,7 @@ const routes = [
     component: Login,
     meta: { layout: "auth" },
   },
+
   // Register page
   {
     path: "/register",
@@ -77,35 +93,26 @@ const routes = [
     component: Register,
     meta: { layout: "auth" },
   },
-  // Admin
+
+  // ===== ADMIN =====
   {
     path: "/admin/home",
-    name: "Dashboard",
+    name: "Bestseller",
     component: Bestseller,
     meta: { requiresAdmin: true },
   },
-  // Product admin page
   {
     path: "/admin/product",
     name: "AdminProduct",
     component: Product,
     meta: { requiresAdmin: true },
   },
-  // Order admin page
   {
     path: "/admin/order",
     name: "AdminOrder",
     component: Order,
     meta: { requiresAdmin: true },
   },
-  // Statistical admin page
-  {
-    path: "/admin/chart",
-    name: "Bestseller",
-    component: Bestseller,
-    meta: { requiresAdmin: true },
-  },
-  // Revenue admin page
   {
     path: "/admin/revenue",
     name: "Revenue",
@@ -114,43 +121,42 @@ const routes = [
   },
 ];
 
-// Create router instance
+// ===== CREATE ROUTER =====
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
 
-// Navigation guards
+// ===== NAVIGATION GUARD =====
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore();
   auth.loadUser();
   const user = auth.user;
 
-  //Nếu trang yêu cầu xác thực và không có người dùng, chuyển hướng đến trang đăng nhập
+  // Nếu trang yêu cầu đăng nhập mà chưa đăng nhập
   if (to.meta.requiresAuth && !user) {
     next({ name: "Login" });
     return;
   }
-  // Nếu người dùng đã đăng nhập và cố gắng truy cập trang đăng nhập hoặc đăng ký, chuyển hướng đến trang chủ
+
+  // Nếu đã đăng nhập mà vào login/register
   if ((to.name === "Login" || to.name === "Register") && user) {
     next({ name: "Home" });
     return;
   }
-  // Nếu trang yêu cầu quyền quản trị và người dùng không phải là quản trị viên, chuyển hướng đến trang chủ
+
+  // Nếu không phải admin mà vào trang admin
   if (to.meta.requiresAdmin && user?.role !== "admin") {
     next({ name: "Home" });
     return;
   }
-  // Nếu trang chỉ dành cho người dùng và người dùng là quản trị viên, chuyển hướng đến trang bảng điều khiển
+
+  // Nếu là admin mà vào trang user-only
   if (to.meta.userOnly && user?.role === "admin") {
-    next({ name: "Dashboard" });
+    next({ name: "Bestseller" });
     return;
   }
-  // Nếu trang chỉ dành cho người dùng và người dùng là quản trị viên, chuyển hướng đến trang bảng điều khiển
-  if (to.meta.userOnly && user?.role === "admin") {
-    next({ name: "Dashboard" });
-    return;
-  }
+
   next();
 });
 

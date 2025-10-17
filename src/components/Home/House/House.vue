@@ -47,9 +47,9 @@
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
 import axios from "axios";
-import NewBook from "@/components/Home/House/MainContent/NewBook.vue";
-import TopBook from "@/components/Home/House/MainContent/TopBook.vue";
-import DetectiveNovels from "@/components/Home/House/MainContent/DetectiveNovels.vue";
+import NewBook from "@/components/Home/House/MainContent/Newbook/Newbook.vue";
+import TopBook from "@/components/Home/House/MainContent/Topbook/Topbook.vue";
+import DetectiveNovels from "@/components/Home/House/MainContent/Detectienovels/Detectivenovels.vue";
 
 // Nhận props searchKeyword từ component cha
 const props = defineProps({

@@ -7,7 +7,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import DetectiveNovels from './DetectiveNovels.vue'
+import DetectiveNovels from './Detectienovels/Detectivenovels.vue'
 import ProductDetail from './ProductDetail.vue'
 
 const selectedBook = ref(null)
