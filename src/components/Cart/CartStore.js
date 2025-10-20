@@ -58,6 +58,7 @@ export const useCartStore = defineStore("cart", {
             items: this.items, //sản phẩm trong giỏ hàng
             total: this.totalPrice, //tổng tiền
             date: new Date().toLocaleString(), //ngày đặt hàng hiện tại
+            status:"Đang xử lý" //trạng thái đơn hàng
           };
 
           const orders = JSON.parse(localStorage.getItem("orders")) || [];

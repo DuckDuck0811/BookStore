@@ -20,6 +20,7 @@ import Product from "@/components/Admin/Product/Product.vue";
 import Order from "@/components/Admin/Order/Order.vue";
 import Bestseller from "@/components/Admin/Statistical/Bestseller.vue";
 import Revenue from "@/components/Admin/Statistical/Revenue.vue";
+import AdminHome from "@/components/Admin/AdminHome/AdminHome.vue";
 
 // ===== ROUTES CONFIG =====
 const routes = [
@@ -42,7 +43,7 @@ const routes = [
     meta: { layout: "default" },
   },
 
-  // Product detail 
+  // Product detail
   {
     path: "/san-pham/:id",
     name: "DetectiveDetail",
@@ -50,7 +51,7 @@ const routes = [
     meta: { layout: "default" },
   },
 
-  // Alias cho /book/:id 
+  // Alias cho /book/:id
   {
     path: "/book/:id",
     name: "BookDetailAlias",
@@ -58,31 +59,31 @@ const routes = [
     meta: { layout: "default" },
   },
 
- {
-  path: "/newbook",
-  name: "Newbook",
-  component: Newbook,
-  meta: { layout: "default" },
-},
-{
-  path: "/newbook/:id",
-  name: "NewBookDetail",
-  component: NewBookDetail,
-  meta: { layout: "default" },
-},
+  {
+    path: "/newbook",
+    name: "Newbook",
+    component: Newbook,
+    meta: { layout: "default" },
+  },
+  {
+    path: "/newbook/:id",
+    name: "NewBookDetail",
+    component: NewBookDetail,
+    meta: { layout: "default" },
+  },
 
-{
-  path:"/topbook",
-  name:"Topbook",
-  component: Newbook,
-  meta: { layout: "default" },
-},
-{
-  path: "/topbook/:id",
-  name: "TopBookDetail",
-  component: TopbookDetail,
-  meta: { layout: "default" },
-},
+  {
+    path: "/topbook",
+    name: "Topbook",
+    component: Newbook,
+    meta: { layout: "default" },
+  },
+  {
+    path: "/topbook/:id",
+    name: "TopBookDetail",
+    component: TopbookDetail,
+    meta: { layout: "default" },
+  },
   // Cart page
   {
     path: "/cart",
@@ -126,8 +127,8 @@ const routes = [
   // ===== ADMIN =====
   {
     path: "/admin/home",
-    name: "Bestseller",
-    component: Bestseller,
+    name: "AdminHome",
+    component: AdminHome,
     meta: { requiresAdmin: true },
   },
   {
@@ -148,6 +149,12 @@ const routes = [
     component: Revenue,
     meta: { requiresAdmin: true },
   },
+  {
+    path: "/admin/bestseller",
+    name: "Bestseller",
+    component: Bestseller,
+    meta: { requiresAdmin: true },
+  }
 ];
 
 // ===== CREATE ROUTER =====

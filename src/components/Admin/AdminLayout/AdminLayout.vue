@@ -23,11 +23,31 @@
           >
         </li>
         <!-- Trang Chart -->
-        <li class="nav-item">
-          <router-link to="/admin/revenue" class="nav-link" active-class="active"
-            >Chart</router-link
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="chartDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
           >
+            Chart
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="chartDropdown">
+            <li>
+              <router-link to="/admin/bestseller" class="dropdown-item">
+                Total revenue
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/admin/revenue" class="dropdown-item">
+                Best selling product
+              </router-link>
+            </li>
+          </ul>
         </li>
+
         <!-- Nút đăng xuất -->
         <li class="nav-item">
           <button @click="handleLogout" class="btn btn-outline-danger mt-3 w-100">

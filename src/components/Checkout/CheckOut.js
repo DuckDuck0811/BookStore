@@ -24,6 +24,7 @@ export const useCartStore = defineStore("cart", {
             customer: customerInfo,
             items: this.items,
             total: this.totalPrice,
+            status:"Đang xử lý"
           });
         }, 1000);
       });
