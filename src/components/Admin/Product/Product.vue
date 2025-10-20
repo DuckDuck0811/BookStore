@@ -203,7 +203,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useProductStore } from "../../Home/ProductList/ProductStore";
 // gọi file ProductStore để sử dụng các chức năng trong đó
 const productStore = useProductStore();
@@ -222,6 +222,10 @@ const newProduct = ref(getEmptyProduct());
 //dùng để lưu dữ liệu sản phẩm đang được sửa hay thêm
 const previewImage = ref(null);
 //dùng để xem hình ảnh khi đc upload sản phẩm
+
+onMounted(() => {
+  categories.value = JSON.parse(localStorage.getItem("categories")) || [];
+});
 
 const openAddForm = () => {
   isEdit.value = false;

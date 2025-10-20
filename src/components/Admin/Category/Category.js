@@ -9,11 +9,27 @@ export const useCategoryStore = defineStore("categories", {
     loadDefaultCategories() {
       if (this.categories.length === 0) {
         this.categories = [
-          { id: 1, name: "Science fiction" },
-          { id: 2, name: "Comic" },
-          { id: 3, name: "Detective" },
-          { id: 4, name: "Romance" },
-          { id: 5, name: "History" },
+          {
+            id: 1,
+            name: "Science fiction",
+            description: "Sách về khoa học và công nghệ tương lai.",
+          },
+          {
+            id: 2,
+            name: "Comic",
+            description: "Truyện tranh và truyện minh họa.",
+          },
+          {
+            id: 3,
+            name: "Detective",
+            description: "Truyện trinh thám, điều tra.",
+          },
+          { id: 4, name: "Romance", description: "Truyện tình cảm, lãng mạn." },
+          {
+            id: 5,
+            name: "History",
+            description: "Sách về lịch sử và nhân vật lịch sử.",
+          },
         ];
         localStorage.setItem("categories", JSON.stringify(this.categories));
       }
