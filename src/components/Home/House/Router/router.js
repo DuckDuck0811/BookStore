@@ -9,6 +9,10 @@ import Login from "@/components/LoginAndRegister/Login.vue";
 import Register from "@/components/LoginAndRegister/Register.vue";
 import CheckOut from "@/components/Checkout/CheckOut.vue";
 import ThankYou from "@/components/Checkout/ThankYou.vue";
+import NewBookDetail from "../MainContent/Newbook/NewBookDetail.vue";
+import Newbook from "../MainContent/Newbook/Newbook.vue";
+import Topbook from "../MainContent/Topbook/Topbook.vue";
+import TopbookDetail from "../MainContent/Topbook/TopbookDetail.vue";
 import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
 
 // ===== ADMIN COMPONENTS =====
@@ -38,7 +42,7 @@ const routes = [
     meta: { layout: "default" },
   },
 
-  // Product detail (DÙNG DetectiveDetail)
+  // Product detail 
   {
     path: "/san-pham/:id",
     name: "DetectiveDetail",
@@ -46,7 +50,7 @@ const routes = [
     meta: { layout: "default" },
   },
 
-  // Alias cho /book/:id (nếu có link kiểu khác)
+  // Alias cho /book/:id 
   {
     path: "/book/:id",
     name: "BookDetailAlias",
@@ -54,6 +58,31 @@ const routes = [
     meta: { layout: "default" },
   },
 
+ {
+  path: "/newbook",
+  name: "Newbook",
+  component: Newbook,
+  meta: { layout: "default" },
+},
+{
+  path: "/newbook/:id",
+  name: "NewBookDetail",
+  component: NewBookDetail,
+  meta: { layout: "default" },
+},
+
+{
+  path:"/topbook",
+  name:"Topbook",
+  component: Newbook,
+  meta: { layout: "default" },
+},
+{
+  path: "/topbook/:id",
+  name: "TopBookDetail",
+  component: TopbookDetail,
+  meta: { layout: "default" },
+},
   // Cart page
   {
     path: "/cart",

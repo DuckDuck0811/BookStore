@@ -21,7 +21,7 @@
               <img
                 :src="book.img"
                 :class="{
-                  'special-hp': book.id === 1 || book.id === 23 || book.id === 25,
+                  'special-hp':book.id === 23 || book.id === 25,
                 }"
                 :style="{
                   width: book.width || '100%',

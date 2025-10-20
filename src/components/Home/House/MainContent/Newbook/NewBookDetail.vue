@@ -42,10 +42,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useCartStore } from "@/components/Cart/CartStore";
-import { detectiveNovels } from "./DetectiveDetail.js";
+import { newBooks } from "./Newbook.js";
+import { toast } from "vue3-toastify";
 
 const router = useRouter();
 const route = useRoute();
@@ -56,11 +57,16 @@ const qty = ref(1);
 
 onMounted(() => {
   const id = Number(route.params.id);
-  bookData.value = detectiveNovels.find((b) => b.id === id);
+  bookData.value = newBooks.find((b) => b.id === id);
+});
+
+// Reset số lượng khi đổi sản phẩm
+watch(bookData, () => {
+  qty.value = 1;
 });
 
 function addToCart(book) {
-  const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
+  const priceNumber = parseInt(String(book.newPrice).replace(/[^\d]/g, ""), 10) || 0;
   cartStore.addToCart({
     id: book.id,
     title: book.title,
@@ -68,11 +74,11 @@ function addToCart(book) {
     img: book.img,
     quantity: qty.value,
   });
-  router.push("/cart");
+  toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 });
 }
 
 function buyNow(book) {
-  const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
+  const priceNumber = parseInt(String(book.newPrice).replace(/[^\d]/g, ""), 10) || 0;
   cartStore.addToCart({
     id: book.id,
     title: book.title,
@@ -100,7 +106,7 @@ function buyNow(book) {
 }
 
 .detail-image {
-  width: 350px;
+  width: 300px;
   height: 450px;
   flex-shrink: 0;
 }

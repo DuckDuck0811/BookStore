@@ -1,0 +1,47 @@
+export const newBooks = [
+  {
+    id: 11,
+    img: "/onepiece.jpg",
+    title: "One Piece",
+    oldPrice: "30,000₫",
+    newPrice: "25,000₫",
+    discount: "-20%",
+    aspect: "3/4",
+    category: "Comic",
+    width: "100%",
+    height: "300px",
+    cardHeight: "500px",
+    description:
+      "Bộ truyện tranh phiêu lưu nổi tiếng toàn cầu kể về hành trình dài bất tận của Monkey D. Luffy – cậu bé sở hữu năng lực cao su sau khi ăn Trái Ác Quỷ Gomu Gomu – cùng những đồng đội đầy cá tính trên con tàu Going Merry, họ vượt qua các vùng biển nguy hiểm, hải quân và tứ hoàng để tìm kiếm kho báu huyền thoại One Piece và biến giấc mơ trở thành Vua Hải Tặc thành hiện thực.",
+  },
+  {
+    id: 12,
+    img: "/naruto.jpg",
+    title: "Naruto",
+    oldPrice: "35,000₫",
+    newPrice: "30,000₫",
+    discount: "-15%",
+    aspect: "3/4",
+    category: "Comic",
+    width: "100%",
+    height: "250px",
+    cardHeight: "300px",
+    description:
+      "Naruto Uzumaki – cậu bé mang trong mình sức mạnh phong ấn của Cửu Vĩ Hồ – lớn lên trong sự cô lập và dè bỉu của dân làng Lá. Dù vậy, Naruto không bỏ cuộc, kiên trì rèn luyện, xây dựng tình bạn, học hỏi từ các thầy và từng bước trưởng thành qua các cuộc chiến để trở thành ninja mạnh nhất và hiện thực hóa ước mơ trở thành Hokage được mọi người công nhận.",
+  },
+  {
+    id: 13,
+    img: "/dragonball.png",
+    title: "Dragon Ball",
+    oldPrice: "31,000₫",
+    newPrice: "28,000₫",
+    discount: "-10%",
+    aspect: "3/4",
+    category: "Comic",
+    width: "100%",
+    height: "250px",
+    cardHeight: "500px",
+    description:
+      "Bộ truyện huyền thoại theo chân Son Goku từ thời niên thiếu đến khi trưởng thành, trong hành trình tìm kiếm bảy viên Ngọc Rồng thần kỳ có thể triệu hồi Rồng Thần để ban điều ước. Goku cùng bạn bè tham gia các giải đấu võ thuật, chiến đấu với những kẻ thù hùng mạnh khắp vũ trụ, bảo vệ Trái Đất và liên tục khám phá những giới hạn sức mạnh mới.",
+  },
+];

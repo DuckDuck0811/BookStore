@@ -16,33 +16,40 @@
         v-for="book in filteredBooks"
         :key="book.id"
       >
-        <div class="card product-card h-100 shadow-sm">
-          <img
-            :src="book.img"
-            class="card-img-top"
-            :alt="book.title"
-            :style="{
-              width: '100%',
-              height: '300px',
-              objectFit: 'cover',
-              borderTopLeftRadius: '.5rem',
-              borderTopRightRadius: '.5rem',
-            }"
-          />
+        <div
+          class="card position-relative product-card"
+          :style="{ height: book.cardHeight }"
+          @click="goToDetail(book)"
+          style="cursor: pointer"
+        >
+          <div class="card product-card h-100 shadow-sm">
+            <img
+              :src="book.img"
+              class="card-img-top"
+              :alt="book.title"
+              :style="{
+                width: '100%',
+                height: '300px',
+                objectFit: 'cover',
+                borderTopLeftRadius: '.5rem',
+                borderTopRightRadius: '.5rem',
+              }"
+            />
 
-          <div class="card-body text-center">
-            <p class="card-text fw-semibold">{{ book.title }}</p>
-            <div class="price">
-              <del>{{ book.oldPrice }}</del>
-              <span class="new-price">{{ book.newPrice }}</span>
-              <span class="discount">{{ book.discount }}</span>
+            <div class="card-body text-center">
+              <p class="card-text fw-semibold">{{ book.title }}</p>
+              <div class="price">
+                <del>{{ book.oldPrice }}</del>
+                <span class="new-price">{{ book.newPrice }}</span>
+                <span class="discount">{{ book.discount }}</span>
+              </div>
             </div>
-          </div>
 
-          <div class="overlay d-flex justify-content-center align-items-end">
-            <button class="btn btn-danger mb-4 add-btn" @click.stop="addToCart(book)">
-              Thêm vô giỏ hàng
-            </button>
+            <div class="overlay d-flex justify-content-center align-items-end">
+              <button class="btn btn-danger mb-4 add-btn" @click.stop="addToCart(book)">
+                Thêm vô giỏ hàng
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -55,84 +62,19 @@ import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "@/components/Cart/CartStore";
 import { toast } from "vue3-toastify";
+import { topbook } from "./Topbook.js";
+
+const router = useRouter();
+const cartStore = useCartStore();
 
 const props = defineProps({
   searchKeyword: String,
 });
 
-const router = useRouter();
-const cartStore = useCartStore();
-
-const sciFiBooks = ref([
-  {
-    id: 1,
-    img: "harrypotter1.jpg",
-    title: "Harry Potter và Hòn Đá Phù Thủy",
-    oldPrice: "120,000₫",
-    newPrice: "90,000₫",
-    discount: "-25%",
-  },
-  {
-    id: 2,
-    img: "harrypotter2.jpg",
-    title: "Harry Potter và Phòng Chứa Bí Mật",
-    oldPrice: "130,000₫",
-    newPrice: "97,500₫",
-    discount: "-25%",
-  },
-  {
-    id: 3,
-    img: "lotr1.jpg",
-    title: "The Lord of the Rings: Fellowship of the Ring",
-    oldPrice: "200,000₫",
-    newPrice: "150,000₫",
-    discount: "-25%",
-  },
-  {
-    id: 4,
-    img: "lotr2.jpg",
-    title: "The Lord of the Rings: The Two Towers",
-    oldPrice: "210,000₫",
-    newPrice: "157,500₫",
-    discount: "-25%",
-  },
-  {
-    id: 5,
-    img: "lotr3.jpg",
-    title: "The Lord of the Rings: Return of the King",
-    oldPrice: "220,000₫",
-    newPrice: "165,000₫",
-    discount: "-25%",
-  },
-  {
-    id: 6,
-    img: "hobbit.jpg",
-    title: "The Hobbit",
-    oldPrice: "180,000₫",
-    newPrice: "135,000₫",
-    discount: "-25%",
-  },
-  {
-    id: 7,
-    img: "percyjackson1.jpg",
-    title: "Percy Jackson: The Lightning Thief",
-    oldPrice: "150,000₫",
-    newPrice: "112,500₫",
-    discount: "-25%",
-  },
-  {
-    id: 8,
-    img: "hungergames1.jpg",
-    title: "The Hunger Games",
-    oldPrice: "160,000₫",
-    newPrice: "120,000₫",
-    discount: "-25%",
-  },
-]);
-
+const books = topbook;
 const filteredBooks = computed(() => {
-  if (!props.searchKeyword) return sciFiBooks.value;
-  return sciFiBooks.value.filter((book) =>
+  if (!props.searchKeyword) return books;
+  return books.filter((book) =>
     book.title.toLowerCase().includes(props.searchKeyword.toLowerCase())
   );
 });
@@ -150,6 +92,10 @@ function addToCart(book) {
   setTimeout(() => {
     router.push("/cart");
   }, 2000);
+}
+
+function goToDetail(book) {
+  router.push(`/topbook/${book.id}`);
 }
 </script>
 
@@ -182,7 +128,6 @@ function addToCart(book) {
   border-radius: 4px;
 }
 
-
 .product-card {
   position: relative;
   overflow: hidden;
@@ -194,7 +139,6 @@ function addToCart(book) {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
-
 
 .product-card .overlay {
   position: absolute;
@@ -208,7 +152,6 @@ function addToCart(book) {
   opacity: 1;
 }
 
-
 .add-btn {
   opacity: 0;
   transform: translateY(20px);
@@ -219,6 +162,4 @@ function addToCart(book) {
   opacity: 1;
   transform: translateY(0);
 }
-
-
 </style>

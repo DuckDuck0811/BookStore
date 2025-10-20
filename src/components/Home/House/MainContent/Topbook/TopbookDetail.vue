@@ -45,7 +45,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useCartStore } from "@/components/Cart/CartStore";
-import { detectiveNovels } from "./DetectiveDetail.js";
+import { topbook } from "./Topbook.js";
 
 const router = useRouter();
 const route = useRoute();
@@ -56,7 +56,7 @@ const qty = ref(1);
 
 onMounted(() => {
   const id = Number(route.params.id);
-  bookData.value = detectiveNovels.find((b) => b.id === id);
+  bookData.value = topbook.find((b) => b.id === id); // ✅ fix: dùng đúng dữ liệu
 });
 
 function addToCart(book) {
@@ -83,6 +83,7 @@ function buyNow(book) {
   router.push("/checkout");
 }
 </script>
+
 
 <style scoped>
 .product-detail {
