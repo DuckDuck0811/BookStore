@@ -21,6 +21,7 @@ import Order from "@/components/Admin/Order/Order.vue";
 import Bestseller from "@/components/Admin/Statistical/Bestseller.vue";
 import Revenue from "@/components/Admin/Statistical/Revenue.vue";
 import AdminHome from "@/components/Admin/AdminHome/AdminHome.vue";
+import Category from "@/components/Admin/Category/Category.vue";
 
 // ===== ROUTES CONFIG =====
 const routes = [
@@ -154,7 +155,13 @@ const routes = [
     name: "Bestseller",
     component: Bestseller,
     meta: { requiresAdmin: true },
-  }
+  },
+  {
+    path: "/admin/category",
+    name: "Category",
+    component: Category,
+    meta: { requiresAdmin: true },
+  },
 ];
 
 // ===== CREATE ROUTER =====

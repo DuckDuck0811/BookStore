@@ -15,7 +15,7 @@
           <input
             type="text"
             class="form-control me-2"
-            placeholder="Tìm kiếm sản phẩm..."  
+            placeholder="Tìm kiếm sản phẩm..."
             v-model="keyword"
             @keyup.enter="search"
           />

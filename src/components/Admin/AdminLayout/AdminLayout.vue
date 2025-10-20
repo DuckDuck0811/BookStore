@@ -36,16 +36,21 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="chartDropdown">
             <li>
-              <router-link to="/admin/bestseller" class="dropdown-item">
+              <router-link to="/admin/revenue" class="dropdown-item">
                 Total revenue
               </router-link>
             </li>
             <li>
-              <router-link to="/admin/revenue" class="dropdown-item">
+              <router-link to="/admin/bestseller" class="dropdown-item">
                 Best selling product
               </router-link>
             </li>
           </ul>
+        </li>
+        <li class="nav-item">
+          <router-link to="/admin/category" class="nav-link" active-class="active"
+            >Category</router-link
+          >
         </li>
 
         <!-- Nút đăng xuất -->
