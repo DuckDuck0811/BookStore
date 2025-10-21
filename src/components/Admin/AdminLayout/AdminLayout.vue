@@ -52,6 +52,11 @@
             >Category</router-link
           >
         </li>
+        <li class="nav-item">
+          <router-link to="/admin/account-users" class="nav-link" active-class="active"
+            >Account users</router-link
+          >
+        </li>
 
         <!-- Nút đăng xuất -->
         <li class="nav-item">

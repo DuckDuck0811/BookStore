@@ -1,7 +1,9 @@
 <template>
   <div class="container mt-4">
     <h3 class="mb-3">Quản lý loại sản phẩm</h3>
-
+    <button class="btn btn-primary mb-3" @click="openAddCategory">
+      Thêm loại sản phẩm
+    </button>
     <table class="table table-bordered table-hover align-middle">
       <thead class="table-primary text-center">
         <tr>
@@ -39,10 +41,6 @@
         </tr>
       </tbody>
     </table>
-
-    <button class="btn btn-primary mt-3" @click="openAddCategory">
-      Thêm loại sản phẩm
-    </button>
   </div>
 </template>
 

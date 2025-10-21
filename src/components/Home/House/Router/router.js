@@ -22,7 +22,7 @@ import Bestseller from "@/components/Admin/Statistical/Bestseller.vue";
 import Revenue from "@/components/Admin/Statistical/Revenue.vue";
 import AdminHome from "@/components/Admin/AdminHome/AdminHome.vue";
 import Category from "@/components/Admin/Category/Category.vue";
-
+import AccountUsers from "@/components/Admin/AccountUsers/AccountUsers.vue";
 // ===== ROUTES CONFIG =====
 const routes = [
   // Default redirect
@@ -160,6 +160,12 @@ const routes = [
     path: "/admin/category",
     name: "Category",
     component: Category,
+    meta: { requiresAdmin: true },
+  },
+  {
+    path: "/admin/account-users",
+    name: "AccountUsers",
+    component: AccountUsers,
     meta: { requiresAdmin: true },
   },
 ];

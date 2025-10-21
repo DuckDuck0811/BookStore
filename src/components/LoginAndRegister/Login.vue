@@ -76,27 +76,32 @@ const handleLogin = (e) => {
   e.preventDefault();
 
   const users = JSON.parse(localStorage.getItem("users")) || [];
-  // Lấy danh sách người dùng từ localStorage
 
+  // Kiểm tra username và password
   const matchedUser = users.find(
     (u) => u.username === username.value && u.password === password.value
   );
-  // Kiểm tra username đã tồn tại chưa
 
-  if (matchedUser) {
-    // Kiểm tra phần đăng nhập
-    auth.login(matchedUser, remember.value);
-    alert("Đăng nhập thành công!");
-
-    // Đăng nhập phân quyền gồm admin và user
-    if (matchedUser.role === "admin") {
-      router.push("/admin/home");
-    } else {
-      router.push("/home");
-    }
-    // Sai tên đăng nhập
-  } else {
+  if (!matchedUser) {
     alert("Sai tên đăng nhập hoặc mật khẩu!");
+    return;
+  }
+
+  //Kiểm tra trạng thái tài khoản
+  if (matchedUser.status === "locked") {
+    alert("Tài khoản này đã bị khóa!");
+    return;
+  }
+
+  // Nếu hợp lệ, đăng nhập
+  auth.login(matchedUser, remember.value);
+  alert("Đăng nhập thành công!");
+
+  // Phân quyền
+  if (matchedUser.role === "admin") {
+    router.push("/admin/home");
+  } else {
+    router.push("/home");
   }
 };
 </script>

@@ -20,7 +20,7 @@
       <table class="table table-bordered table-hover mb-0 align-middle">
         <thead class="table-primary text-center">
           <tr>
-            <th style="width: 100px">No</th>
+            <th style="width: 100px">ID</th>
             <th style="width: 150px">Image</th>
             <th>Title</th>
             <th style="width: 150px">Category</th>
@@ -167,9 +167,9 @@
                   <label class="form-label">Category</label>
                   <select v-model="newProduct.category" class="form-select">
                     <option disabled value="">-- Chọn loại sản phẩm --</option>
-                    <option value="Fiction">Fiction</option>
-                    <option value="Science fiction">Science fiction</option>
-                    <option value="Detective">Detective</option>
+                    <option v-for="cat in categories" :key="cat.id" :value="cat.name">
+                      {{ cat.name }}
+                    </option>
                   </select>
                 </div>
                 <!-- Mô tả của sản phẩm -->
@@ -205,35 +205,27 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useProductStore } from "../../Home/ProductList/ProductStore";
-// gọi file ProductStore để sử dụng các chức năng trong đó
-const productStore = useProductStore();
-//dùng để khai báo biến từ productStore
-productStore.loadDefaultProducts();
-//gọi hàm loadDefaultProducts để load dữ liệu sản phẩm
-const products = computed(() => productStore.products);
-//dùng để hiển thị dữ liệu theo local Stogare
-const loading = ref(false);
-// dùng để hiển thị trạng thái đang tải dữ liệu
-const isEdit = ref(false);
-// dùng để xác định sản phẩm đang ở chế độ sửa hay thêm
-const editingId = ref(null);
-//dùng để lưu ID sản phẩm đang chỉnh sửa
-const newProduct = ref(getEmptyProduct());
-//dùng để lưu dữ liệu sản phẩm đang được sửa hay thêm
-const previewImage = ref(null);
-//dùng để xem hình ảnh khi đc upload sản phẩm
+import { useCategoryStore } from "@/components/Admin/Category/Category";
 
+const productStore = useProductStore();
+const categoryStore = useCategoryStore();
+
+// Load dữ liệu
 onMounted(() => {
-  categories.value = JSON.parse(localStorage.getItem("categories")) || [];
+  productStore.loadDefaultProducts();
+  categoryStore.loadDefaultCategories();
 });
 
-const openAddForm = () => {
-  isEdit.value = false;
-  editingId.value = null;
-  newProduct.value = getEmptyProduct();
-  previewImage.value = null;
-};
-//dùng để mở form thêm sản phẩm
+// Lấy danh sách category dynamic
+const categories = computed(() => categoryStore.categories);
+
+const products = computed(() => productStore.products);
+const loading = ref(false);
+const isEdit = ref(false);
+const editingId = ref(null);
+const newProduct = ref(getEmptyProduct());
+const previewImage = ref(null);
+
 function getEmptyProduct() {
   return {
     id: Date.now(),
@@ -250,7 +242,6 @@ function getEmptyProduct() {
     description: "",
   };
 }
-//form thêm sản phẩm mới với các trường nhập liệu trống để thêm sản phẩm vào bảng
 
 const saveProduct = () => {
   if (isEdit.value) {
@@ -262,7 +253,6 @@ const saveProduct = () => {
   }
   resetForm();
 };
-//dùng để lưu sản phẩm khi cập nhật sản phẩm có sẵn trong local storge
 
 const editProduct = (item) => {
   isEdit.value = true;
@@ -270,7 +260,6 @@ const editProduct = (item) => {
   newProduct.value = { ...item };
   previewImage.value = item.img;
 };
-//dùng để sửa sản phẩm trong local storge
 
 const onFileChange = (e) => {
   const file = e.target.files[0];
@@ -283,43 +272,35 @@ const onFileChange = (e) => {
     reader.readAsDataURL(file);
   }
 };
-//dùng để lưu ảnh từ máy tính lên đk
 
 const removeProduct = (id) => {
   if (confirm("Bạn có muốn xóa không?")) {
     productStore.deleteProduct(id);
   }
 };
-//hàm dùng để thông báo xóa sản phẩm
 
 function resetForm() {
   newProduct.value = getEmptyProduct();
   previewImage.value = null;
 }
-//dùng để reset form khi thêm và sửa sản phẩm
 
 const currentPage = ref(1);
-// biến phản ứng mặc định là 1
 const pageSize = 9;
-// biến có tối đa 9 sản phẩm
 const totalPages = computed(() => Math.ceil(products.value.length / pageSize));
-//tổng số trang sẽ gồm độ dài của sản phẩm / 9 sản phẩm
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * pageSize;
   return products.value.slice(start, start + pageSize);
 });
-//dùng để chia nhỏ sản phẩm theo từng trang và hiển thị đúng 9 sản phẩm mỗi trang
+
 function prevPage() {
   if (currentPage.value > 1) currentPage.value--;
 }
-//hàm dùng để chuyển lùi số trang dần từ lớn xuống bé
+
 function nextPage() {
   if (currentPage.value < totalPages.value) currentPage.value++;
 }
-//hàm dùng để chuyển lùi số trang dần từ bé đến lớn
 
 function goToPage(page) {
   currentPage.value = page;
 }
-//dùng đến chuyển số trang bất kỳ mà người dùng được chọn
 </script>

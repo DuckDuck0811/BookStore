@@ -35,8 +35,11 @@ export const useAuthStore = defineStore("auth", {
     },
 
     login(user, remember) {
+      if (user.locked) {
+        alert("Tài khoản của bạn đã bị khóa!");
+        return false;
+      }
       this.user = user;
-
       if (remember) {
         localStorage.setItem("currentUser", JSON.stringify(user));
         sessionStorage.removeItem("currentUser");
