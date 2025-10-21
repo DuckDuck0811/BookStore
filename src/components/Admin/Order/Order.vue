@@ -13,13 +13,13 @@
       <thead class="table-primary text-center">
         <tr>
           <th>ID</th>
-          <th>Khách hàng</th>
-          <th>Số điện thoại</th>
-          <th>Địa chỉ</th>
-          <th>Ngày đặt</th>
-          <th>Tên sách</th>
-          <th>Tổng tiền</th>
-          <th>Trạng thái</th>
+          <th>Customer</th>
+          <th>Phone Num</th>
+          <th>Address</th>
+          <th>Order Date</th>
+          <th>Book Title</th>
+          <th>Total</th>
+          <th>Status</th>
         </tr>
       </thead>
 

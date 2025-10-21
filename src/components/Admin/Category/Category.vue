@@ -2,16 +2,16 @@
   <div class="container mt-4">
     <h3 class="mb-3">Quản lý loại sản phẩm</h3>
     <button class="btn btn-primary mb-3" @click="openAddCategory">
-      Thêm loại sản phẩm
+      Add Category Name
     </button>
     <table class="table table-bordered table-hover align-middle">
       <thead class="table-primary text-center">
         <tr>
           <th>ID</th>
-          <th>Tên loại</th>
-          <th>Mô tả</th>
-          <th>Số lượng sản phẩm</th>
-          <th>Hành động</th>
+          <th>Category Name</th>
+          <th>Description</th>
+          <th>Product Quantity</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -26,10 +26,10 @@
           <td>{{ category.count }}</td>
           <td>
             <button class="btn btn-sm btn-warning me-2" @click="editCategory(category)">
-              Sửa
+              Update
             </button>
             <button class="btn btn-sm btn-danger" @click="deleteCategory(category.id)">
-              Xóa
+              Delete
             </button>
           </td>
         </tr>

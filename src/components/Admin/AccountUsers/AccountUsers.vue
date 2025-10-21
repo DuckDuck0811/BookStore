@@ -102,7 +102,7 @@
           <th>Full Name</th>
           <th>Role</th>
           <th>Status</th>
-          <th>Thao tác</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -121,10 +121,10 @@
               data-bs-target="#userModal"
               @click="openEditForm(user)"
             >
-              Sửa
+              Update
             </button>
             <button class="btn btn-sm btn-danger me-2" @click="deleteUser(user.username)">
-              Xóa
+              Delete
             </button>
             <button
               class="btn btn-sm"
