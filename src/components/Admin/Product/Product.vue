@@ -37,7 +37,11 @@
             </td>
             <td class="text-center">
               <img
-                :src="item.img.startsWith('data:') ? item.img : '/' + item.img"
+                :src="
+                  item.img?.startsWith('data:')
+                    ? item.img
+                    : '/' + (item.img || 'default.jpg')
+                "
                 alt="cover"
                 style="width: 80px; height: auto"
               />
@@ -212,8 +216,8 @@ const categoryStore = useCategoryStore();
 
 // Load dữ liệu
 onMounted(() => {
-  productStore.loadDefaultProducts();
-  categoryStore.loadDefaultCategories();
+  productStore.fetchProducts();
+  categoryStore.fetchCategories();
 });
 
 // Lấy danh sách category dynamic
@@ -243,15 +247,30 @@ function getEmptyProduct() {
   };
 }
 
-const saveProduct = () => {
-  if (isEdit.value) {
-    productStore.updateProduct(editingId.value, { ...newProduct.value });
+const saveProduct = async () => {
+  if (
+    !newProduct.value.title ||
+    !newProduct.value.category ||
+    !newProduct.value.newPrice
+  ) {
+    alert("Vui lòng điền đủ thông tin bắt buộc!");
+    return;
+  }
+
+  try {
+    if (isEdit.value) {
+      await productStore.updateProduct(editingId.value, newProduct.value);
+    } else {
+      await productStore.addProduct(newProduct.value);
+    }
+    resetForm();
     isEdit.value = false;
     editingId.value = null;
-  } else {
-    productStore.addProduct({ ...newProduct.value, id: Date.now() });
+    await productStore.fetchProducts();
+  } catch (err) {
+    console.error(err);
+    alert("Lỗi khi lưu sản phẩm!");
   }
-  resetForm();
 };
 
 const editProduct = (item) => {
@@ -263,19 +282,20 @@ const editProduct = (item) => {
 
 const onFileChange = (e) => {
   const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      previewImage.value = event.target.result;
-      newProduct.value.img = event.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
+  if (!file) return;
+
+  newProduct.value.img = file.name;
+  previewImage.value = "/" + file.name; // hiển thị ảnh trong /public
 };
 
-const removeProduct = (id) => {
-  if (confirm("Bạn có muốn xóa không?")) {
-    productStore.deleteProduct(id);
+const removeProduct = async (id) => {
+  if (!confirm("Bạn có muốn xóa không?")) return;
+  try {
+    await productStore.deleteProduct(id);
+    await productStore.fetchProducts();
+  } catch (err) {
+    console.error(err);
+    alert("Xóa sản phẩm thất bại!");
   }
 };
 

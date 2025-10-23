@@ -1,56 +1,42 @@
 import { defineStore } from "pinia";
+import axios from "axios";
 
-export const useCategoryStore = defineStore("categories", {
+const API_URL = "https://68f86340deff18f212b5f740.mockapi.io/category"; // ⚠ đổi sang đúng endpoint
+
+export const useCategoryStore = defineStore("categoryStore", {
   state: () => ({
-    categories: JSON.parse(localStorage.getItem("categories") || "[]"),
+    categories: [],
+    loading: false,
   }),
 
   actions: {
-    loadDefaultCategories() {
-      if (this.categories.length === 0) {
-        this.categories = [
-          {
-            id: 1,
-            name: "Science fiction",
-            description: "Sách về khoa học và công nghệ tương lai.",
-          },
-          {
-            id: 2,
-            name: "Comic",
-            description: "Truyện tranh và truyện minh họa.",
-          },
-          {
-            id: 3,
-            name: "Detective",
-            description: "Truyện trinh thám, điều tra.",
-          },
-          { id: 4, name: "Romance", description: "Truyện tình cảm, lãng mạn." },
-          {
-            id: 5,
-            name: "History",
-            description: "Sách về lịch sử và nhân vật lịch sử.",
-          },
-        ];
-        localStorage.setItem("categories", JSON.stringify(this.categories));
+    async fetchCategories() {
+      const res = await axios.get(API_URL);
+      this.categories = res.data;
+    },
+
+    async addCategory(data) {
+      const res = await axios.post(API_URL, data);
+      this.categories.push(res.data);
+    },
+
+    async updateCategory(id, updatedData) {
+      try {
+        const strId = String(id); 
+        const res = await axios.put(`${API_URL}/${strId}`, updatedData);
+        const i = this.categories.findIndex((c) => String(c.id) === strId);
+        if (i !== -1) this.categories[i] = res.data;
+        alert("Cập nhật danh mục thành công!");
+      } catch (err) {
+        console.error("Lỗi khi cập nhật danh mục:", err);
       }
     },
 
-    addCategory(category) {
-      this.categories.push(category);
-      localStorage.setItem("categories", JSON.stringify(this.categories));
-    },
-
-    updateCategory(id, updated) {
-      const index = this.categories.findIndex((c) => c.id === id);
-      if (index !== -1) {
-        this.categories[index] = { ...this.categories[index], ...updated };
-        localStorage.setItem("categories", JSON.stringify(this.categories));
-      }
-    },
-
-    deleteCategory(id) {
-      this.categories = this.categories.filter((c) => c.id !== id);
-      localStorage.setItem("categories", JSON.stringify(this.categories));
+    async deleteCategory(id) {
+      await axios.delete(`${API_URL}/${String(id)}`);
+      this.categories = this.categories.filter(
+        (c) => String(c.id) !== String(id)
+      );
     },
   },
 });

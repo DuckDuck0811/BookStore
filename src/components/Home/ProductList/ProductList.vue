@@ -5,11 +5,12 @@
         <br /><br />
         <h5 class="fw-bold mb-3">TẤT CẢ CÁC SẢN PHẨM</h5>
 
-        <!-- Hiển thị khi không tìm thấy sách -->
+        <!-- Không tìm thấy sách -->
         <div v-if="paginatedBooks.length === 0" class="text-center text-muted">
           Không tìm thấy sách nào phù hợp.
         </div>
-        <!-- Hiển thị danh sách sách -->
+
+        <!-- Danh sách sách -->
         <div class="row g-3" v-else>
           <div class="col-md-3" v-for="book in paginatedBooks" :key="book.id">
             <div
@@ -19,10 +20,7 @@
             >
               <!-- Ảnh -->
               <img
-                :src="book.img"
-                :class="{
-                  'special-hp':book.id === 23 || book.id === 25,
-                }"
+                :src="resolveImage(book.img)"
                 :style="{
                   width: book.width || '100%',
                   height: book.height || '300px',
@@ -32,9 +30,10 @@
                   display: 'block',
                   margin: 'auto',
                 }"
+                alt="book"
               />
 
-              <!-- nội dung -->
+              <!-- Nội dung -->
               <div class="card-body text-center">
                 <p class="card-text fw-semibold">{{ book.title }}</p>
                 <div class="price">
@@ -48,21 +47,21 @@
                 </div>
               </div>
 
-              <!-- overlay -->
+              <!-- Overlay -->
               <div class="overlay d-flex justify-content-center align-items-end">
                 <button
                   class="btn btn-danger mb-4"
                   style="height: 40px; width: 170px"
                   @click.stop="addToCart(book)"
                 >
-                  Thêm vô giỏ hàng
+                  Thêm vào giỏ hàng
                 </button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- phân trang -->
+        <!-- Phân trang -->
         <nav class="mt-4" v-if="totalPages > 1">
           <ul class="pagination justify-content-center">
             <li class="page-item" :class="{ disabled: currentPage === 1 }">
@@ -96,6 +95,7 @@
       </div>
     </div>
 
+    <!-- Chi tiết sản phẩm -->
     <ProductDetail v-else :book="selectedBook" @back="selectedBook = null" />
     <br /><br />
   </div>
@@ -103,44 +103,40 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
+import { useProductStore } from "./ProductStore";
 import ProductDetail from "../ProductDetail/ProductDetail.vue";
 import { useCartStore } from "@/components/Cart/CartStore";
-import { useRouter } from "vue-router";
-import { useProductStore } from "./ProductStore";
 import { toast } from "vue3-toastify";
-const cartStore = useCartStore();
+import { useRouter } from "vue-router";
+
 const router = useRouter();
+const cartStore = useCartStore();
 const productStore = useProductStore();
 
-// Nhận props từ component cha
 const props = defineProps({
   searchKeyword: String,
   category: String,
 });
 
-// Load sản phẩm mặc định
 onMounted(() => {
-  productStore.loadDefaultProducts();
+  productStore.fetchProducts();
 });
 
-// Lưu sách được chọn để xem chi tiết
 const selectedBook = ref(null);
 
-// Lọc sách theo searchKeyword và category
-const filteredBooks = computed(() => {
-  return productStore.products.filter((book) => {
+const filteredBooks = computed(() =>
+  productStore.products.filter((book) => {
     const matchKeyword =
       !props.searchKeyword ||
       book.title.toLowerCase().includes(props.searchKeyword.toLowerCase());
     const matchCategory = !props.category || book.category === props.category;
     return matchKeyword && matchCategory;
-  });
-});
+  })
+);
 
+// 🧭 Phân trang
 const currentPage = ref(1);
-// Mặc định hiển thị trang 1
 const itemsPerPage = ref(8);
-// Mỗi trang hiển thị 8 sản phẩm
 
 const totalPages = computed(() =>
   Math.max(1, Math.ceil(filteredBooks.value.length / itemsPerPage.value))
@@ -165,23 +161,31 @@ function nextPage() {
   if (currentPage.value < totalPages.value) currentPage.value++;
 }
 
+// 🖼 Xử lý ảnh để tránh base64 quá nặng
+function resolveImage(img) {
+  if (!img) return "/placeholder.jpg";
+  if (img.startsWith("data:")) return img; // base64
+  if (img.startsWith("http")) return img; // ảnh online
+  return "/" + img.replace(/^\//, ""); // ảnh cục bộ
+}
+
 function viewBookDetail(book) {
   selectedBook.value = book;
 }
 
-async function addToCart(book) {
-  //Thêm sản phẩm vô giỏ hàng lấy từ id của sản phẩm
+function addToCart(book) {
   cartStore.addToCart({
     id: book.id,
     title: book.title,
     price: Number(book.newPrice.replace(/[^\d]/g, "")),
-    img: book.img,
+    img: resolveImage(book.img),
   });
-  toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 }); //Và tự tắt trong 2 giây
 
-  await new Promise((resolve) => setTimeout(resolve, 2000)); //Chờ 2 giây
-  //Sau 2 giây thì chuyển trang
-  router.push("/cart");
+  toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 });
+
+  setTimeout(() => {
+    router.push("/cart");
+  }, 2000);
 }
 </script>
 
@@ -189,28 +193,18 @@ async function addToCart(book) {
 .new-price {
   font-size: 1.1rem;
 }
-
 .discount {
   font-size: 0.9rem;
 }
-
-.special-hp {
-  width: 100% !important;
-  height: 300px !important;
-  object-fit: cover !important;
-}
-
 .product-card {
   position: relative;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s;
 }
-
 .product-card:hover {
   transform: scale(1.03);
 }
-
 .product-card .overlay {
   position: absolute;
   inset: 0;
@@ -218,13 +212,7 @@ async function addToCart(book) {
   transition: opacity 0.3s ease;
   background: rgba(0, 0, 0, 0.1);
 }
-
 .product-card:hover .overlay {
   opacity: 1;
-}
-
-.product-card .overlay button {
-  position: absolute;
-  bottom: 20px;
 }
 </style>
