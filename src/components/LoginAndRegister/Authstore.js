@@ -3,53 +3,65 @@ import router from "@/components/Home/House/Router/Router.js";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    user: null, // người dùng hiện tại
+    user: null,
   }),
 
   actions: {
+    // ✅ Load user đang đăng nhập
     loadUser() {
-      // Tạo sẵn tài khoản mẫu nếu chưa có
-      if (!localStorage.getItem("users")) {
-        const sampleUsers = [
-          {
-            username: "admin",
-            password: "123",
-            role: "admin",
-            fullname: "Quản trị viên",
-          },
-          {
-            username: "user",
-            password: "123",
-            role: "user",
-            fullname: "Người dùng thường",
-          },
-        ];
-        localStorage.setItem("users", JSON.stringify(sampleUsers));
-      }
-
-      // Kiểm tra user đang đăng nhập từ localStorage
       const raw =
         localStorage.getItem("currentUser") ||
         sessionStorage.getItem("currentUser");
       this.user = raw ? JSON.parse(raw) : null;
     },
 
-    login(user, remember) {
-      if (user.locked) {
-        alert("Tài khoản của bạn đã bị khóa!");
+    // ✅ Đăng nhập từ db.json
+    async login({ username, password, remember }) {
+      try {
+        const res = await fetch("http://localhost:3000/accounts");
+
+        if (!res.ok) {
+          alert("Không thể tải danh sách tài khoản!");
+          return false;
+        }
+
+        const accounts = await res.json();
+        const user = accounts.find(
+          (u) => u.username === username && u.password === password
+        );
+
+        if (!user) {
+          alert("Sai tài khoản hoặc mật khẩu!");
+          return false;
+        }
+
+        const status = (user.status || "").toLowerCase().trim();
+        if (status !== "active") {
+          alert("Tài khoản của bạn đã bị khóa!");
+          return false;
+        }
+
+        // ✅ Đăng nhập hợp lệ
+        this.user = user;
+
+        if (remember) {
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          sessionStorage.removeItem("currentUser");
+        } else {
+          sessionStorage.setItem("currentUser", JSON.stringify(user));
+          localStorage.removeItem("currentUser");
+        }
+
+        alert("Đăng nhập thành công!");
+        return true;
+      } catch (error) {
+        console.error("Lỗi khi đăng nhập:", error);
+        alert("Không thể kết nối tới máy chủ!");
         return false;
-      }
-      this.user = user;
-      if (remember) {
-        localStorage.setItem("currentUser", JSON.stringify(user));
-        sessionStorage.removeItem("currentUser");
-      } else {
-        sessionStorage.setItem("currentUser", JSON.stringify(user));
-        localStorage.removeItem("currentUser");
       }
     },
 
-    //Đăng xuất
+    // ✅ Đăng xuất
     logout() {
       this.user = null;
       localStorage.removeItem("currentUser");
@@ -57,7 +69,7 @@ export const useAuthStore = defineStore("auth", {
       router.push({ name: "Home" });
     },
 
-    // Chặn router khi chưa đăng nhập
+    // ✅ Chặn truy cập nếu chưa đăng nhập
     requireLogin(redirectPath = "/") {
       if (!this.user) {
         router.push({ name: "Login", query: { redirect: redirectPath } });
@@ -65,15 +77,34 @@ export const useAuthStore = defineStore("auth", {
       }
       return true;
     },
+
+    // ✅ Khóa / Mở khóa tài khoản (admin)
+    async toggleAccountStatus(userId) {
+      try {
+        const res = await fetch(`http://localhost:3000/accounts/${userId}`);
+        const user = await res.json();
+        const newStatus = user.status === "active" ? "locked" : "active";
+
+        await fetch(`http://localhost:3000/accounts/${userId}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: newStatus }),
+        });
+
+        alert(
+          `Tài khoản ${user.username} đã được ${
+            newStatus === "locked" ? "khóa" : "mở khóa"
+          }!`
+        );
+      } catch (error) {
+        alert("Lỗi khi cập nhật trạng thái tài khoản!");
+      }
+    },
   },
 
   getters: {
-    // Check đăng nhập chưa
     isLoggedIn: (state) => !!state.user,
-
-    // Lấy role, mặc định là “guest”
     role: (state) => state.user?.role || "guest",
-    // Các hàm phân quyền nhanh
     isAdmin: (state) => state.user?.role === "admin",
     isUser: (state) => state.user?.role === "user",
   },

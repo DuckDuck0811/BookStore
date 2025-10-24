@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-const API_URL = "https://68f86340deff18f212b5f740.mockapi.io/products";
+const API_URL = "http://localhost:3000/products";
 
 export const useProductStore = defineStore("products", {
   state: () => ({

@@ -172,7 +172,6 @@ const deleteCategory = async (id) => {
       await categoryStore.deleteCategory(id);
       await categoryStore.fetchCategories();
     } catch (err) {
-      console.error("❌ Lỗi khi xóa:", err);
       alert("Không thể xóa danh mục (có thể ID không tồn tại trong API).");
     }
   }

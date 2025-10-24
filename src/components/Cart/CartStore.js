@@ -2,32 +2,18 @@ import { defineStore } from "pinia";
 import { useToast } from "vue-toastification";
 
 export const useCartStore = defineStore("cart", {
-  // khởi tạo các sản phẩm trong giỏ hàng
   state: () => ({
-    items: JSON.parse(localStorage.getItem("cartItems")) || [],
+    items: [], // Giỏ hàng chỉ lưu trong state
   }),
 
   getters: {
     totalPrice: (state) =>
       state.items.reduce((sum, item) => sum + item.price * item.quantity, 0),
-    // totalPrice là tổng số tiền trong giỏ hàng
     totalItems: (state) =>
       state.items.reduce((sum, item) => sum + item.quantity, 0),
-    // totalItems là tổng số sản phẩm trong giỏ hàng
   },
 
   actions: {
-    saveCart() {
-      localStorage.setItem("cartItems", JSON.stringify(this.items));
-    },
-    // dùng để lưu sản phẩm vào localStorage mỗi khi thêm sửa xóa
-    getNextOrderId() {
-      let currentId = parseInt(localStorage.getItem("orderIdCounter")) || 0;
-      currentId++;
-      localStorage.setItem("orderIdCounter", currentId);
-      return currentId;
-    },
-    //mỗi khi tạo thêm đơn hàng thì id đơn hàng sẽ tự động tăng lên 1 đơn vị
     addToCart(product) {
       const found = this.items.find((item) => item.id === product.id);
       if (found) {
@@ -35,44 +21,79 @@ export const useCartStore = defineStore("cart", {
       } else {
         this.items.push({ ...product, quantity: 1 });
       }
-      this.saveCart();
+
+      const toast = useToast();
+      toast.success(`${product.title} đã được thêm vào giỏ!`);
     },
-    //thêm sản phẩm vào giỏ hàng
+
     removeItem(id) {
       this.items = this.items.filter((item) => item.id !== id);
-      this.saveCart();
+
+      const toast = useToast();
+      toast.info(`Sản phẩm đã được xóa khỏi giỏ`);
     },
-    // xóa sản phẩm khỏi giỏ hàng theo id sản phẩm
-    clearItems() {
+
+    clearCart() {
       this.items = [];
-      localStorage.removeItem("cartItems");
+
+      const toast = useToast();
+      toast.info("Giỏ hàng đã được làm trống");
     },
-    //xóa toàn bộ giỏ hàng
+
     async postOrder(customerInfo) {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          const order = {
-            //Tạo đơn hàng
-            orderId: this.getNextOrderId(), //Id đơn hàng tăng dần
-            customer: customerInfo, //thông tin khách hàng
-            items: this.items, //sản phẩm trong giỏ hàng
-            total: this.totalPrice, //tổng tiền
-            date: new Date().toLocaleString(), //ngày đặt hàng hiện tại
-            status:"Đang xử lý" //trạng thái đơn hàng
-          };
+      const toast = useToast();
 
-          const orders = JSON.parse(localStorage.getItem("orders")) || [];
-          orders.push(order);
-          localStorage.setItem("orders", JSON.stringify(orders)); //lưu vào dữ liệu localStorage
+      if (!this.items.length) {
+        toast.error("Giỏ hàng trống, không thể đặt hàng!");
+        return { success: false, error: "Giỏ hàng trống" };
+      }
 
-          this.clearItems(); //xóa hết sản phẩm trong localStorage
-          resolve(order);
-        }, 1000);
-      });
+      try {
+        // 🔹 Lấy toàn bộ đơn hàng hiện có
+        const resAll = await fetch("http://localhost:3000/orders");
+        const existingOrders = await resAll.json();
+
+        // 🔹 Lọc chỉ lấy các id là số để tránh mấy id kiểu "d390"
+        const numericIds = existingOrders
+          .map((o) => parseInt(o.id))
+          .filter((id) => !isNaN(id));
+
+        // 🔹 Tính ID mới (bắt đầu từ 1 nếu trống)
+        const newId = numericIds.length > 0 ? Math.max(...numericIds) + 1 : 1;
+
+        // 🔹 Tạo đơn hàng mới
+        const newOrder = {
+          id: newId, // ✅ ID tự tăng từ 1
+          customer: customerInfo,
+          items: this.items.map((i) => ({
+            productId: i.id,
+            title: i.title,
+            price: i.price,
+            quantity: i.quantity,
+          })),
+          total: this.totalPrice,
+          date: new Date().toISOString().split("T")[0], // ✅ YYYY-MM-DD
+          status: "Đang xử lý",
+        };
+
+        // 🔹 Gửi đơn hàng lên server
+        const res = await fetch("http://localhost:3000/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newOrder),
+        });
+
+        if (!res.ok) throw new Error("Lỗi khi gửi đơn hàng");
+
+        const savedOrder = await res.json();
+        this.clearCart();
+        toast.success("Đặt hàng thành công!");
+        return { success: true, order: savedOrder };
+      } catch (err) {
+        console.error("Lỗi gửi đơn hàng:", err);
+        toast.error("Đặt hàng thất bại!");
+        return { success: false, error: err.message };
+      }
     },
-    resetOrderId() {
-      localStorage.setItem("orderIdCounter", 0);
-    },
-    // Đơn hàng sẽ bắt đầu lại từ 0
   },
 });

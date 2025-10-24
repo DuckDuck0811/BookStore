@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-const API_URL = "https://68f86340deff18f212b5f740.mockapi.io/category"; // ⚠ đổi sang đúng endpoint
+const API_URL = "http://localhost:3000/categories";
 
 export const useCategoryStore = defineStore("categoryStore", {
   state: () => ({
@@ -22,7 +22,7 @@ export const useCategoryStore = defineStore("categoryStore", {
 
     async updateCategory(id, updatedData) {
       try {
-        const strId = String(id); 
+        const strId = String(id);
         const res = await axios.put(`${API_URL}/${strId}`, updatedData);
         const i = this.categories.findIndex((c) => String(c.id) === strId);
         if (i !== -1) this.categories[i] = res.data;

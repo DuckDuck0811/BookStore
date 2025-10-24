@@ -146,11 +146,12 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import axios from "axios";
 
-const users = ref([]);
-// Danh sách tài khoản
+const API_URL = "http://localhost:3000/accounts";
+
+const users = ref([]); // danh sách tài khoản
 const isEdit = ref(false);
-// Trạng thái thêm hay sửa
 const currentUser = ref({
   username: "",
   fullname: "",
@@ -158,58 +159,93 @@ const currentUser = ref({
   role: "user",
   status: "active",
 });
-// Thêm tài khoản
 
-onMounted(() => {
-  users.value = JSON.parse(localStorage.getItem("users")) || [];
-});
-// Lấy danh sách tài khoản từ localStorage
-
-const saveUser = () => {
-  if (isEdit.value) {
-    const index = users.value.findIndex((u) => u.username === currentUser.value.username);
-    if (index !== -1) {
-      users.value[index] = { ...currentUser.value };
-      alert("Cập nhật tài khoản thành công!");
-    }
-  } else {
-    if (users.value.find((u) => u.username === currentUser.value.username)) {
-      alert("Username đã tồn tại!");
-      return;
-    }
-    users.value.push({ ...currentUser.value });
-    alert("Thêm tài khoản thành công!");
+const fetchUsers = async () => {
+  try {
+    const res = await axios.get(API_URL);
+    users.value = res.data;
+  } catch (err) {
+    console.error("Lỗi khi tải danh sách tài khoản:", err);
+    alert("Không thể tải danh sách tài khoản từ API!");
   }
-  localStorage.setItem("users", JSON.stringify(users.value));
-  resetForm();
 };
-// lưu tài khoản
+
+onMounted(fetchUsers);
+
+// ===== Lưu tài khoản (Thêm hoặc Sửa) =====
+const saveUser = async () => {
+  try {
+    if (isEdit.value) {
+      // Cập nhật tài khoản
+      const existingUser = users.value.find((u) => u.username === currentUser.value.username);
+      if (!existingUser) {
+        alert("Không tìm thấy tài khoản để cập nhật!");
+        return;
+      }
+
+      await axios.put(`${API_URL}/${existingUser.id}`, currentUser.value);
+      alert("Cập nhật tài khoản thành công!");
+    } else {
+      // Thêm tài khoản mới
+      const exists = users.value.find((u) => u.username === currentUser.value.username);
+      if (exists) {
+        alert("Username đã tồn tại!");
+        return;
+      }
+
+      await axios.post(API_URL, currentUser.value);
+      alert("Thêm tài khoản thành công!");
+    }
+
+    await fetchUsers();
+    resetForm();
+  } catch (err) {
+    alert("Không thể lưu tài khoản!");
+  }
+};
+
+// ===== Mở form thêm =====
 const openAddForm = () => {
   resetForm();
   isEdit.value = false;
 };
-// mở form thêm tài khoản
+
+// ===== Mở form sửa =====
 const openEditForm = (user) => {
   currentUser.value = { ...user };
   isEdit.value = true;
 };
-// mở form sửa tài khoản
-const deleteUser = (username) => {
+
+// ===== Xóa tài khoản =====
+const deleteUser = async (username) => {
   if (confirm("Bạn có chắc muốn xóa tài khoản này?")) {
-    users.value = users.value.filter((u) => u.username !== username);
-    localStorage.setItem("users", JSON.stringify(users.value));
+    try {
+      const user = users.value.find((u) => u.username === username);
+      if (!user) return alert("Không tìm thấy tài khoản!");
+
+      await axios.delete(`${API_URL}/${user.id}`);
+      await fetchUsers();
+      alert("Đã xóa tài khoản!");
+    } catch (err) {
+      console.error("Lỗi khi xóa tài khoản:", err);
+      alert("Không thể xóa tài khoản!");
+    }
   }
 };
 
-const toggleLock = (user) => {
-  user.status = user.status === "locked" ? "active" : "locked";
-  localStorage.setItem("users", JSON.stringify(users.value));
-  alert(
-    user.status === "locked" ? "Tài khoản đã bị khóa!" : "Tài khoản đã được mở khóa!"
-  );
+// ===== Khóa / Mở khóa =====
+const toggleLock = async (user) => {
+  try {
+    const updatedStatus = user.status === "locked" ? "active" : "locked";
+    await axios.patch(`${API_URL}/${user.id}`, { status: updatedStatus });
+    user.status = updatedStatus;
+    alert(updatedStatus === "locked" ? "Tài khoản đã bị khóa!" : "Tài khoản đã được mở khóa!");
+  } catch (err) {
+    alert("Không thể thay đổi trạng thái tài khoản!");
+  }
 };
-// Khóa/Mở khóa tài khoản
 
+// ===== Reset form =====
 const resetForm = () => {
   currentUser.value = {
     username: "",
@@ -219,5 +255,5 @@ const resetForm = () => {
     status: "active",
   };
 };
-// reset form
 </script>
+
