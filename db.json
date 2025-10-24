@@ -377,16 +377,6 @@
       "height": "300px",
       "cardHeight": "500px",
       "description": "Một thiên tài toán học lập kế hoạch hoàn hảo để che giấu tội ác của người phụ nữ mình yêu. Câu chuyện mở ra cuộc đấu trí căng thẳng giữa hung thủ và vị thám tử thiên tài, hé lộ sự hy sinh, tình yêu, và những tính toán vượt ngoài dự đoán của độc giả."
-    },
-    {
-      "title": "Generic Gold Cheese",
-      "img": "https://loremflickr.com/3492/1302?lock=5865736499309389",
-      "oldPrice": 27,
-      "newPrice": 77,
-      "discount": "discount 28",
-      "category": "Music",
-      "description": "Eveniet patior socius. Baiulus voveo curtus vulnus nobis. Acsi ustilo terebro amplitudo compono solium theatrum.",
-      "id": "28"
     }
   ],
   "categories": [
@@ -432,6 +422,14 @@
       "id": "3",
       "username": "user1",
       "fullname": "user1",
+      "password": "123",
+      "role": "user",
+      "status": "active"
+    },
+    {
+      "id": "a9a1",
+      "username": "duck",
+      "fullname": "Đức",
       "password": "123",
       "role": "user",
       "status": "active"

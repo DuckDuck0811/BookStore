@@ -7,14 +7,15 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import axios from "axios";
 import {
   Chart,
-  BarElement, //Các thanh biểu đồ
-  CategoryScale, //Danh mục tung
-  LinearScale, //Danh mục trục hoành
-  Tooltip, //Hiển thi thông tin khi hover tới cột bất kỳ
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
   Legend,
-  Title, //Hiển thị tên biểu đồ
+  Title,
 } from "chart.js";
 
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
@@ -22,83 +23,89 @@ Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, Title);
 const chartCanvas = ref(null);
 let chartInstance = null;
 
-//Hàm lấy dữ liệu sách từ localStorage
-function getProductSalesData() {
-  const orders = JSON.parse(localStorage.getItem("orders")) || [];
-  const salesMap = {};
+// Hàm lấy dữ liệu từ db.json qua API JSON Server
+async function getProductSalesData() {
+  try {
+    const res = await axios.get("http://localhost:3000/orders");
+    const orders = res.data || [];
+    const salesMap = {};
 
-  orders.forEach((order) => {
-    if (!order.items || !Array.isArray(order.items)) return;
-
-    order.items.forEach((item) => {
-      if (!item || !item.title) return;
-      if (!salesMap[item.title]) salesMap[item.title] = 0;
-      salesMap[item.title] += item.quantity || 0;
+    orders.forEach((order) => {
+      if (!order.items || !Array.isArray(order.items)) return;
+      order.items.forEach((item) => {
+        if (!item || !item.title) return;
+        if (!salesMap[item.title]) salesMap[item.title] = 0;
+        salesMap[item.title] += item.quantity || 0;
+      });
     });
-  });
 
-  const sorted = Object.entries(salesMap)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 10);
+    const sorted = Object.entries(salesMap)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10);
 
-  return {
-    labels: sorted.map(([title]) => title),
-    data: sorted.map(([, qty]) => qty),
-  };
+    return {
+      labels: sorted.map(([title]) => title),
+      data: sorted.map(([, qty]) => qty),
+    };
+  } catch (error) {
+    console.error("Lỗi khi tải dữ liệu từ API:", error);
+    return { labels: [], data: [] };
+  }
 }
-// Hiển thị biểu đồ
-function renderChart() {
-  const { labels, data } = getProductSalesData();
+
+//Hiển thị biểu đồ
+async function renderChart() {
+  const { labels, data } = await getProductSalesData();
   if (chartInstance) chartInstance.destroy();
+
   chartInstance = new Chart(chartCanvas.value, {
     type: "bar",
     data: {
       labels,
       datasets: [
         {
-          label: "Số lượng bán", //Số lượng bán sản phẩm
-          data, //dữ liệu trong localStorage
-          backgroundColor: "rgba(54, 162, 235, 0.6)", //màu sắc của cột
-          borderColor: "rgba(54, 162, 235, 1)", //màu bo góc của cột
-          borderWidth: 1, //chỉnh kiểu cột
+          label: "Số lượng bán",
+          data,
+          backgroundColor: "rgba(54, 162, 235, 0.6)",
+          borderColor: "rgba(54, 162, 235, 1)",
+          borderWidth: 1,
         },
       ],
     },
     options: {
-      responsive: true, //biểu đồ co giãn theo trang web
+      responsive: true,
       plugins: {
         legend: { display: false },
         title: {
-          display: true, //tiêu đề của biểu đồ
-          text: "Top sản phẩm bán chạy nhất", //Nội dung
-          font: { size: 10 }, //Cỡ chữ
+          display: true,
+          text: "Top sản phẩm bán chạy nhất",
+          font: { size: 10 },
         },
         tooltip: { enabled: true },
       },
       scales: {
         y: {
-          beginAtZero: true, //trục tung bắt đầu từ 0
-          title: { display: true, text: "Số lượng bán" }, //tiêu đề trục tung
+          beginAtZero: true,
+          title: { display: true, text: "Số lượng bán" },
         },
         x: {
-          title: { display: true, text: "Tên sản phẩm" }, //tiêu đề trục hoành
+          title: { display: true, text: "Tên sản phẩm" },
           ticks: {
-            maxRotation: 0, //độ xoay của tiêu đề
-            font: { size: 5.75 }, //cỡ chữ
+            maxRotation: 0,
+            font: { size: 12 },
           },
         },
       },
     },
   });
 }
-// vẽ biểu đồ theo dữ liệu cũ
+
 onMounted(() => {
   renderChart();
 });
 
-// vẽ biểu đồ theo dữ liệu mới
-function reloadData() {
-  renderChart();
+async function reloadData() {
+  await renderChart();
 }
 </script>
 

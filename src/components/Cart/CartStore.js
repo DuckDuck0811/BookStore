@@ -76,7 +76,7 @@ export const useCartStore = defineStore("cart", {
           status: "Đang xử lý",
         };
 
-        // 🔹 Gửi đơn hàng lên server
+        //  Gửi đơn hàng lên server
         const res = await fetch("http://localhost:3000/orders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
