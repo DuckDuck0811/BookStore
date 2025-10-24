@@ -79,7 +79,7 @@ async function renderChart() {
         title: {
           display: true,
           text: "Top sản phẩm bán chạy nhất",
-          font: { size: 10 },
+          font: { size: 12 },
         },
         tooltip: { enabled: true },
       },
