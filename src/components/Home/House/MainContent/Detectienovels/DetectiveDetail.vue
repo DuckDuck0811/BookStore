@@ -44,8 +44,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import axios from "axios";
 import { useCartStore } from "@/components/Cart/CartStore";
-import { detectiveNovels } from "./DetectiveDetail.js";
 
 const router = useRouter();
 const route = useRoute();
@@ -54,11 +54,19 @@ const cartStore = useCartStore();
 const bookData = ref(null);
 const qty = ref(1);
 
-onMounted(() => {
-  const id = Number(route.params.id);
-  bookData.value = detectiveNovels.find((b) => b.id === id);
+// Lấy chi tiết sách khi component được mount
+onMounted(async () => {
+  const id = route.params.id;
+  try {
+    const res = await axios.get(`http://localhost:3000/detectiveNovels/${id}`);
+    bookData.value = res.data;
+  } catch (error) {
+    console.error("Lỗi khi tải chi tiết sách:", error);
+    alert("Không thể tải chi tiết sách!");
+  }
 });
 
+// Thêm vào giỏ hàng
 function addToCart(book) {
   const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
   cartStore.addToCart({
@@ -71,6 +79,7 @@ function addToCart(book) {
   router.push("/cart");
 }
 
+// Mua ngay
 function buyNow(book) {
   const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
   cartStore.addToCart({

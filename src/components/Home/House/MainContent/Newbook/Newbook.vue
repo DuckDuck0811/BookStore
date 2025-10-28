@@ -4,12 +4,14 @@
       <h5 class="fw-bold">TRUYỆN TRANH NỔI TIẾNG</h5>
     </div>
 
-    <!-- Nếu không có dữ liệu -->
-    <div v-if="filteredComics.length === 0" class="text-center text-muted">
+    <div v-if="loading" class="text-center text-muted py-5">
+      Đang tải dữ liệu truyện tranh...
+    </div>
+
+    <div v-else-if="filteredComics.length === 0" class="text-center text-muted">
       Không tìm thấy truyện tranh nào phù hợp.
     </div>
 
-    <!-- Danh sách truyện tranh -->
     <div class="comic-list" v-else>
       <div
         class="comic-card"
@@ -18,23 +20,15 @@
         @click="goToDetail(comic)"
       >
         <div class="card product-card">
-          <img
-            :src="comic.img"
-            class="card-img-top"
-            :style="{
-              width: '100%',
-              height: comic.height,
-              aspectRatio: comic.aspect,
-              objectFit: 'cover',
-              borderTopLeftRadius: '.5rem',
-              borderTopRightRadius: '.5rem',
-            }"
-          />
+          <img :src="comic.img" class="card-img-top" />
+
           <div class="card-body text-center">
             <p class="card-title fw-bold mb-1">{{ comic.title }}</p>
 
             <div class="price">
-              <span class="new-price">{{ comic.newPrice }}</span>
+              <span class="new-price">{{
+                formatPrice(Number(comic.newPrice.replace(/[^\d]/g, "")))
+              }}</span>
               <span class="discount-badge">{{ comic.discount }}</span>
             </div>
           </div>
@@ -51,28 +45,49 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "@/components/Cart/CartStore";
 import { toast } from "vue3-toastify";
-import { newBooks } from "./Newbook.js";
+import axios from "axios";
 
-const props = defineProps({
-  searchKeyword: String,
+const props = defineProps({ searchKeyword: String });
+
+const comics = ref([]);
+const loading = ref(true);
+
+// Lấy dữ liệu truyện tranh nổi tiếng
+onMounted(async () => {
+  try {
+    const res = await axios.get("http://localhost:3000/newBooks");
+    comics.value = res.data;
+  } catch (error) {
+    console.error("Lỗi khi tải dữ liệu:", error);
+    toast.error("Không thể tải danh sách truyện tranh!");
+  } finally {
+    loading.value = false;
+  }
+});
+
+// Lọc theo keyword nếu có
+const filteredComics = computed(() => {
+  if (!props.searchKeyword || props.searchKeyword.trim() === "") return comics.value;
+  return comics.value.filter((comic) =>
+    comic.title.toLowerCase().includes(props.searchKeyword.toLowerCase())
+  );
 });
 
 const router = useRouter();
 const cartStore = useCartStore();
 
-const comics = newBooks;
-
-const filteredComics = computed(() => {
-  if (!props.searchKeyword) return comics;
-  return comics.filter((comic) =>
-    comic.title.toLowerCase().includes(props.searchKeyword.toLowerCase())
+// Định dạng giá tiền
+function formatPrice(value) {
+  return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
+    value
   );
-});
+}
 
+// Thêm vào giỏ hàng
 function addToCart(comic) {
   cartStore.addToCart({
     id: comic.id,
@@ -81,8 +96,12 @@ function addToCart(comic) {
     img: comic.img,
   });
   toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 });
+  setTimeout(() => {
+    router.push("/cart");
+  }, 1000);
 }
 
+// Chuyển đến trang chi tiết truyện tranh
 function goToDetail(comic) {
   router.push(`/newbook/${comic.id}`);
 }
@@ -90,17 +109,15 @@ function goToDetail(comic) {
 
 <style scoped>
 .comic-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 25px;
+  justify-items: center;
 }
 
-.comic-card {
-  width: 300px;
-}
 .card {
   width: 100%;
+  max-width: 280px;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #e0e0e0;
@@ -115,15 +132,10 @@ function goToDetail(comic) {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Hình ảnh */
 .card-img-top {
-  padding-left: 30px;
-  width: 90%!important;
-  height: 350px !important;
+  width: 100%;
+  height: 350px;
   object-fit: cover;
-}
-.card-body {
-  padding: 12px;
 }
 
 .price {

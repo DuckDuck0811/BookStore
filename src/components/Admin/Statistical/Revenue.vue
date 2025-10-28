@@ -76,7 +76,7 @@ async function renderChart() {
       responsive: true,
       plugins: {
         legend: { display: false },
-        title: {
+        title: {  
           display: true,
           text: "Top sản phẩm bán chạy nhất",
           font: { size: 12 },

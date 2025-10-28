@@ -99,7 +99,6 @@
         <tr>
           <th>ID</th>
           <th>Username</th>
-          <th>Full Name</th>
           <th>Role</th>
           <th>Status</th>
           <th>Action</th>
@@ -109,7 +108,6 @@
         <tr v-for="(user, index) in users" :key="user.username" class="text-center">
           <td>{{ index + 1 }}</td>
           <td>{{ user.username }}</td>
-          <td>{{ user.fullname }}</td>
           <td>{{ user.role }}</td>
           <td>
             {{ user.status }}

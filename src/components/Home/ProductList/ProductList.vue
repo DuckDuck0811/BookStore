@@ -134,7 +134,7 @@ const filteredBooks = computed(() =>
   })
 );
 
-// 🧭 Phân trang
+// Phân trang
 const currentPage = ref(1);
 const itemsPerPage = ref(8);
 
@@ -161,7 +161,6 @@ function nextPage() {
   if (currentPage.value < totalPages.value) currentPage.value++;
 }
 
-// 🖼 Xử lý ảnh để tránh base64 quá nặng
 function resolveImage(img) {
   if (!img) return "/placeholder.jpg";
   if (img.startsWith("data:")) return img; // base64

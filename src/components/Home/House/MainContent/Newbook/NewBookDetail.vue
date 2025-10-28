@@ -45,7 +45,7 @@
 import { ref, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useCartStore } from "@/components/Cart/CartStore";
-import { newBooks } from "./Newbook.js";
+import axios from "axios";
 import { toast } from "vue3-toastify";
 
 const router = useRouter();
@@ -55,16 +55,19 @@ const cartStore = useCartStore();
 const bookData = ref(null);
 const qty = ref(1);
 
-onMounted(() => {
-  const id = Number(route.params.id);
-  bookData.value = newBooks.find((b) => b.id === id);
+// Lấy chi tiết sách khi component được mount
+onMounted(async () => {
+  const id = route.params.id;
+  try {
+    const res = await axios.get(`http://localhost:3000/newBooks/${id}`);
+    bookData.value = res.data;
+  } catch (error) {
+    console.error("Lỗi khi tải chi tiết sách:", error);
+    alert("Không thể tải chi tiết sách!");
+  }
 });
 
-// Reset số lượng khi đổi sản phẩm
-watch(bookData, () => {
-  qty.value = 1;
-});
-
+// Thêm vào giỏ hàng
 function addToCart(book) {
   const priceNumber = parseInt(String(book.newPrice).replace(/[^\d]/g, ""), 10) || 0;
   cartStore.addToCart({
@@ -74,9 +77,11 @@ function addToCart(book) {
     img: book.img,
     quantity: qty.value,
   });
-  toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 });
+    router.push("/cart");
+  toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 1000 });
 }
 
+// Mua ngay
 function buyNow(book) {
   const priceNumber = parseInt(String(book.newPrice).replace(/[^\d]/g, ""), 10) || 0;
   cartStore.addToCart({

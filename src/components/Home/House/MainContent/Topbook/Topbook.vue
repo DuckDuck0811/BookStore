@@ -58,28 +58,57 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "@/components/Cart/CartStore";
+import { useAuthStore } from "@/components/LoginAndRegister/Authstore"; 
 import { toast } from "vue3-toastify";
-import { topbook } from "./Topbook.js";
+import axios from "axios"; 
 
 const router = useRouter();
 const cartStore = useCartStore();
-
+const authStore = useAuthStore(); 
+const books = ref([]);
+const loading = ref(true);
+// Nhận từ props
 const props = defineProps({
   searchKeyword: String,
 });
 
-const books = topbook;
+// Lấy dữ liệu sách khoa học viễn tưởng
+onMounted(async () => {
+  try {
+    const res = await axios.get("http://localhost:3000/topbook");
+    books.value = res.data;
+  } catch (error) {
+    console.error("Lỗi khi tải dữ liệu:", error);
+    toast.error("Không thể tải danh sách sách!");
+  } finally {
+    loading.value = false;
+  }
+});
+
+// Lọc sách theo từ khóa tìm kiếm
 const filteredBooks = computed(() => {
-  if (!props.searchKeyword) return books;
-  return books.filter((book) =>
+  if (!props.searchKeyword) return books.value;
+  return books.value.filter((book) =>
     book.title.toLowerCase().includes(props.searchKeyword.toLowerCase())
   );
 });
 
+// Kiểm tra đăng nhập
+function checkLogin() {
+  return authStore.isLoggedIn || !!authStore.user;
+}
+
+// Thêm vào giỏ hàng
 function addToCart(book) {
+  if (!checkLogin()) {
+    toast.info("Vui lòng đăng nhập để thêm sản phẩm!", { autoClose: 2000 });
+    router.push({ name: "Login", query: { redirect: "/cart" } });
+    return;
+  }
+
   const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
   cartStore.addToCart({
     id: book.id,
@@ -88,12 +117,12 @@ function addToCart(book) {
     img: book.img,
     quantity: 1,
   });
+
   toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 });
-  setTimeout(() => {
-    router.push("/cart");
-  }, 2000);
+  setTimeout(() => router.push("/cart"), 2000);
 }
 
+// Chuyển đến trang chi tiết sách
 function goToDetail(book) {
   router.push(`/topbook/${book.id}`);
 }

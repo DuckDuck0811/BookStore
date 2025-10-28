@@ -45,8 +45,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useCartStore } from "@/components/Cart/CartStore";
-import { topbook } from "./Topbook.js";
-
+import axios from "axios";
 const router = useRouter();
 const route = useRoute();
 const cartStore = useCartStore();
@@ -54,11 +53,19 @@ const cartStore = useCartStore();
 const bookData = ref(null);
 const qty = ref(1);
 
-onMounted(() => {
-  const id = Number(route.params.id);
-  bookData.value = topbook.find((b) => b.id === id); // ✅ fix: dùng đúng dữ liệu
+// Lấy chi tiết sách khi component được mount
+onMounted(async () => {
+  const id = route.params.id;
+  try {
+    const res = await axios.get(`http://localhost:3000/topbook/${id}`);
+    bookData.value = res.data;
+  } catch (error) {
+    console.error("Lỗi khi tải chi tiết sách:", error);
+    alert("Không thể tải chi tiết sách!");
+  }
 });
 
+// Thêm vào giỏ hàng
 function addToCart(book) {
   const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
   cartStore.addToCart({
@@ -71,6 +78,7 @@ function addToCart(book) {
   router.push("/cart");
 }
 
+// Mua ngay
 function buyNow(book) {
   const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
   cartStore.addToCart({
@@ -83,7 +91,6 @@ function buyNow(book) {
   router.push("/checkout");
 }
 </script>
-
 
 <style scoped>
 .product-detail {
