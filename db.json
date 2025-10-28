@@ -394,11 +394,6 @@
       "id": "3",
       "name": "Detective",
       "description": "Truyện trinh thám, điều tra."
-    },
-    {
-      "name": "Romance",
-      "description": "Truyện tình cảm, lãng mạn.",
-      "id": "4"
     }
   ],
   "accounts": [
@@ -431,6 +426,22 @@
       "username": "duck",
       "fullname": "Đức",
       "password": "123",
+      "role": "user",
+      "status": "active"
+    },
+    {
+      "id": "5d62",
+      "username": "ggg",
+      "email": "sadsaD@sahdja.com",
+      "password": "123",
+      "role": "user",
+      "status": "active"
+    },
+    {
+      "id": "4989",
+      "username": "xss",
+      "fullname": "sss",
+      "password": "ss",
       "role": "user",
       "status": "active"
     }
@@ -509,6 +520,25 @@
         }
       ],
       "total": 307500,
+      "date": "2025-10-28",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": "4",
+      "customer": {
+        "name": "duckkkkkkkkk",
+        "address": "ưdđ,jjjsss",
+        "phone": "0987654321"
+      },
+      "items": [
+        {
+          "productId": "1",
+          "title": "Harry Potter và Hòn Đá Phù Thủy",
+          "price": 90000,
+          "quantity": 2
+        }
+      ],
+      "total": 180000,
       "date": "2025-10-28",
       "status": "Đang xử lý"
     }

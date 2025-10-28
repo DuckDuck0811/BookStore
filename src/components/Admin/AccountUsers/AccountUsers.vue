@@ -175,7 +175,9 @@ const saveUser = async () => {
   try {
     if (isEdit.value) {
       // Cập nhật tài khoản
-      const existingUser = users.value.find((u) => u.username === currentUser.value.username);
+      const existingUser = users.value.find(
+        (u) => u.username === currentUser.value.username
+      );
       if (!existingUser) {
         alert("Không tìm thấy tài khoản để cập nhật!");
         return;
@@ -237,7 +239,9 @@ const toggleLock = async (user) => {
     const updatedStatus = user.status === "locked" ? "active" : "locked";
     await axios.patch(`${API_URL}/${user.id}`, { status: updatedStatus });
     user.status = updatedStatus;
-    alert(updatedStatus === "locked" ? "Tài khoản đã bị khóa!" : "Tài khoản đã được mở khóa!");
+    alert(
+      updatedStatus === "locked" ? "Tài khoản đã bị khóa!" : "Tài khoản đã được mở khóa!"
+    );
   } catch (err) {
     alert("Không thể thay đổi trạng thái tài khoản!");
   }
@@ -254,4 +258,3 @@ const resetForm = () => {
   };
 };
 </script>
-

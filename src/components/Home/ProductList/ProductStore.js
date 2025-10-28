@@ -47,8 +47,10 @@ export const useProductStore = defineStore("products", {
 
     async deleteProduct(id) {
       try {
-        await axios.delete(`${API_URL}/${id}`);
-        this.products = this.products.filter((p) => p.id !== id);
+        const strId = String(id);
+        await axios.delete(`${API_URL}/${strId}`);
+        this.products = this.products.filter((p) => String(p.id) !== strId);
+        alert("Xóa sản phẩm thành công!");
       } catch (error) {
         console.error("Lỗi khi xóa sản phẩm:", error);
       }

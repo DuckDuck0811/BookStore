@@ -15,8 +15,9 @@ export const useCategoryStore = defineStore("categoryStore", {
       this.categories = res.data;
     },
 
-    async addCategory(data) {
-      const res = await axios.post(API_URL, data);
+    async addCategory(newCategory) {
+      const newId = String(this.categories.length + 1);
+      const res = await axios.post(API_URL, { ...newCategory, id: newId });
       this.categories.push(res.data);
     },
 

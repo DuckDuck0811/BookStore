@@ -160,7 +160,7 @@ const submitForm = async () => {
     await categoryStore.fetchCategories();
     closeModal();
   } catch (err) {
-    console.error("❌ Lỗi khi lưu danh mục:", err);
+    console.error("Lỗi khi lưu danh mục:", err);
     alert("Không thể lưu danh mục. Kiểm tra lại API URL hoặc ID!");
   }
 };
