@@ -41,7 +41,7 @@ async function getProductSalesData() {
 
     const sorted = Object.entries(salesMap)
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 10);
+      .slice(0, 5);
 
     return {
       labels: sorted.map(([title]) => title),
@@ -92,7 +92,7 @@ async function renderChart() {
           title: { display: true, text: "Tên sản phẩm" },
           ticks: {
             maxRotation: 0,
-            font: { size: 12 },
+            font: { size: 10 },
           },
         },
       },

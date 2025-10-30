@@ -444,6 +444,14 @@
       "password": "ss",
       "role": "user",
       "status": "active"
+    },
+    {
+      "id": "eb2d",
+      "username": "admin1",
+      "email": "Duck@gmail.com",
+      "password": "123",
+      "role": "user",
+      "status": "active"
     }
   ],
   "orders": [
@@ -540,6 +548,126 @@
       ],
       "total": 180000,
       "date": "2025-10-28",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": 5,
+      "customer": {
+        "name": "sadad",
+        "address": "sdahssha,sjadisnad",
+        "phone": "0987654321"
+      },
+      "items": [
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        }
+      ],
+      "total": 97500,
+      "date": "2025-10-30",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": 6,
+      "customer": {
+        "name": "sadhagd",
+        "address": "sahvdasd,dsahgdafd",
+        "phone": "0987654321"
+      },
+      "items": [
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        },
+        {
+          "productId": "7",
+          "title": "Percy Jackson: The Lightning Thief",
+          "price": 112500,
+          "quantity": 1
+        }
+      ],
+      "total": 210000,
+      "date": "2025-10-30",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": 7,
+      "customer": {
+        "name": "gggg",
+        "address": "Hà Nội, Việt Nam",
+        "phone": "0987654321"
+      },
+      "items": [
+        {
+          "productId": "1",
+          "title": "Harry Potter và Hòn Đá Phù Thủy",
+          "price": 90000,
+          "quantity": 100
+        }
+      ],
+      "total": 9000000,
+      "date": "2025-10-30",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": 8,
+      "customer": {
+        "name": "mmm",
+        "address": "Việt Nam, Trái Đất",
+        "phone": "0123456789"
+      },
+      "items": [
+        {
+          "productId": "24",
+          "title": "Thiên Thần và Ác Quỷ - Dan Brown",
+          "price": 157500,
+          "quantity": 100
+        }
+      ],
+      "total": 15750000,
+      "date": "2025-10-30",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": 9,
+      "customer": {
+        "name": "oooo",
+        "address": "Bắc Từ Liêm, Hà Nội",
+        "phone": "0897654321"
+      },
+      "items": [
+        {
+          "productId": "12",
+          "title": "Naruto",
+          "price": 30000,
+          "quantity": 101
+        }
+      ],
+      "total": 3030000,
+      "date": "2025-10-30",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": 10,
+      "customer": {
+        "name": "Đức",
+        "address": "sadhagds,dsahgdad",
+        "phone": "0987654321"
+      },
+      "items": [
+        {
+          "productId": "12",
+          "title": "Naruto",
+          "price": 30000,
+          "quantity": 150
+        }
+      ],
+      "total": 4500000,
+      "date": "2025-10-30",
       "status": "Đang xử lý"
     }
   ],
@@ -641,20 +769,6 @@
       "height": "300px",
       "cardHeight": "500px",
       "description": "Một thiên tài toán học lập kế hoạch hoàn hảo để che giấu tội ác của người phụ nữ mình yêu. Câu chuyện mở ra cuộc đấu trí căng thẳng giữa hung thủ và vị thám tử thiên tài, hé lộ sự hy sinh, tình yêu, và những tính toán vượt ngoài dự đoán của độc giả."
-    },
-    {
-      "id": "28",
-      "img": "/trinhtham2.jpg",
-      "title": "Điều Kỳ Diệu Của Tiệm Tạp Hóa Namiya",
-      "oldPrice": "140,000₫",
-      "newPrice": "105,000₫",
-      "discount": "-25%",
-      "aspect": "3/4",
-      "category": "Detective",
-      "width": "100%",
-      "height": "300px",
-      "cardHeight": "500px",
-      "description": "Ba thanh niên trốn vào tiệm tạp hóa cũ và phát hiện ra những lá thư cầu cứu từ quá khứ trôi qua khe cửa. Mỗi bức thư hé lộ một câu chuyện kỳ diệu về sự cảm thông, thay đổi cuộc đời và những bí ẩn kết nối quá khứ – hiện tại trong một vòng tròn ấm áp nhưng đầy bất ngờ."
     }
   ],
   "newBooks": [

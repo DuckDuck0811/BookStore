@@ -87,7 +87,7 @@ const handleOrder = async () => {
   if (
     name.value.length < 3 ||
     name.value.length > 50 ||
-    !/^[A-Za-z\s]+$/.test(name.value)
+    !/^[A-Za-zÀ-ỹà-ỹ\s]+$/.test(name.value)
   ) {
     alert(
       "Họ và tên phải từ 3-50 ký tự và chỉ được nhập chữ" || "Họ và tên không hợp lệ"
