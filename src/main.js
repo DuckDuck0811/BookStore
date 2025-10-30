@@ -4,7 +4,7 @@ import App from "./App.vue";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-import router from "./components/Home/House/Router/Router.js";
+import router from "./router/router.js";
 import Vue3Toastify from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 

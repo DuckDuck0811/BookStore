@@ -1,10 +1,10 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { computed, onMounted } from "vue";
-import DefaultLayout from "./components/Home/DefaultLayout.vue";
-import AuthLayout from "./components/Home/House/AuthLayout.vue";
-import AdminLayout from "./components/Admin/AdminLayout/AdminLayout.vue";
-import { useAuthStore } from "@/components/LoginAndRegister/Authstore";
+import DefaultLayout from "./layout/UserLayout/DefaultLayout.vue";
+import AuthLayout from "./layout/UserLayout/AuthLayout.vue";
+import AdminLayout from "./layout/AdminLayout/AdminLayout.vue";
+import { useAuthStore } from "@/stores/Authstore";
 
 const route = useRoute();
 const auth = useAuthStore();

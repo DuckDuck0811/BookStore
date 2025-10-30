@@ -1,0 +1,41 @@
+import { defineStore } from "pinia";
+import axios from "axios";
+
+const API_URL = "http://localhost:3000/categories";
+
+export const useCategoryStore = defineStore("categoryStore", {
+  state: () => ({
+    categories: [],
+    loading: false,
+  }),
+
+  actions: {
+    async fetchCategories() {
+      const res = await axios.get(API_URL);
+      this.categories = res.data;
+    },
+
+    async addCategory(newCategory) {
+      const newId = String(this.categories.length + 1);
+      const res = await axios.post(API_URL, { ...newCategory, id: newId });
+      this.categories.push(res.data);
+    },
+
+    async updateCategory(id, updatedData) {
+      try {
+        const strId = String(id);
+        const res = await axios.put(`${API_URL}/${strId}`, updatedData);
+        const i = this.categories.findIndex((c) => String(c.id) === strId);
+        if (i !== -1) this.categories[i] = res.data;
+        alert("Cập nhật danh mục thành công!");
+      } catch (err) {
+        console.error("Lỗi khi cập nhật danh mục:", err);
+      }
+    },
+
+    async deleteCategory(id) {
+      await axios.delete(`${API_URL}/${String(id)}`);
+      this.categories = this.categories.filter((c) => String(c.id) !== String(id));
+    },
+  },
+});
