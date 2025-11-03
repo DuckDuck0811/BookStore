@@ -170,7 +170,7 @@ const fetchUsers = async () => {
 
 onMounted(fetchUsers);
 
-// ===== Lưu tài khoản (Thêm hoặc Sửa) =====
+//Lưu tài khoản (thêm hoặc sửa)
 const saveUser = async () => {
   try {
     if (isEdit.value) {
@@ -204,19 +204,19 @@ const saveUser = async () => {
   }
 };
 
-// ===== Mở form thêm =====
+//Mở form thêm
 const openAddForm = () => {
   resetForm();
   isEdit.value = false;
 };
 
-// ===== Mở form sửa =====
+//Mở form sửa 
 const openEditForm = (user) => {
   currentUser.value = { ...user };
   isEdit.value = true;
 };
 
-// ===== Xóa tài khoản =====
+// Xóa tài khoản 
 const deleteUser = async (username) => {
   if (confirm("Bạn có chắc muốn xóa tài khoản này?")) {
     try {
@@ -247,7 +247,7 @@ const toggleLock = async (user) => {
   }
 };
 
-// ===== Reset form =====
+// Reset form 
 const resetForm = () => {
   currentUser.value = {
     username: "",

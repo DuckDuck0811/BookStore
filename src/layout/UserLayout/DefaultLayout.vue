@@ -5,7 +5,7 @@ import Footer from "@/components/Footer/Footer.vue";
 import { ref } from "vue";
 
 // Lưu trữ từ khóa tìm kiếm và danh mục được chọn
-const searchKeyword = ref("");
+const searchKeyword = ref("");  
 // Lưu trữ danh mục được chọn
 const selectedCategory = ref("");
 
