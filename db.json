@@ -656,6 +656,25 @@
       "total": 780000,
       "date": "2025-10-30",
       "status": "Đang xử lý"
+    },
+    {
+      "id": 12,
+      "customer": {
+        "name": "Duckkk",
+        "address": "Bắc Từ Liêm, Hà Nội",
+        "phone": "0987654321"
+      },
+      "items": [
+        {
+          "productId": "13",
+          "title": "Dragon Ball",
+          "price": 28000,
+          "quantity": 100
+        }
+      ],
+      "total": 2800000,
+      "date": "2025-11-03",
+      "status": "Đang xử lý"
     }
   ],
   "detectiveNovels": [

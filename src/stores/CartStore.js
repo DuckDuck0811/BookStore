@@ -49,21 +49,21 @@ export const useCartStore = defineStore("cart", {
       }
 
       try {
-        // 🔹 Lấy toàn bộ đơn hàng hiện có
+        //  Lấy toàn bộ đơn hàng hiện có
         const resAll = await fetch("http://localhost:3000/orders");
         const existingOrders = await resAll.json();
 
-        // 🔹 Lọc chỉ lấy các id là số để tránh mấy id kiểu "d390"
+        //  Lọc chỉ lấy các id là số để tránh mấy id kiểu "d390"
         const numericIds = existingOrders
           .map((o) => parseInt(o.id))
           .filter((id) => !isNaN(id));
 
-        // 🔹 Tính ID mới (bắt đầu từ 1 nếu trống)
+        // Tính ID mới (bắt đầu từ 1 nếu trống)
         const newId = numericIds.length > 0 ? Math.max(...numericIds) + 1 : 1;
 
-        // 🔹 Tạo đơn hàng mới
+        //  Tạo đơn hàng mới
         const newOrder = {
-          id: newId, // ✅ ID tự tăng từ 1
+          id: newId, // ID tự tăng từ 1
           customer: customerInfo,
           items: this.items.map((i) => ({
             productId: i.id,
@@ -72,7 +72,7 @@ export const useCartStore = defineStore("cart", {
             quantity: i.quantity,
           })),
           total: this.totalPrice,
-          date: new Date().toISOString().split("T")[0], // ✅ YYYY-MM-DD
+          date: new Date().toISOString().split("T")[0], // YYYY-MM-DD
           status: "Đang xử lý",
         };
 

@@ -7,7 +7,7 @@ export const useAuthStore = defineStore("auth", {
   }),
 
   actions: {
-    // ✅ Load user đang đăng nhập
+    // Load user đang đăng nhập
     loadUser() {
       const raw =
         localStorage.getItem("currentUser") ||
@@ -15,7 +15,7 @@ export const useAuthStore = defineStore("auth", {
       this.user = raw ? JSON.parse(raw) : null;
     },
 
-    // ✅ Đăng nhập từ db.json
+    // Đăng nhập từ db.json
     async login({ username, password, remember }) {
       try {
         const res = await fetch("http://localhost:3000/accounts");
@@ -41,7 +41,7 @@ export const useAuthStore = defineStore("auth", {
           return false;
         }
 
-        // ✅ Đăng nhập hợp lệ
+        // Đăng nhập hợp lệ
         this.user = user;
 
         if (remember) {
@@ -61,7 +61,7 @@ export const useAuthStore = defineStore("auth", {
       }
     },
 
-    // ✅ Đăng xuất
+    // Đăng xuất
     logout() {
       this.user = null;
       localStorage.removeItem("currentUser");
@@ -69,7 +69,7 @@ export const useAuthStore = defineStore("auth", {
       router.push({ name: "Home" });
     },
 
-    // ✅ Chặn truy cập nếu chưa đăng nhập
+    // Chặn truy cập nếu chưa đăng nhập
     requireLogin(redirectPath = "/") {
       if (!this.user) {
         router.push({ name: "Login", query: { redirect: redirectPath } });
@@ -78,7 +78,7 @@ export const useAuthStore = defineStore("auth", {
       return true;
     },
 
-    // ✅ Khóa / Mở khóa tài khoản (admin)
+    // Khóa / Mở khóa tài khoản (admin)
     async toggleAccountStatus(userId) {
       try {
         const res = await fetch(`http://localhost:3000/accounts/${userId}`);
