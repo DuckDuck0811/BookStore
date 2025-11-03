@@ -400,7 +400,7 @@
     {
       "id": "1",
       "username": "admin",
-      "fullname": "duckk",
+      "email": "admin@gmail.com",
       "password": "123",
       "role": "admin",
       "status": "active"
@@ -408,46 +408,14 @@
     {
       "id": "2",
       "username": "user",
-      "fullname": "user",
+      "email": "user@gmail.com",
       "password": "123",
       "role": "user",
       "status": "active"
     },
     {
-      "id": "3",
-      "username": "user1",
-      "fullname": "user1",
-      "password": "123",
-      "role": "user",
-      "status": "active"
-    },
-    {
-      "id": "a9a1",
+      "id": "1001",
       "username": "duck",
-      "fullname": "Đức",
-      "password": "123",
-      "role": "user",
-      "status": "active"
-    },
-    {
-      "id": "5d62",
-      "username": "ggg",
-      "email": "sadsaD@sahdja.com",
-      "password": "123",
-      "role": "user",
-      "status": "active"
-    },
-    {
-      "id": "4989",
-      "username": "xss",
-      "fullname": "sss",
-      "password": "ss",
-      "role": "user",
-      "status": "active"
-    },
-    {
-      "id": "eb2d",
-      "username": "admin1",
       "email": "Duck@gmail.com",
       "password": "123",
       "role": "user",
@@ -671,7 +639,7 @@
       "status": "Đang xử lý"
     },
     {
-      "id": 11,
+      "id": "11",
       "customer": {
         "name": "sadassad",
         "address": "shadghgfasyd,dsajdgahd",

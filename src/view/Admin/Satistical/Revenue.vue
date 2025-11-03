@@ -1,7 +1,7 @@
 <template>
   <div class="card p-4 shadow-sm" style="width: 100%">
     <h4 class="chart-title">Biểu đồ số lượng sản phẩm bán chạy</h4>
-    <canvas ref="chartCanvas" style="width: 100%"></canvas>
+    <canvas ref="chartCanvas" style="size: 500px; width: 100%"></canvas>
   </div>
 </template>
 
@@ -76,7 +76,7 @@ async function renderChart() {
       responsive: true,
       plugins: {
         legend: { display: false },
-        title: {  
+        title: {
           display: true,
           text: "Top sản phẩm bán chạy nhất",
           font: { size: 12 },

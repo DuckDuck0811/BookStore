@@ -9,6 +9,7 @@
     >
       + Thêm tài khoản
     </button>
+
     <!-- Thêm/Sửa tài khoản -->
     <div
       class="modal fade"
@@ -46,12 +47,12 @@
               </div>
 
               <div class="mb-3">
-                <label class="form-label">Full Name</label>
+                <label class="form-label">Email</label>
                 <input
-                  v-model="currentUser.fullname"
-                  type="text"
+                  v-model="currentUser.email"
+                  type="email"
                   class="form-control"
-                  placeholder="Họ tên đầy đủ"
+                  placeholder="Địa chỉ email"
                   required
                 />
               </div>
@@ -99,6 +100,7 @@
         <tr>
           <th>ID</th>
           <th>Username</th>
+          <th>Email</th>
           <th>Role</th>
           <th>Status</th>
           <th>Action</th>
@@ -108,10 +110,9 @@
         <tr v-for="(user, index) in users" :key="user.username" class="text-center">
           <td>{{ index + 1 }}</td>
           <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
           <td>{{ user.role }}</td>
-          <td>
-            {{ user.status }}
-          </td>
+          <td>{{ user.status }}</td>
           <td>
             <button
               class="btn btn-sm btn-warning me-2"
@@ -148,11 +149,11 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3000/accounts";
 
-const users = ref([]); // danh sách tài khoản
+const users = ref([]);
 const isEdit = ref(false);
 const currentUser = ref({
   username: "",
-  fullname: "",
+  email: "",
   password: "",
   role: "user",
   status: "active",
@@ -170,28 +171,20 @@ const fetchUsers = async () => {
 
 onMounted(fetchUsers);
 
-//Lưu tài khoản (thêm hoặc sửa)
+// Lưu tài khoản 
 const saveUser = async () => {
   try {
     if (isEdit.value) {
-      // Cập nhật tài khoản
       const existingUser = users.value.find(
         (u) => u.username === currentUser.value.username
       );
-      if (!existingUser) {
-        alert("Không tìm thấy tài khoản để cập nhật!");
-        return;
-      }
+      if (!existingUser) return alert("Không tìm thấy tài khoản!");
 
       await axios.put(`${API_URL}/${existingUser.id}`, currentUser.value);
       alert("Cập nhật tài khoản thành công!");
     } else {
-      // Thêm tài khoản mới
       const exists = users.value.find((u) => u.username === currentUser.value.username);
-      if (exists) {
-        alert("Username đã tồn tại!");
-        return;
-      }
+      if (exists) return alert("Username đã tồn tại!");
 
       await axios.post(API_URL, currentUser.value);
       alert("Thêm tài khoản thành công!");
@@ -199,41 +192,35 @@ const saveUser = async () => {
 
     await fetchUsers();
     resetForm();
-  } catch (err) {
+  } catch {
     alert("Không thể lưu tài khoản!");
   }
 };
 
-//Mở form thêm
 const openAddForm = () => {
   resetForm();
   isEdit.value = false;
 };
 
-//Mở form sửa 
 const openEditForm = (user) => {
   currentUser.value = { ...user };
   isEdit.value = true;
 };
 
-// Xóa tài khoản 
 const deleteUser = async (username) => {
   if (confirm("Bạn có chắc muốn xóa tài khoản này?")) {
     try {
       const user = users.value.find((u) => u.username === username);
       if (!user) return alert("Không tìm thấy tài khoản!");
-
       await axios.delete(`${API_URL}/${user.id}`);
       await fetchUsers();
       alert("Đã xóa tài khoản!");
-    } catch (err) {
-      console.error("Lỗi khi xóa tài khoản:", err);
+    } catch {
       alert("Không thể xóa tài khoản!");
     }
   }
 };
 
-// ===== Khóa / Mở khóa =====
 const toggleLock = async (user) => {
   try {
     const updatedStatus = user.status === "locked" ? "active" : "locked";
@@ -242,16 +229,15 @@ const toggleLock = async (user) => {
     alert(
       updatedStatus === "locked" ? "Tài khoản đã bị khóa!" : "Tài khoản đã được mở khóa!"
     );
-  } catch (err) {
+  } catch {
     alert("Không thể thay đổi trạng thái tài khoản!");
   }
 };
 
-// Reset form 
 const resetForm = () => {
   currentUser.value = {
     username: "",
-    fullname: "",
+    email: "",
     password: "",
     role: "user",
     status: "active",
