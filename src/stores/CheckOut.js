@@ -18,6 +18,7 @@ export const useCartStore = defineStore("cart", {
       const found = this.items.find((item) => item.id === product.id);
       if (found) {
         found.quantity++;
+
       } else {
         this.items.push({ ...product, quantity: 1 });
       }

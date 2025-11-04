@@ -1,6 +1,6 @@
 <template>
   <div class="card p-4 shadow-sm">
-    <h4 class="mb-3">Biểu đồ doanh thu </h4>
+    <h4 class="mb-3">Biểu đồ doanh thu theo tháng</h4>
     <canvas ref="chartCanvas"></canvas>
   </div>
 </template>
@@ -8,65 +8,82 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { Chart } from "chart.js/auto";
-//gọi biểu đồ chart từ thư viện chart.js
-const chartCanvas = ref(null);
+import axios from "axios";
 
-onMounted(() => {
-  const months = [
-    "Th1", "Th2", "Th3", "Th4", "Th5", "Th6",
-    "Th7", "Th8", "Th9", "Th10", "Th11", "Th12"
-  ];
-  //Biến có tên dữ liệu ở trục hoành  
-  const fakeRevenue = [1200000, 950000, 1800000, 2200000, 1750000, 2600000, 3100000, 2900000, 3400000, 3600000, 4000000, 4500000];
-  //Biến có tên dữ liệu ở trục tung  
-  new Chart(chartCanvas.value, {
-    type: "bar", //kiểu dữ liệu xuất hiện trong biểu đồ 
+const chartCanvas = ref(null);
+let chartInstance = null;
+
+// Hàm tính tổng doanh thu theo tháng
+const calculateMonthlyRevenue = (orders) => {
+  const revenueByMonth = Array(12).fill(0);
+
+  orders.forEach(order => {
+    if (order.date && order.total) {
+      const month = new Date(order.date).getMonth(); // tháng (0–11)
+      revenueByMonth[month] += order.total;
+    }
+  });
+
+  return revenueByMonth;
+};
+
+const fetchRevenueData = async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/orders");
+    const orders = response.data;
+
+    const revenues = calculateMonthlyRevenue(orders);
+    const months = [
+      "Th1", "Th2", "Th3", "Th4", "Th5", "Th6",
+      "Th7", "Th8", "Th9", "Th10", "Th11", "Th12"
+    ];
+
+    renderChart(months, revenues);
+  } catch (error) {
+    console.error("Lỗi khi lấy dữ liệu đơn hàng:", error);
+  }
+};
+
+const renderChart = (months, revenues) => {
+  if (chartInstance) chartInstance.destroy();
+
+  chartInstance = new Chart(chartCanvas.value, {
+    type: "bar",
     data: {
-      labels: months,//trục hoành
+      labels: months,
       datasets: [
         {
-          label: "Doanh thu (nghìn VND)",//tên dữ liệu
-          data: fakeRevenue,//trục tung
-          backgroundColor: [
-            "rgba(54, 162, 235, 0.7)",
-            "rgba(255, 99, 132, 0.7)",
-            "rgba(255, 206, 86, 0.7)",
-            "rgba(75, 192, 192, 0.7)",
-            "rgba(153, 102, 255, 0.7)",
-            "rgba(255, 159, 64, 0.7)",
-            "rgba(54, 162, 235, 0.7)",
-            "rgba(255, 99, 132, 0.7)",
-            "rgba(255, 206, 86, 0.7)",
-            "rgba(75, 192, 192, 0.7)",
-            "rgba(153, 102, 255, 0.7)",
-            "rgba(255, 159, 64, 0.7)",
-          ],//màu của từng cột dữ liệu
-          borderWidth: 1,//chỉnh kiểu cột
+          label: "Doanh thu (VND)",
+          data: revenues,
+          backgroundColor: "rgba(54, 162, 235, 0.7)",
+          borderWidth: 1,
         },
       ],
     },
-      options: {
-        responsive: true,//biểu đồ co giãn theo trang web
-        plugins: {
-          title: {
-            display: true,//tiêu đề của biểu đồ
-            text: "Doanh thu theo tháng (Fake Data)",//Nội dung
-            font: { size: 16 },//Cỡ chữ
-          },
-          legend: { display: false },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: "Doanh thu theo tháng trong năm",
+          font: { size: 16 },
         },
-        scales: {
-          y: {
-            beginAtZero: true,//trục tung bắt đầu từ 0
-            title: { display: true, text: "Nghìn VND" },//Tiêu đề bắt đầu từ trục hoành
-          },
-          x: {
-            title: { display: true, text: "Tháng" },//Tiêu đề trục tung
-          },
+        legend: { display: false },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: "VND" },
+        },
+        x: {
+          title: { display: true, text: "Tháng" },
         },
       },
+    },
   });
-});
+};
+
+onMounted(fetchRevenueData);
 </script>
 
 <style scoped>
