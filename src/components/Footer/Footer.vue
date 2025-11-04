@@ -11,11 +11,11 @@
                 <div class="col-md-4 mb-3">
                     <h6 class="fw-bold">Liên kết</h6>
                     <ul class="list-unstyled small">
-                        <li><a class="text-light text-decoration-none" href="https://facebook.com"
+                        <li><a class="text-light text-decoration-none"
                                 target="_blank">Facebook</a></li>
-                        <li><a class="text-light text-decoration-none" href="https://zalo.me" target="_blank">Zalo</a>
+                        <li><a class="text-light text-decoration-none" target="_blank">Zalo</a>
                         </li>
-                        <li><a class="text-light text-decoration-none" href="mailto:support@mybookstore.com">
+                        <li><a class="text-light text-decoration-none">
                                 Email</a></li>
                     </ul>
                 </div>
