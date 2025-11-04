@@ -1,4 +1,4 @@
-<script setup>
+  <script setup>
 import { useRoute } from "vue-router";
 import { computed, onMounted } from "vue";
 import DefaultLayout from "./layout/UserLayout/DefaultLayout.vue";

@@ -17,7 +17,7 @@ let chartInstance = null;
 const calculateMonthlyRevenue = (orders) => {
   const revenueByMonth = Array(12).fill(0);
 
-  orders.forEach(order => {
+  orders.forEach((order) => {
     if (order.date && order.total) {
       const month = new Date(order.date).getMonth(); // tháng (0–11)
       revenueByMonth[month] += order.total;
@@ -34,8 +34,18 @@ const fetchRevenueData = async () => {
 
     const revenues = calculateMonthlyRevenue(orders);
     const months = [
-      "Th1", "Th2", "Th3", "Th4", "Th5", "Th6",
-      "Th7", "Th8", "Th9", "Th10", "Th11", "Th12"
+      "Th1",
+      "Th2",
+      "Th3",
+      "Th4",
+      "Th5",
+      "Th6",
+      "Th7",
+      "Th8",
+      "Th9",
+      "Th10",
+      "Th11",
+      "Th12",
     ];
 
     renderChart(months, revenues);

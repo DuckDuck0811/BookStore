@@ -420,6 +420,14 @@
       "password": "123",
       "role": "user",
       "status": "active"
+    },
+    {
+      "id": "e51d",
+      "username": "aaaa",
+      "email": "aaa@gmail.com",
+      "password": "123",
+      "role": "user",
+      "status": "locked"
     }
   ],
   "orders": [
@@ -674,6 +682,25 @@
       ],
       "total": 2800000,
       "date": "2025-11-03",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": 13,
+      "customer": {
+        "name": "Duck",
+        "address": "Hà Nội, Việt Nam",
+        "phone": "0987654321"
+      },
+      "items": [
+        {
+          "productId": "27",
+          "title": "Phía Sau Nghi Can X - Higashino Keigo",
+          "price": 127500,
+          "quantity": 100
+        }
+      ],
+      "total": 12750000,
+      "date": "2025-11-04",
       "status": "Đang xử lý"
     }
   ],

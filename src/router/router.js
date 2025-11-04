@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-// ===== USER COMPONENTS =====
+// user 
 import House from "@/view/User/Home/House.vue";
 import ProductList from "@/view/User/Product/ProductList.vue";
 import DetectiveDetail from "@/view/User/MainContent/DetectiveNovels/DetectiveDetail.vue";
@@ -15,7 +15,7 @@ import Topbook from "@/view/User/MainContent/TopBook/Topbook.vue";
 import TopbookDetail from "@/view/User/MainContent/TopBook/TopbookDetail.vue";
 import { useAuthStore } from "@/stores/Authstore";
 
-// ===== ADMIN COMPONENTS =====
+// admin
 import Product from "@/view/Admin/Product/Product.vue";
 import Order from "@/view/Admin/Order/Order.vue";
 import Bestseller from "@/view/Admin/Satistical/Bestseller.vue";
@@ -23,7 +23,7 @@ import Revenue from "@/view/Admin/Satistical/Revenue.vue";
 import AdminHome from "@/view/Admin/AdminHome.vue";
 import Category from "@/view/Admin/Category/Category.vue";
 import AccountUsers from "@/view/Admin/AccountUsers/AccountUsers.vue";
-// ===== ROUTES CONFIG =====
+// router setup
 const routes = [
   // Default redirect
   { path: "/", redirect: "/home" },
@@ -125,7 +125,7 @@ const routes = [
     meta: { layout: "auth" },
   },
 
-  // ===== ADMIN =====
+// admin
   {
     path: "/admin/home",
     name: "AdminHome",
@@ -170,13 +170,11 @@ const routes = [
   },
 ];
 
-// ===== CREATE ROUTER =====
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
 
-// ===== NAVIGATION GUARD =====
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore();
   auth.loadUser();
