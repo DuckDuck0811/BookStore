@@ -18,11 +18,9 @@ export const useCartStore = defineStore("cart", {
       const found = this.items.find((item) => item.id === product.id);
       if (found) {
         found.quantity++;
-
       } else {
         this.items.push({ ...product, quantity: 1 });
       }
-
       useToast().success(`${product.title} đã được thêm vào giỏ!`);
     },
 
@@ -70,9 +68,6 @@ export const useCartStore = defineStore("cart", {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newOrder),
         });
-
-        if (!res.ok) throw new Error("Lỗi khi gửi đơn hàng");
-
         const savedOrder = await res.json();
         this.clearCart();
         useToast().success("Đặt hàng thành công!");

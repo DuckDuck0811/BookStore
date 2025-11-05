@@ -25,32 +25,27 @@ let chartInstance = null;
 
 // Hàm lấy dữ liệu từ db.json qua API JSON Server
 async function getProductSalesData() {
-  try {
-    const res = await axios.get("http://localhost:3000/orders");
-    const orders = res.data || [];
-    const salesMap = {};
+  const res = await axios.get("http://localhost:3000/orders");
+  const orders = res.data || [];
+  const salesMap = {};
 
-    orders.forEach((order) => {
-      if (!order.items || !Array.isArray(order.items)) return;
-      order.items.forEach((item) => {
-        if (!item || !item.title) return;
-        if (!salesMap[item.title]) salesMap[item.title] = 0;
-        salesMap[item.title] += item.quantity || 0;
-      });
+  orders.forEach((order) => {
+    if (!order.items || !Array.isArray(order.items)) return;
+    order.items.forEach((item) => {
+      if (!item || !item.title) return;
+      if (!salesMap[item.title]) salesMap[item.title] = 0;
+      salesMap[item.title] += item.quantity || 0;
     });
+  });
 
-    const sorted = Object.entries(salesMap)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5);
+  const sorted = Object.entries(salesMap)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
 
-    return {
-      labels: sorted.map(([title]) => title),
-      data: sorted.map(([, qty]) => qty),
-    };
-  } catch (error) {
-    console.error("Lỗi khi tải dữ liệu từ API:", error);
-    return { labels: [], data: [] };
-  }
+  return {
+    labels: sorted.map(([title]) => title),
+    data: sorted.map(([, qty]) => qty),
+  };
 }
 
 //Hiển thị biểu đồ

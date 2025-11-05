@@ -40,7 +40,7 @@
           <td>{{ order.total.toLocaleString() }}₫</td>
           <td>
             <span
-              :class="{ 
+              :class="{
                 'badge bg-warning text-dark': order.status === 'Đang xử lý',
                 'badge bg-info text-dark': order.status === 'Đang giao hàng',
                 'badge bg-success': order.status === 'Đã giao thành công',

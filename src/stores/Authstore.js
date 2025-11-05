@@ -25,6 +25,8 @@ export const useAuthStore = defineStore("auth", {
           return false;
         }
 
+
+
         const accounts = await res.json();
         const user = accounts.find(
           (u) => u.username === username && u.password === password

@@ -394,6 +394,31 @@
       "id": "3",
       "name": "Detective",
       "description": "Truyện trinh thám, điều tra."
+    },
+    {
+      "id": "4",
+      "name": "Fantasy",
+      "description": "Truyện fantasy, tưởng tượng."
+    },
+    {
+      "id": "5",
+      "name": "Horror",
+      "description": "Truyện horror, kinh dị."
+    },
+    {
+      "id": "6",
+      "name": "Mystery",
+      "description": "Truyện mystery, bí ẩn."
+    },
+    {
+      "id": "7",
+      "name": "Thriller",
+      "description": "Truyện thriller, hồi hộp."
+    },
+    {
+      "id": "8",
+      "name": "Romance",
+      "description": "Truyện romance, tình yêu."
     }
   ],
   "accounts": [
@@ -427,7 +452,7 @@
       "email": "aaa@gmail.com",
       "password": "123",
       "role": "user",
-      "status": "locked"
+      "status": "active"
     }
   ],
   "orders": [
@@ -685,7 +710,7 @@
       "status": "Đang xử lý"
     },
     {
-      "id": 13,
+      "id": "13",
       "customer": {
         "name": "Duck",
         "address": "Hà Nội, Việt Nam",
@@ -701,6 +726,63 @@
       ],
       "total": 12750000,
       "date": "2025-11-04",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": "14",
+      "customer": {
+        "name": "Trương Minh Đức",
+        "address": "Đông Ngạc, Hà Nội",
+        "phone": "0877438292"
+      },
+      "items": [
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        }
+      ],
+      "total": 97500,
+      "date": "2025-11-04",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": "15",
+      "customer": {
+        "name": "gggssss",
+        "address": "shadusadh,dsajusdha",
+        "phone": "01234566798"
+      },
+      "items": [
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 200
+        }
+      ],
+      "total": 19500000,
+      "date": "2025-11-05",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": "16",
+      "customer": {
+        "name": "gsadhsaakdh",
+        "address": "bgss,sjsssss",
+        "phone": "0192837465"
+      },
+      "items": [
+        {
+          "productId": "1",
+          "title": "Harry Potter và Hòn Đá Phù Thủy",
+          "price": 90000,
+          "quantity": 100
+        }
+      ],
+      "total": 9000000,
+      "date": "2025-11-05",
       "status": "Đang xử lý"
     }
   ],
@@ -802,6 +884,9 @@
       "height": "300px",
       "cardHeight": "500px",
       "description": "Một thiên tài toán học lập kế hoạch hoàn hảo để che giấu tội ác của người phụ nữ mình yêu. Câu chuyện mở ra cuộc đấu trí căng thẳng giữa hung thủ và vị thám tử thiên tài, hé lộ sự hy sinh, tình yêu, và những tính toán vượt ngoài dự đoán của độc giả."
+    },
+    {
+      "id": "e37d"
     }
   ],
   "newBooks": [

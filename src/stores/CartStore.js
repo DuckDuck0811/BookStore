@@ -21,7 +21,6 @@ export const useCartStore = defineStore("cart", {
       } else {
         this.items.push({ ...product, quantity: 1 });
       }
-
       const toast = useToast();
       toast.success(`${product.title} đã được thêm vào giỏ!`);
     },

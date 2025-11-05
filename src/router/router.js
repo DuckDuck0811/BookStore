@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-
-// user 
+// user
 import House from "@/view/User/Home/House.vue";
 import ProductList from "@/view/User/Product/ProductList.vue";
 import DetectiveDetail from "@/view/User/MainContent/DetectiveNovels/DetectiveDetail.vue";
@@ -72,7 +71,6 @@ const routes = [
     component: NewBookDetail,
     meta: { layout: "default" },
   },
-
   {
     path: "/topbook",
     name: "Topbook",
@@ -125,7 +123,7 @@ const routes = [
     meta: { layout: "auth" },
   },
 
-// admin
+  // admin
   {
     path: "/admin/home",
     name: "AdminHome",

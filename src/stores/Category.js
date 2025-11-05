@@ -35,7 +35,9 @@ export const useCategoryStore = defineStore("categoryStore", {
 
     async deleteCategory(id) {
       await axios.delete(`${API_URL}/${String(id)}`);
-      this.categories = this.categories.filter((c) => String(c.id) !== String(id));
+      this.categories = this.categories.filter(
+        (c) => String(c.id) !== String(id)
+      );
     },
   },
 });

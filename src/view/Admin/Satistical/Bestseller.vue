@@ -28,30 +28,24 @@ const calculateMonthlyRevenue = (orders) => {
 };
 
 const fetchRevenueData = async () => {
-  try {
     const response = await axios.get("http://localhost:3000/orders");
     const orders = response.data;
-
     const revenues = calculateMonthlyRevenue(orders);
     const months = [
-      "Th1",
-      "Th2",
-      "Th3",
-      "Th4",
-      "Th5",
-      "Th6",
-      "Th7",
-      "Th8",
-      "Th9",
-      "Th10",
-      "Th11",
-      "Th12",
+      "Tháng 1",
+      "Tháng 2",
+      "Tháng 3",
+      "Tháng 4",
+      "Tháng 5",
+      "Tháng 6",
+      "Tháng 7",
+      "Tháng 8",
+      "Tháng 9",
+      "Tháng 10",
+      "Tháng 11",
+      "Tháng 12",
     ];
-
     renderChart(months, revenues);
-  } catch (error) {
-    console.error("Lỗi khi lấy dữ liệu đơn hàng:", error);
-  }
 };
 
 const renderChart = (months, revenues) => {
