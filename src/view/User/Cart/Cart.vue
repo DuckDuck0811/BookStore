@@ -3,7 +3,6 @@
     <h3>Giỏ hàng</h3>
     <!-- Nếu giỏ hàng trống sẽ hiện thông báo giỏ hàng đang trống -->
     <div v-if="cartStore.items.length === 0" class="text-muted">Giỏ hàng đang trống</div>
-    <!-- Dữ liệu được lấy từ trong localStorage sẽ được lưu trong bảng -->
     <table v-else class="table table-bordered text-center">
       <thead class="table-light">
         <tr>

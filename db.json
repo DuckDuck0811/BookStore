@@ -784,6 +784,31 @@
       "total": 9000000,
       "date": "2025-11-05",
       "status": "Đang xử lý"
+    },
+    {
+      "id": 17,
+      "customer": {
+        "name": "dátyfdag",
+        "address": "dsasdsad,sadasd",
+        "phone": "0987654321"
+      },
+      "items": [
+        {
+          "productId": "4",
+          "title": "The Lord of the Rings: The Two Towers",
+          "price": 157500,
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        }
+      ],
+      "total": 255000,
+      "date": "2025-11-05",
+      "status": "Đang xử lý"
     }
   ],
   "detectiveNovels": [
@@ -884,9 +909,6 @@
       "height": "300px",
       "cardHeight": "500px",
       "description": "Một thiên tài toán học lập kế hoạch hoàn hảo để che giấu tội ác của người phụ nữ mình yêu. Câu chuyện mở ra cuộc đấu trí căng thẳng giữa hung thủ và vị thám tử thiên tài, hé lộ sự hy sinh, tình yêu, và những tính toán vượt ngoài dự đoán của độc giả."
-    },
-    {
-      "id": "e37d"
     }
   ],
   "newBooks": [

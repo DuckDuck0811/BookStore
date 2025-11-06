@@ -52,26 +52,11 @@ const perPage = 4;
 onMounted(async () => {
   try {
     const res = await axios.get("http://localhost:3000/books");
+    a;
     books.value = res.data;
   } catch (err) {
     console.error("Lỗi tải dữ liệu sách:", err);
   }
-});
-
-// Reset trang khi searchKeyword thay đổi
-watch(
-  () => props.searchKeyword,
-  () => {
-    currentPage.value = 1;
-  }
-);
-
-// Lọc theo searchKeyword
-const filteredBooks = computed(() => {
-  if (!props.searchKeyword) return books.value;
-  return books.value.filter((b) =>
-    b.title.toLowerCase().includes(props.searchKeyword.toLowerCase())
-  );
 });
 
 // Phân trang
