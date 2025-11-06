@@ -4,7 +4,6 @@
     <div
       class="card-header bg-white fw-bold d-flex justify-content-between align-items-center"
     >
-      <!-- Form thêm sản phẩm  -->
       <span>Product</span>
       <button
         class="btn btn-outline-secondary btn-sm"
@@ -15,12 +14,13 @@
         + Add Product
       </button>
     </div>
-    <!-- Bảng dữ liệu các thành phần của sản phẩm -->
+
+    <!-- Bảng dữ liệu -->
     <div class="card-body p-0">
       <table class="table table-bordered table-hover mb-0 align-middle">
         <thead class="table-primary text-center">
           <tr>
-            <th style="width: 100px">ID</th>
+            <th style="width: 100px">#</th>
             <th style="width: 150px">Image</th>
             <th>Title</th>
             <th style="width: 150px">Category</th>
@@ -30,11 +30,8 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Phân trang của sản phẩm mỗi trang có 9 sản phẩm -->
           <tr v-for="(item, index) in paginatedProducts" :key="item.id">
-            <td class="text-center">
-              {{ (currentPage - 1) * pageSize + index + 1 }}
-            </td>
+            <td class="text-center">{{ (currentPage - 1) * pageSize + index + 1 }}</td>
             <td class="text-center">
               <img
                 :src="
@@ -45,7 +42,6 @@
                 alt="cover"
                 style="width: 80px; height: auto"
               />
-              <!-- Hiển thị ảnh của mỗi sản phẩm -->
             </td>
             <td>{{ item.title }}</td>
             <td class="text-center">{{ item.category }}</td>
@@ -59,18 +55,15 @@
                 data-bs-target="#addProductModal"
               >
                 Edit
-                <!-- Nút edit sản phẩm -->
               </button>
               <button class="btn btn-sm btn-danger" @click="removeProduct(item.id)">
                 Delete
-                <!-- Nút remove sản phẩm -->
               </button>
             </td>
           </tr>
           <tr v-if="paginatedProducts.length === 0">
             <td colspan="7" class="text-center text-muted py-3">Không có sản phẩm nào</td>
           </tr>
-          <!-- Giao diện sẽ hiện thông báo "Không có sản phẩm nào" khi danh sách sản phẩm trống -->
         </tbody>
       </table>
     </div>
@@ -88,9 +81,7 @@
             class="page-item"
             :class="{ active: currentPage === page }"
           >
-            <a class="page-link" href="#" @click.prevent="goToPage(page)">
-              {{ page }}
-            </a>
+            <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
           </li>
           <li class="page-item" :class="{ disabled: currentPage === totalPages }">
             <a class="page-link" href="#" @click.prevent="nextPage">&raquo;</a>
@@ -100,7 +91,7 @@
     </div>
   </div>
 
-  <!-- Thêm sửa các sản phẩm -->
+  <!-- Modal thêm / sửa -->
   <div class="modal fade" id="addProductModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
       <div class="modal-content rounded-3 shadow-lg">
@@ -131,7 +122,6 @@
                   class="form-control mt-2"
                   @change="onFileChange"
                 />
-                <!-- Chọn ảnh của sản phẩm -->
               </div>
 
               <div class="col-md-8">
@@ -143,8 +133,8 @@
                     class="form-control"
                     placeholder="Tên sản phẩm"
                   />
-                  <!-- Tên sản phẩm -->
                 </div>
+
                 <div class="row">
                   <div class="col-md-6 mb-3">
                     <label class="form-label">Price</label>
@@ -155,7 +145,6 @@
                       placeholder="90,000₫"
                     />
                   </div>
-                  <!--Giảm giá của sản phẩm -->
                   <div class="col-md-6 mb-3">
                     <label class="form-label">Discount</label>
                     <input
@@ -166,7 +155,7 @@
                     />
                   </div>
                 </div>
-                <!-- Chọn loại sản phẩm qua combobox -->
+
                 <div class="mb-3">
                   <label class="form-label">Category</label>
                   <select v-model="newProduct.category" class="form-select">
@@ -176,7 +165,7 @@
                     </option>
                   </select>
                 </div>
-                <!-- Mô tả của sản phẩm -->
+
                 <div class="mb-3">
                   <label class="form-label">Description</label>
                   <textarea
@@ -193,11 +182,9 @@
               <button type="submit" class="btn btn-success me-2">
                 {{ isEdit ? "Cập nhật" : "Lưu sản phẩm" }}
               </button>
-              <!-- Nút cập nhật sẽ được thay đổi khi chọn sản phẩm edit và lưu sản phẩm khi thêm sản phẩm mới  -->
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                 Hủy
               </button>
-              <!-- Nút hủy -->
             </div>
           </form>
         </div>
@@ -208,23 +195,19 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { useProductStore } from "../../../stores/ProductStore";
+import { useProductStore } from "@/stores/ProductStore";
 import { useCategoryStore } from "@/stores/Category";
 
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
 
-// Load dữ liệu
 onMounted(() => {
   productStore.fetchProducts();
   categoryStore.fetchCategories();
 });
 
-// Lấy danh sách category dynamic
 const categories = computed(() => categoryStore.categories);
-
 const products = computed(() => productStore.products);
-const loading = ref(false);
 const isEdit = ref(false);
 const editingId = ref(null);
 const newProduct = ref(getEmptyProduct());
@@ -232,7 +215,6 @@ const previewImage = ref(null);
 
 function getEmptyProduct() {
   return {
-    id: Date.now(),
     img: "",
     title: "",
     oldPrice: "",
@@ -260,13 +242,13 @@ const saveProduct = async () => {
   try {
     if (isEdit.value) {
       await productStore.updateProduct(editingId.value, newProduct.value);
+      await productStore.fetchProducts();
     } else {
       await productStore.addProduct(newProduct.value);
     }
     resetForm();
     isEdit.value = false;
     editingId.value = null;
-    await productStore.fetchProducts();
   } catch (err) {
     console.error(err);
     alert("Lỗi khi lưu sản phẩm!");
@@ -283,9 +265,8 @@ const editProduct = (item) => {
 const onFileChange = (e) => {
   const file = e.target.files[0];
   if (!file) return;
-
   newProduct.value.img = file.name;
-  previewImage.value = "/" + file.name; // hiển thị ảnh trong /public
+  previewImage.value = "/" + file.name;
 };
 
 const removeProduct = async (id) => {
@@ -315,12 +296,14 @@ const paginatedProducts = computed(() => {
 function prevPage() {
   if (currentPage.value > 1) currentPage.value--;
 }
-
 function nextPage() {
   if (currentPage.value < totalPages.value) currentPage.value++;
 }
-
 function goToPage(page) {
   currentPage.value = page;
+}
+function openAddForm() {
+  resetForm();
+  isEdit.value = false;
 }
 </script>

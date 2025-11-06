@@ -786,7 +786,7 @@
       "status": "Đang xử lý"
     },
     {
-      "id": 17,
+      "id": "17",
       "customer": {
         "name": "dátyfdag",
         "address": "dsasdsad,sadasd",
@@ -808,6 +808,25 @@
       ],
       "total": 255000,
       "date": "2025-11-05",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": "18",
+      "customer": {
+        "name": "aaaaaa",
+        "address": "shsadagsda,koijnmbh",
+        "phone": "01928374655"
+      },
+      "items": [
+        {
+          "productId": "7",
+          "title": "Percy Jackson: The Lightning Thief",
+          "price": 112500,
+          "quantity": 100
+        }
+      ],
+      "total": 11250000,
+      "date": "2025-11-06",
       "status": "Đang xử lý"
     }
   ],
