@@ -76,7 +76,7 @@ function addToCart(book) {
     img: book.img,
     quantity: qty.value,
   });
-  router.push("/cart");
+  // Thông báo đã được hiển thị từ CartStore.addToCart()
 }
 
 // Mua ngay

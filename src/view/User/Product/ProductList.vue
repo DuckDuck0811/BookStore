@@ -179,16 +179,11 @@ function addToCart(book) {
     price: Number(book.newPrice.replace(/[^\d]/g, "")),
     img: resolveImage(book.img),
   });
-
-  toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 });
-
-  setTimeout(() => {
-    router.push("/cart");
-  }, 2000);
+  // Thông báo đã được hiển thị từ CartStore.addToCart()
 }
 </script>
 
-<style scoped>
+<style scoped>  
 .new-price {
   font-size: 1.1rem;
 }

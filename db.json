@@ -1,20 +1,6 @@
 {
   "products": [
     {
-      "id": "1",
-      "img": "harrypotter1.jpg",
-      "title": "Harry Potter và Hòn Đá Phù Thủy",
-      "oldPrice": "120,000₫",
-      "newPrice": "90,000₫",
-      "discount": "-25%",
-      "aspect": "3/4",
-      "category": "Science fiction",
-      "cardHeight": "500px",
-      "width": "100%",
-      "height": "300px",
-      "description": "Cuốn mở đầu hành trình kỳ diệu của Harry Potter – cậu bé phù thủy mồ côi sống với gia đình Dursley khắc nghiệt, bỗng nhận được thư mời nhập học Hogwarts. Ở đây, Harry khám phá sức mạnh phép thuật tiềm ẩn, làm quen Ron và Hermione, phát hiện những bí mật về cha mẹ mình và đối mặt với thế lực hắc ám đe dọa thế giới phù thủy ngay trong năm học đầu tiên."
-    },
-    {
       "id": "2",
       "img": "harrypotter2.jpg",
       "title": "Harry Potter và Phòng Chứa Bí Mật",
@@ -112,20 +98,7 @@
       "height": "300px",
       "description": "Katniss Everdeen tình nguyện thay em gái tham gia Hunger Games – cuộc đấu sinh tử truyền hình trực tiếp giữa các quận. Trong đấu trường khốc liệt, cô vừa phải tìm cách sinh tồn vừa trở thành biểu tượng phản kháng của cả quốc gia, khơi dậy hy vọng cho những con người bị áp bức."
     },
-    {
-      "id": "9",
-      "img": "maze1.jpg",
-      "title": "The Maze Runner",
-      "oldPrice": "170,000₫",
-      "newPrice": "127,500₫",
-      "discount": "-25%",
-      "aspect": "3/4",
-      "category": "Science fiction",
-      "cardHeight": "500px",
-      "width": "100%",
-      "height": "300px",
-      "description": "Thomas tỉnh dậy trong một thang máy, mất hết ký ức, và xuất hiện ở một mê cung khổng lồ cùng nhiều cậu bé khác. Họ tự tổ chức cuộc sống, tìm lối ra khỏi mê cung và đối mặt với sinh vật nguy hiểm. Thomas phải khám phá sự thật về tổ chức bí ẩn WICKED và vai trò của chính mình trong thí nghiệm tàn khốc này."
-    },
+
     {
       "id": "10",
       "img": "divergent1.jpg",
@@ -856,7 +829,7 @@
       "category": "Detective",
       "width": "100%",
       "height": "300px",
-      "cardHeight": "200px",
+      "cardHeight": "500px",
       "description": "Holmes và Watson đối mặt với vụ án phức tạp liên quan tới kho báu Ấn Độ, lời hứa bí mật của những người lính cũ và bốn dấu hiệu kỳ lạ dẫn đến một chuỗi tội ác rùng rợn. Sự nhạy bén của Holmes đưa người đọc qua từng manh mối, mở ra bức tranh âm mưu và lòng tham của con người."
     },
     {
@@ -928,6 +901,20 @@
       "height": "300px",
       "cardHeight": "500px",
       "description": "Một thiên tài toán học lập kế hoạch hoàn hảo để che giấu tội ác của người phụ nữ mình yêu. Câu chuyện mở ra cuộc đấu trí căng thẳng giữa hung thủ và vị thám tử thiên tài, hé lộ sự hy sinh, tình yêu, và những tính toán vượt ngoài dự đoán của độc giả."
+    },
+    {
+      "id": "9",
+      "img": "/maze1.jpg",
+      "title": "The Maze Runner",
+      "oldPrice": "170,000₫",
+      "newPrice": "127,500₫",
+      "discount": "-25%",
+      "aspect": "3/4",
+      "category": "Detective",
+      "width": "100%",
+      "height": "300px",
+      "cardHeight": "500px",
+      "description": "Thomas tỉnh dậy trong một thang máy, mất hết ký ức, và xuất hiện ở một mê cung khổng lồ cùng nhiều cậu bé khác. Họ tự tổ chức cuộc sống, tìm lối ra khỏi mê cung và đối mặt với sinh vật nguy hiểm. Thomas phải khám phá sự thật về tổ chức bí ẩn WICKED và vai trò của chính mình trong thí nghiệm tàn khốc này."
     }
   ],
   "newBooks": [

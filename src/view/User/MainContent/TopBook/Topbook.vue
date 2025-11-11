@@ -118,8 +118,7 @@ function addToCart(book) {
     quantity: 1,
   });
 
-  toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 });
-  setTimeout(() => router.push("/cart"), 2000);
+  // Thông báo đã được hiển thị từ CartStore.addToCart()
 }
 
 // Chuyển đến trang chi tiết sách

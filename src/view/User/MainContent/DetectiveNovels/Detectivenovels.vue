@@ -17,18 +17,18 @@
       <div class="col-md-3" v-for="book in filteredBooks" :key="book.id">
         <div
           class="card position-relative product-card"
+          :style="{ height: book.cardHeight || '500px', cursor: 'pointer' }"
           @click="goToDetail(book)"
-          style="cursor: pointer"
         >
           <img
             :src="book.img"
             class="card-img-top"
-            style="
-              width: 100%;
-              height: 250px;
-              object-fit: cover;
-              border-radius: 10px 10px 0 0;
-            "
+            :style="{
+              width: book.width || '100%',
+              height: book.height || '300px',
+              objectFit: 'cover',
+              borderRadius: '10px 10px 0 0',
+            }"
           />
 
           <div class="card-body text-center">
@@ -98,10 +98,7 @@ function addToCart(book) {
     price: Number(book.newPrice.replace(/[^\d]/g, "")),
     img: book.img,
   });
-  toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 });
-  setTimeout(() => {
-    router.push("/cart");
-  }, 2000);
+  // Thông báo đã được hiển thị từ CartStore.addToCart()
 }
 
 function goToDetail(book) {
@@ -110,11 +107,20 @@ function goToDetail(book) {
 </script>
 
 <style scoped>
+.product-card .card-body {
+  padding: 0.75rem;
+}
+.product-card .card-text {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
 .price {
   display: flex;
   justify-content: center;
   gap: 5px;
-  margin-top: 5px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 .price del {
   color: #555;
@@ -130,6 +136,8 @@ function goToDetail(book) {
   overflow: hidden;
   border-radius: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 .product-card:hover {
   transform: translateY(-4px);

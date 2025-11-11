@@ -95,10 +95,7 @@ function addToCart(comic) {
     price: Number(comic.newPrice.replace(/[^\d]/g, "")),
     img: comic.img,
   });
-  toast.success("Đã thêm sản phẩm vào giỏ hàng!", { autoClose: 2000 });
-  setTimeout(() => {
-    router.push("/cart");
-  }, 1000);
+  // Thông báo đã được hiển thị từ CartStore.addToCart()
 }
 
 // Chuyển đến trang chi tiết truyện tranh

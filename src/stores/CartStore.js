@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { useToast } from "vue-toastification";
+import { toast } from "vue3-toastify";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
@@ -21,29 +21,38 @@ export const useCartStore = defineStore("cart", {
       } else {
         this.items.push({ ...product, quantity: 1 });
       }
-      const toast = useToast();
-      toast.success(`${product.title} đã được thêm vào giỏ!`);
+      toast.success("Đã thêm sản phẩm vào giỏ hàng!", {
+        autoClose: 2000,
+        position: "top-right",
+        pauseOnHover: false,
+      });
     },
 
     removeItem(id) {
       this.items = this.items.filter((item) => item.id !== id);
-
-      const toast = useToast();
-      toast.info(`Sản phẩm đã được xóa khỏi giỏ`);
+      toast.info("Sản phẩm đã được xóa khỏi giỏ", {
+        autoClose: 2000,
+        position: "top-right",
+        pauseOnHover: false,
+      });
     },
 
     clearCart() {
       this.items = [];
-
-      const toast = useToast();
-      toast.info("Giỏ hàng đã được làm trống");
+      toast.info("Giỏ hàng đã được làm trống", {
+        autoClose: 2000,
+        position: "top-right",
+        pauseOnHover: false,
+      });
     },
 
     async postOrder(customerInfo) {
-      const toast = useToast();
 
       if (!this.items.length) {
-        toast.error("Giỏ hàng trống, không thể đặt hàng!");
+        toast.error("Giỏ hàng trống, không thể đặt hàng!", {
+          position: "top-right",
+          pauseOnHover: false,
+        });
         return { success: false, error: "Giỏ hàng trống" };
       }
 
@@ -86,11 +95,17 @@ export const useCartStore = defineStore("cart", {
 
         const savedOrder = await res.json();
         this.clearCart();
-        toast.success("Đặt hàng thành công!");
+        toast.success("Đặt hàng thành công!", {
+          position: "top-right",
+          pauseOnHover: false,
+        });
         return { success: true, order: savedOrder };
       } catch (err) {
         console.error("Lỗi gửi đơn hàng:", err);
-        toast.error("Đặt hàng thất bại!");
+        toast.error("Đặt hàng thất bại!", {
+          position: "top-right",
+          pauseOnHover: false,
+        });
         return { success: false, error: err.message };
       }
     },
