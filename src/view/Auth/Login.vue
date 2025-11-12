@@ -41,12 +41,64 @@
         </div>
 
         <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+
+        <!-- Link Quên mật khẩu -->
+        <div class="text-center mt-3">
+          <a href="#" @click.prevent="openForgotPasswordModal">Quên mật khẩu?</a>
+        </div>
       </form>
 
       <div class="text-center mt-3">
         <router-link to="/register" class="text-decoration-none">
           Chưa có tài khoản? Đăng ký
         </router-link>
+      </div>
+    </div>
+
+    <!-- Modal Quên mật khẩu -->
+    <div
+      v-if="showForgotModal"
+      class="modal-backdrop fade show"
+      @click="closeForgotPasswordModal"
+    ></div>
+    <div
+      v-if="showForgotModal"
+      class="modal fade show d-block"
+      tabindex="-1"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="forgotPasswordModalLabel"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-info text-white">
+            <h5 class="modal-title" id="forgotPasswordModalLabel">Quên mật khẩu</h5>
+            <button
+              type="button"
+              class="btn-close"
+              @click="closeForgotPasswordModal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Nhập email đăng ký của bạn để nhận hướng dẫn đặt lại mật khẩu.</p>
+            <input
+              type="email"
+              v-model="forgotEmail"
+              class="form-control"
+              placeholder="Nhập email"
+              required
+            />
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" @click="closeForgotPasswordModal">
+              Hủy
+            </button>
+            <button class="btn btn-primary" @click="submitForgotPassword">
+              Gửi
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -63,9 +115,11 @@ const remember = ref(false);
 const router = useRouter();
 const auth = useAuthStore();
 
+const showForgotModal = ref(false);
+const forgotEmail = ref("");
+
 onMounted(() => auth.loadUser());
 
-//  Kiểm tra toàn bộ điều kiện trước khi đăng nhập
 const handleLogin = async (e) => {
   e.preventDefault();
 
@@ -82,13 +136,11 @@ const handleLogin = async (e) => {
         u.password === password.value
     );
 
-    // Không tìm thấy tài khoản
     if (!user) {
       alert("Sai tên đăng nhập hoặc mật khẩu!");
       return;
     }
 
-    // Tài khoản bị khóa
     const status = (user.status || "").toLowerCase().trim();
     if (status !== "active") {
       alert("Tài khoản này đã bị khóa hoặc chưa kích hoạt!");
@@ -107,7 +159,6 @@ const handleLogin = async (e) => {
 
     alert("Đăng nhập thành công!");
 
-    // Phân quyền
     if (user.role === "admin") {
       router.push("/admin/home");
     } else {
@@ -116,6 +167,44 @@ const handleLogin = async (e) => {
   } catch (error) {
     console.error("Lỗi khi đăng nhập:", error);
     alert("Không thể kết nối tới máy chủ!");
+  }
+};
+
+// Quên mật khẩu
+const openForgotPasswordModal = () => {
+  forgotEmail.value = "";
+  showForgotModal.value = true;
+};
+
+const closeForgotPasswordModal = () => {
+  showForgotModal.value = false;
+};
+
+const submitForgotPassword = async () => {
+  if (!forgotEmail.value.trim()) {
+    alert("Vui lòng nhập email!");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:3000/accounts");
+    const accounts = await res.json();
+    const user = accounts.find(
+      (u) => u.email.trim().toLowerCase() === forgotEmail.value.trim().toLowerCase()
+    );
+
+    if (!user) {
+      alert("Email không tồn tại trong hệ thống!");
+      return;
+    }
+
+    // Giả lập gửi mail reset
+    alert(`Link đặt lại mật khẩu đã được gửi tới ${forgotEmail.value} (giả lập).`);
+
+    closeForgotPasswordModal();
+  } catch (error) {
+    console.error("Lỗi khi gửi yêu cầu đặt lại mật khẩu:", error);
+    alert("Lỗi khi gửi yêu cầu đặt lại mật khẩu!");
   }
 };
 </script>

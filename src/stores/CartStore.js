@@ -47,7 +47,6 @@ export const useCartStore = defineStore("cart", {
     },
 
     async postOrder(customerInfo) {
-
       if (!this.items.length) {
         toast.error("Giỏ hàng trống, không thể đặt hàng!", {
           position: "top-right",
@@ -57,19 +56,23 @@ export const useCartStore = defineStore("cart", {
       }
 
       try {
-        //  Lấy toàn bộ đơn hàng hiện có
+        // Lấy toàn bộ đơn hàng hiện có
         const resAll = await fetch("http://localhost:3000/orders");
         const existingOrders = await resAll.json();
 
-        //  Lọc chỉ lấy các id là số để tránh mấy id kiểu "d390"
+        // Lấy số trong id dạng DH001 (lấy phần số, bỏ "DH")
         const numericIds = existingOrders
-          .map((o) => parseInt(o.id))
+          .map((o) => {
+            const match = o.id.match(/\d+/); // tìm phần số trong id
+            return match ? parseInt(match[0], 10) : NaN;
+          })
           .filter((id) => !isNaN(id));
 
         // Tính ID mới (bắt đầu từ 1 nếu trống)
-        const newId = numericIds.length > 0 ? Math.max(...numericIds) + 1 : 1;
+        const maxNum = numericIds.length > 0 ? Math.max(...numericIds) : 0;
+        const newId = `DH${String(maxNum + 1).padStart(3, "0")}`;
 
-        //  Tạo đơn hàng mới
+        // Tạo đơn hàng mới
         const newOrder = {
           id: newId, // ID tự tăng từ 1
           customer: customerInfo,
@@ -84,7 +87,7 @@ export const useCartStore = defineStore("cart", {
           status: "Đang xử lý",
         };
 
-        //  Gửi đơn hàng lên server
+        // Gửi đơn hàng lên server
         const res = await fetch("http://localhost:3000/orders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

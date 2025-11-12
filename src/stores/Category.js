@@ -16,7 +16,18 @@ export const useCategoryStore = defineStore("categoryStore", {
     },
 
     async addCategory(newCategory) {
-      const newId = String(this.categories.length + 1);
+      let maxNum = 0;
+      this.categories.forEach((c) => {
+        const match = c.id?.match(/^CT(\d{3})$/);
+        if (match) {
+          const num = parseInt(match[1], 10);
+          if (num > maxNum) maxNum = num;
+        }
+      });
+
+      const nextNum = maxNum + 1;
+      const newId = `CT${String(nextNum).padStart(3, "0")}`;
+
       const res = await axios.post(API_URL, { ...newCategory, id: newId });
       this.categories.push(res.data);
     },

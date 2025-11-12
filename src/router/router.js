@@ -125,10 +125,12 @@ const routes = [
 
   // admin
   {
+    path: "/admin",
+    redirect: "/admin/product",
+  },
+  {
     path: "/admin/home",
-    name: "AdminHome",
-    component: AdminHome,
-    meta: { requiresAdmin: true },
+    redirect: "/admin/product",
   },
   {
     path: "/admin/product",

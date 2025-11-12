@@ -25,8 +25,6 @@ export const useAuthStore = defineStore("auth", {
           return false;
         }
 
-
-
         const accounts = await res.json();
         const user = accounts.find(
           (u) => u.username === username && u.password === password
@@ -84,6 +82,7 @@ export const useAuthStore = defineStore("auth", {
     async toggleAccountStatus(userId) {
       try {
         const res = await fetch(`http://localhost:3000/accounts/${userId}`);
+        if (!res.ok) throw new Error("Không tìm thấy tài khoản");
         const user = await res.json();
         const newStatus = user.status === "active" ? "locked" : "active";
 
@@ -100,6 +99,55 @@ export const useAuthStore = defineStore("auth", {
         );
       } catch (error) {
         alert("Lỗi khi cập nhật trạng thái tài khoản!");
+      }
+    },
+
+    // Hàm tạo ID tài khoản mới dạng TK0, TK1, TK2,...
+    generateNextUserId(accounts) {
+      if (!Array.isArray(accounts) || accounts.length === 0) return "TK0";
+
+      let maxNum = -1;
+      for (const acc of accounts) {
+        if (!acc.id) continue;
+        const match = acc.id.match(/^TK(\d+)$/);
+        if (match) {
+          const num = parseInt(match[1], 10);
+          if (num > maxNum) maxNum = num;
+        }
+      }
+      return `TK${maxNum + 1}`;
+    },
+
+    // Thêm tài khoản mới
+    async addAccount(newUserData) {
+      try {
+        // Lấy danh sách tài khoản hiện có
+        const res = await fetch("http://localhost:3000/accounts");
+        if (!res.ok) throw new Error("Không thể tải danh sách tài khoản");
+        const accounts = await res.json();
+
+        // Tạo ID mới dùng hàm generateNextUserId
+        const newId = this.generateNextUserId(accounts);
+
+        const newUser = {
+          id: newId,
+          ...newUserData,
+          status: "active", // mặc định tài khoản mới active
+        };
+
+        // Gửi dữ liệu lên server
+        const resAdd = await fetch("http://localhost:3000/accounts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newUser),
+        });
+
+        if (!resAdd.ok) throw new Error("Lỗi khi thêm tài khoản");
+
+        return await resAdd.json();
+      } catch (error) {
+        console.error(error);
+        throw error;
       }
     },
   },

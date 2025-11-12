@@ -98,7 +98,6 @@
       "height": "300px",
       "description": "Katniss Everdeen tình nguyện thay em gái tham gia Hunger Games – cuộc đấu sinh tử truyền hình trực tiếp giữa các quận. Trong đấu trường khốc liệt, cô vừa phải tìm cách sinh tồn vừa trở thành biểu tượng phản kháng của cả quốc gia, khơi dậy hy vọng cho những con người bị áp bức."
     },
-
     {
       "id": "10",
       "img": "divergent1.jpg",
@@ -354,415 +353,111 @@
   ],
   "categories": [
     {
-      "id": "1",
+      "id": "CT001",
       "name": "Science fiction",
       "description": "Sách về khoa học và công nghệ tương lai."
     },
     {
-      "id": "2",
+      "id": "CT002",
       "name": "Comic",
       "description": "Truyện tranh và truyện minh họa."
     },
     {
-      "id": "3",
+      "id": "CT003",
       "name": "Detective",
       "description": "Truyện trinh thám, điều tra."
     },
     {
-      "id": "4",
+      "id": "CT004",
       "name": "Fantasy",
       "description": "Truyện fantasy, tưởng tượng."
     },
     {
-      "id": "5",
+      "id": "CT005",
       "name": "Horror",
       "description": "Truyện horror, kinh dị."
     },
     {
-      "id": "6",
-      "name": "Mystery",
-      "description": "Truyện mystery, bí ẩn."
-    },
-    {
-      "id": "7",
-      "name": "Thriller",
-      "description": "Truyện thriller, hồi hộp."
-    },
-    {
-      "id": "8",
+      "id": "CT006",
       "name": "Romance",
-      "description": "Truyện romance, tình yêu."
+      "description": "Truyện tình cảm"
+    },
+    {
+      "id": "CT007",
+      "name": "History",
+      "description": "Sách lịch sử."
     }
   ],
   "accounts": [
     {
-      "id": "1",
+      "id": "AC001",
       "username": "admin",
       "email": "admin@gmail.com",
       "password": "123",
       "role": "admin",
-      "status": "active"
+      "status": "Active"
     },
     {
-      "id": "2",
+      "id": "AC002",
       "username": "user",
-      "email": "user@gmail.com",
+      "email": "ductmth04341@fpt.edu.vn",
       "password": "123",
       "role": "user",
-      "status": "active"
+      "status": "Active"
     },
     {
-      "id": "1001",
+      "id": "AC003",
       "username": "duck",
       "email": "Duck@gmail.com",
       "password": "123",
       "role": "user",
-      "status": "active"
-    },
-    {
-      "id": "e51d",
-      "username": "aaaa",
-      "email": "aaa@gmail.com",
-      "password": "123",
-      "role": "user",
-      "status": "active"
+      "status": "Active"
     }
   ],
   "orders": [
     {
-      "id": "1",
-      "accountId": "2",
+      "id": "DH001",
       "customer": {
-        "name": "Nguyễn Văn A",
-        "phone": "0123456789",
-        "address": "Hà Nội"
-      },
-      "date": "2024-06-15",
-      "items": [
-        {
-          "productId": "5",
-          "quantity": 1,
-          "price": 165000,
-          "title": "The Lord of the Rings: Return of the King"
-        },
-        {
-          "productId": "7",
-          "quantity": 3,
-          "price": 112500,
-          "title": "Percy Jackson: The Lightning Thief"
-        }
-      ],
-      "total": 502500,
-      "status": "Đã giao thành công"
-    },
-    {
-      "id": "2",
-      "customer": {
-        "name": "duck",
-        "address": "hà nội, việt nam",
-        "phone": "0987654321"
-      },
-      "items": [
-        {
-          "productId": 2,
-          "title": "Harry Potter và Phòng Chứa Bí Mật",
-          "price": 97500,
-          "quantity": 1
-        },
-        {
-          "productId": 3,
-          "title": "The Lord of the Rings: Fellowship of the Ring",
-          "price": 150000,
-          "quantity": 1
-        }
-      ],
-      "total": 247500,
-      "date": "2025-10-24",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "3",
-      "customer": {
-        "name": "duckkkk",
-        "address": "Hà Nội, Việt Nam",
-        "phone": "0987654321"
-      },
-      "items": [
-        {
-          "productId": 3,
-          "title": "The Lord of the Rings: Fellowship of the Ring",
-          "price": 150000,
-          "quantity": 1
-        },
-        {
-          "productId": 4,
-          "title": "The Lord of the Rings: The Two Towers",
-          "price": 157500,
-          "quantity": 1
-        }
-      ],
-      "total": 307500,
-      "date": "2025-10-28",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "4",
-      "customer": {
-        "name": "duckkkkkkkkk",
-        "address": "ưdđ,jjjsss",
-        "phone": "0987654321"
-      },
-      "items": [
-        {
-          "productId": "1",
-          "title": "Harry Potter và Hòn Đá Phù Thủy",
-          "price": 90000,
-          "quantity": 2
-        }
-      ],
-      "total": 180000,
-      "date": "2025-10-28",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "5",
-      "customer": {
-        "name": "sadad",
-        "address": "sdahssha,sjadisnad",
-        "phone": "0987654321"
-      },
-      "items": [
-        {
-          "productId": "2",
-          "title": "Harry Potter và Phòng Chứa Bí Mật",
-          "price": 97500,
-          "quantity": 1
-        }
-      ],
-      "total": 97500,
-      "date": "2025-10-30",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "6",
-      "customer": {
-        "name": "sadhagd",
-        "address": "sahvdasd,dsahgdafd",
-        "phone": "0987654321"
-      },
-      "items": [
-        {
-          "productId": "2",
-          "title": "Harry Potter và Phòng Chứa Bí Mật",
-          "price": 97500,
-          "quantity": 1
-        },
-        {
-          "productId": "7",
-          "title": "Percy Jackson: The Lightning Thief",
-          "price": 112500,
-          "quantity": 1
-        }
-      ],
-      "total": 210000,
-      "date": "2025-10-30",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "7",
-      "customer": {
-        "name": "gggg",
-        "address": "Hà Nội, Việt Nam",
-        "phone": "0987654321"
-      },
-      "items": [
-        {
-          "productId": "1",
-          "title": "Harry Potter và Hòn Đá Phù Thủy",
-          "price": 90000,
-          "quantity": 100
-        }
-      ],
-      "total": 9000000,
-      "date": "2025-10-30",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "8",
-      "customer": {
-        "name": "mmm",
-        "address": "Việt Nam, Trái Đất",
-        "phone": "0123456789"
-      },
-      "items": [
-        {
-          "productId": "24",
-          "title": "Thiên Thần và Ác Quỷ - Dan Brown",
-          "price": 157500,
-          "quantity": 100
-        }
-      ],
-      "total": 15750000,
-      "date": "2025-10-30",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "9",
-      "customer": {
-        "name": "oooo",
-        "address": "Bắc Từ Liêm, Hà Nội",
-        "phone": "0897654321"
-      },
-      "items": [
-        {
-          "productId": "12",
-          "title": "Naruto",
-          "price": 30000,
-          "quantity": 101
-        }
-      ],
-      "total": 3030000,
-      "date": "2025-10-30",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "10",
-      "customer": {
-        "name": "Đức",
-        "address": "sadhagds,dsahgdad",
-        "phone": "0987654321"
-      },
-      "items": [
-        {
-          "productId": "12",
-          "title": "Naruto",
-          "price": 30000,
-          "quantity": 150
-        }
-      ],
-      "total": 4500000,
-      "date": "2025-10-30",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "11",
-      "customer": {
-        "name": "sadassad",
-        "address": "shadghgfasyd,dsajdgahd",
-        "phone": "0987654321"
-      },
-      "items": [
-        {
-          "productId": "2",
-          "title": "Harry Potter và Phòng Chứa Bí Mật",
-          "price": 97500,
-          "quantity": 8
-        }
-      ],
-      "total": 780000,
-      "date": "2025-10-30",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "12",
-      "customer": {
-        "name": "Duckkk",
+        "name": "Duckkkk",
         "address": "Bắc Từ Liêm, Hà Nội",
         "phone": "0987654321"
       },
       "items": [
         {
-          "productId": "13",
-          "title": "Dragon Ball",
-          "price": 28000,
-          "quantity": 100
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 1
         }
       ],
-      "total": 2800000,
-      "date": "2025-11-03",
+      "total": 150000,
+      "date": "2025-11-08",
+      "status": "Đang giao hàng"
+    },
+    {
+      "id": "DH002",
+      "customer": {
+        "name": "Trương Minh Đức",
+        "address": "Bắc Từ Liêm, Hà Nội",
+        "phone": "0987654321"
+      },
+      "items": [
+        {
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 1
+        }
+      ],
+      "total": 150000,
+      "date": "2025-11-09",
       "status": "Đang xử lý"
     },
     {
-      "id": "13",
+      "id": "DH003",
       "customer": {
         "name": "Duck",
         "address": "Hà Nội, Việt Nam",
-        "phone": "0987654321"
-      },
-      "items": [
-        {
-          "productId": "27",
-          "title": "Phía Sau Nghi Can X - Higashino Keigo",
-          "price": 127500,
-          "quantity": 100
-        }
-      ],
-      "total": 12750000,
-      "date": "2025-11-04",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "14",
-      "customer": {
-        "name": "Trương Minh Đức",
-        "address": "Đông Ngạc, Hà Nội",
-        "phone": "0877438292"
-      },
-      "items": [
-        {
-          "productId": "2",
-          "title": "Harry Potter và Phòng Chứa Bí Mật",
-          "price": 97500,
-          "quantity": 1
-        }
-      ],
-      "total": 97500,
-      "date": "2025-11-04",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "15",
-      "customer": {
-        "name": "gggssss",
-        "address": "shadusadh,dsajusdha",
-        "phone": "01234566798"
-      },
-      "items": [
-        {
-          "productId": "2",
-          "title": "Harry Potter và Phòng Chứa Bí Mật",
-          "price": 97500,
-          "quantity": 200
-        }
-      ],
-      "total": 19500000,
-      "date": "2025-11-05",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "16",
-      "customer": {
-        "name": "gsadhsaakdh",
-        "address": "bgss,sjsssss",
-        "phone": "0192837465"
-      },
-      "items": [
-        {
-          "productId": "1",
-          "title": "Harry Potter và Hòn Đá Phù Thủy",
-          "price": 90000,
-          "quantity": 100
-        }
-      ],
-      "total": 9000000,
-      "date": "2025-11-05",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "17",
-      "customer": {
-        "name": "dátyfdag",
-        "address": "dsasdsad,sadasd",
         "phone": "0987654321"
       },
       "items": [
@@ -771,36 +466,11 @@
           "title": "The Lord of the Rings: The Two Towers",
           "price": 157500,
           "quantity": 1
-        },
-        {
-          "productId": "2",
-          "title": "Harry Potter và Phòng Chứa Bí Mật",
-          "price": 97500,
-          "quantity": 1
         }
       ],
-      "total": 255000,
-      "date": "2025-11-05",
-      "status": "Đang xử lý"
-    },
-    {
-      "id": "18",
-      "customer": {
-        "name": "aaaaaa",
-        "address": "shsadagsda,koijnmbh",
-        "phone": "01928374655"
-      },
-      "items": [
-        {
-          "productId": "7",
-          "title": "Percy Jackson: The Lightning Thief",
-          "price": 112500,
-          "quantity": 100
-        }
-      ],
-      "total": 11250000,
-      "date": "2025-11-06",
-      "status": "Đang xử lý"
+      "total": 157500,
+      "date": "2025-11-12",
+      "status": "Đã giao thành công"
     }
   ],
   "detectiveNovels": [
