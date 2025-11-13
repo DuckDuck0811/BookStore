@@ -69,24 +69,40 @@ const handleRegister = async (e) => {
   }
 
   try {
-    // Kiểm tra username đã tồn tại trên server chưa
-    const res = await fetch(`${API_URL}?username=${username.value}`);
-    const existingUsers = await res.json();
+    // Lấy tất cả user để kiểm tra username và tạo id mới
+    const resAll = await fetch(API_URL);
+    const allUsers = await resAll.json();
 
-    if (existingUsers.length > 0) {
+    // Kiểm tra username đã tồn tại chưa
+    const existingUser = allUsers.find((u) => u.username === username.value.trim());
+    if (existingUser) {
       alert("Username đã tồn tại!");
       return;
     }
 
-    // Gửi POST request tạo tài khoản mới
+    // Tạo id mới theo dạng AC00x
+    // Lấy max số từ id hiện có
+    let maxIdNum = 0;
+    allUsers.forEach((u) => {
+      const match = u.id.match(/^AC00(\d+)$/);
+      if (match) {
+        const num = parseInt(match[1], 10);
+        if (num > maxIdNum) maxIdNum = num;
+      }
+    });
+    const newId = `AC00${maxIdNum + 1}`;
+
+    // Tạo user mới với id tự sinh
     const newUser = {
-      username: username.value,
-      email: email.value,
+      id: newId,
+      username: username.value.trim(),
+      email: email.value.trim(),
       password: password.value,
       role: "user",
       status: "active",
     };
 
+    // POST user mới
     await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -96,6 +112,7 @@ const handleRegister = async (e) => {
     alert("Đăng ký thành công! Mời bạn đăng nhập.");
     router.push("/login");
   } catch (error) {
+    console.error(error);
     alert("Không thể kết nối tới server!");
   }
 };

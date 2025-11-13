@@ -1,44 +1,92 @@
 <template>
-  <div class="top-bar d-flex justify-content-center align-items-center px-4"
-    style="height: 40px; background-color:#d3d3d3;">
-    <div class="d-flex align-items-center gap-5 fw-bold">
-      <!-- Dropdown trái -->
-      <div class="dropdown">
-        <a class="dropdown-toggle fw-bold text-dark text-decoration-none" href="#" role="button"
-          data-bs-toggle="dropdown">
-          DANH MỤC SÁCH
-        </a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'Comic')">Truyện tranh</a></li>
-          <!-- Gọi thành phần comic từ cha -->
-          <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'Science fiction')">Sách khoa học viễn
-              tưởng</a></li>
-          <!-- Gọi thành phần sciFi từ cha -->
-          <li><a class="dropdown-item" href="#" @click.prevent="$emit('update-category', 'Detective')">Tiểu thuyết trinh
-              thám</a></li>
-          <!-- Gọi thành phần detective từ cha -->
-        </ul>
-      </div>
+  <div class="top-bar-container">
+    <div class="top-bar d-flex justify-content-start align-items-center px-4">
+      <!-- Menu trái -->
+      <router-link to="/" class="nav-link px-2 text-dark fw-semibold">Home</router-link>
+      <router-link to="/san-pham" class="nav-link px-2 text-dark fw-semibold">Sản phẩm</router-link>
+      <router-link to="/gioi-thieu" class="nav-link px-2 text-dark fw-semibold">Giới thiệu</router-link>
+      <router-link to="/lien-he" class="nav-link px-2 text-dark fw-semibold">Liên hệ</router-link>
+    </div>
 
-      <router-link to="/" class="text-decoration-none text-dark">Home</router-link>
-      <!-- Điều hướng về trang Home -->
-      <router-link to="/san-pham" class="text-decoration-none text-dark">Sản phẩm</router-link>
-      <!-- Điều hướng về trang Sản phẩm -->
-
-      <div class="d-flex align-items-center gap-2">
-        <img src="/shipper.png" alt="shipper" width="70" />
-        <span>Ship cod toàn quốc</span>
-      </div>
-
-      <div class="d-flex align-items-center gap-2">
-        <img src="/lienhe.png" alt="lienhe" width="18" />
-        <span>SĐT: 0234567891</span>
+    <!-- Chữ chạy ngang -->
+    <div class="marquee-container px-4">
+      <div class="marquee-text">
+        Trang sách online uy tín, đa dạng thể loại, giao hàng nhanh chóng!
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-// Khai báo sự kiện update-category để gửi danh mục sách đã chọn lên component cha
-defineEmits(['update-category'])
-</script>
+<style scoped>
+.top-bar-container {
+  background-color: #e9ecef;
+  user-select: none;
+}
+
+/* Thanh menu */
+.top-bar {
+  height: 48px;
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Nav link style */
+.nav-link {
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 0 12px;
+  line-height: 48px; /* căn giữa theo chiều cao */
+}
+
+.nav-link:hover {
+  color: #0d6efd !important;
+  text-decoration: underline;
+}
+
+/* Container chứa chữ chạy */
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  height: 24px;
+  position: relative;
+  background-color: #f0f0f0;
+  border-top: 1px solid #ccc;
+  font-style: italic;
+  font-weight: 500;
+  color: #555;
+  display: flex;
+  align-items: center;
+}
+
+/* Text chạy */
+.marquee-text {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 15s linear infinite;
+}
+
+/* Animation chữ chạy */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@media (max-width: 768px) {
+  .top-bar {
+    justify-content: center;
+  }
+  .nav-link {
+    padding: 0 8px;
+    font-size: 13px;
+  }
+  .marquee-container {
+    height: 20px;
+    font-size: 13px;
+  }
+}
+</style>

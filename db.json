@@ -401,7 +401,7 @@
       "id": "AC002",
       "username": "user",
       "email": "ductmth04341@fpt.edu.vn",
-      "password": "123",
+      "password": "321",
       "role": "user",
       "status": "Active"
     },
@@ -417,6 +417,14 @@
       "id": "AC004",
       "username": "duckk",
       "email": "duc08112k7@gmail.com",
+      "password": "123",
+      "role": "user",
+      "status": "active"
+    },
+    {
+      "id": "AC005",
+      "username": "userrrr",
+      "email": "ghgh@gmail.com",
       "password": "123",
       "role": "user",
       "status": "active"

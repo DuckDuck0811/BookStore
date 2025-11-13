@@ -12,6 +12,7 @@ import NewBookDetail from "@/view/User/MainContent/NewBook/NewBookDetail.vue";
 import Newbook from "@/view/User/MainContent/Newbook/Newbook.vue";
 import Topbook from "@/view/User/MainContent/TopBook/Topbook.vue";
 import TopbookDetail from "@/view/User/MainContent/TopBook/TopbookDetail.vue";
+import Profile from "@/view/User/Profile/Profile.vue";
 import { useAuthStore } from "@/stores/Authstore";
 
 // admin
@@ -40,6 +41,12 @@ const routes = [
     path: "/san-pham",
     name: "ProductList",
     component: ProductList,
+    meta: { layout: "default" },
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
     meta: { layout: "default" },
   },
 
