@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h5 class="fw-bold title">Sách Khoa Học Viễn Tưởng</h5>
+      <h5 class="fw-bold title">SÁCH KHOA HỌC VIỄN TƯỞNG</h5>
     </div>
 
     <!-- Loading -->

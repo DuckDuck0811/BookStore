@@ -630,18 +630,18 @@
   ],
   "newBooks": [
     {
-      "id": "11",
-      "img": "/onepiece.jpg",
-      "title": "One Piece",
-      "oldPrice": "30,000₫",
-      "newPrice": "25,000₫",
-      "discount": "-20%",
+      "id": "19",
+      "img": "/hunterxhunter.jpg",
+      "title": "Hunter x Hunter",
+      "oldPrice": "37,000₫",
+      "newPrice": "32,000₫",
+      "discount": "-14%",
       "aspect": "3/4",
       "category": "Comic",
       "width": "100%",
       "height": "300px",
-      "cardHeight": "500px",
-      "description": "Bộ truyện tranh phiêu lưu nổi tiếng toàn cầu kể về hành trình dài bất tận của Monkey D. Luffy – cậu bé sở hữu năng lực cao su sau khi ăn Trái Ác Quỷ Gomu Gomu – cùng những đồng đội đầy cá tính trên con tàu Going Merry, họ vượt qua các vùng biển nguy hiểm, hải quân và tứ hoàng để tìm kiếm kho báu huyền thoại One Piece và biến giấc mơ trở thành Vua Hải Tặc thành hiện thực."
+      "cardHeight": "450px",
+      "description": "Gon Freecss rời đảo cá nhân để trở thành Hunter – một nghề nghiệp mạo hiểm được cả thế giới ngưỡng mộ – với hy vọng tìm được người cha mất tích. Trên đường đi, cậu gặp Killua, Kurapika, Leorio và cùng họ vượt qua kỳ thi khắc nghiệt, chiến đấu với tội phạm, khám phá những vùng đất bí ẩn và tham gia vào các cuộc phiêu lưu đầy nguy hiểm."
     },
     {
       "id": "12",
@@ -653,8 +653,8 @@
       "aspect": "3/4",
       "category": "Comic",
       "width": "100%",
-      "height": "250px",
-      "cardHeight": "300px",
+      "height": "300px",
+      "cardHeight": "500px",
       "description": "Naruto Uzumaki – cậu bé mang trong mình sức mạnh phong ấn của Cửu Vĩ Hồ – lớn lên trong sự cô lập và dè bỉu của dân làng Lá. Dù vậy, Naruto không bỏ cuộc, kiên trì rèn luyện, xây dựng tình bạn, học hỏi từ các thầy và từng bước trưởng thành qua các cuộc chiến để trở thành ninja mạnh nhất và hiện thực hóa ước mơ trở thành Hokage được mọi người công nhận."
     },
     {
@@ -667,9 +667,37 @@
       "aspect": "3/4",
       "category": "Comic",
       "width": "100%",
-      "height": "250px",
+      "height": "300px",
       "cardHeight": "500px",
       "description": "Bộ truyện huyền thoại theo chân Son Goku từ thời niên thiếu đến khi trưởng thành, trong hành trình tìm kiếm bảy viên Ngọc Rồng thần kỳ có thể triệu hồi Rồng Thần để ban điều ước. Goku cùng bạn bè tham gia các giải đấu võ thuật, chiến đấu với những kẻ thù hùng mạnh khắp vũ trụ, bảo vệ Trái Đất và liên tục khám phá những giới hạn sức mạnh mới."
+    },
+    {
+      "id": "15",
+      "img": "/attack_on_titan.jpg",
+      "title": "Attack on Titan",
+      "oldPrice": "40,000₫",
+      "newPrice": "35,000₫",
+      "discount": "-12%",
+      "aspect": "3/4",
+      "category": "Comic",
+      "width": "100%",
+      "height": "300px",
+      "cardHeight": "500px",
+      "description": "Con người sống trong thành phố kiên cố được bao quanh bởi ba bức tường khổng lồ để tránh loài Titan ăn thịt người. Eren Yeager cùng Mikasa và Armin gia nhập quân đội Trinh Sát để chiến đấu chống lại Titan, tìm kiếm sự thật về nguồn gốc của chúng và dần khám phá những bí mật kinh hoàng ẩn giấu bên trong chính nhân loại."
+    },
+    {
+      "id": "17",
+      "img": "/demon_slayer.jpg",
+      "title": "Demon Slayer",
+      "oldPrice": "36,000₫",
+      "newPrice": "30,000₫",
+      "discount": "-17%",
+      "aspect": "3/4",
+      "category": "Comic",
+      "width": "100%",
+      "height": "300px",
+      "cardHeight": "500px",
+      "description": "Tanjiro Kamado – cậu bé hiền lành – trở thành thợ săn quỷ sau khi gia đình bị quỷ tàn sát, chỉ còn em gái Nezuko sống sót nhưng bị biến thành quỷ. Với thanh kiếm Nichirin và kỹ thuật Hơi Thở Nước, Tanjiro cùng các đồng đội trong Sát Quỷ Đoàn chiến đấu không ngừng để tiêu diệt quỷ dữ và tìm cách biến em gái trở lại thành người."
     }
   ],
   "topbook": [

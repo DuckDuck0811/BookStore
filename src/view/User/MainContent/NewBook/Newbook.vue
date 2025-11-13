@@ -2,16 +2,16 @@
   <div class="container py-3">
     <!-- Tiêu đề -->
     <div class="d-flex justify-content-between align-items-center mb-4 title-container">
-      <h5 class="fw-bold">TRUYỆN TRANH NỔI TIẾNG</h5>
+      <h5 class="fw-bold title">TRUYỆN TRANH NỔI TIẾNG</h5>
     </div>
 
     <!-- Loading -->
-    <div v-if="loading" class="text-center text-muted py-5">
+    <div v-if="loading" class="text-center text-muted py-5 fs-5">
       Đang tải dữ liệu truyện tranh...
     </div>
 
     <!-- Không tìm thấy -->
-    <div v-else-if="filteredComics.length === 0" class="text-center text-muted">
+    <div v-else-if="filteredComics.length === 0" class="text-center text-muted fs-5">
       Không tìm thấy truyện tranh nào phù hợp.
     </div>
 
@@ -26,13 +26,17 @@
         role="button"
         @keydown.enter="goToDetail(comic)"
       >
-        <div class="card product-card">
-          <img :src="comic.img" class="card-img-top" :alt="comic.title" loading="lazy" />
+        <div class="card product-card" :style="{ height: comic.cardHeight || '350px' }">
+          <img
+            :src="comic.img"
+            class="card-img-top"
+            :alt="comic.title"
+            loading="lazy"
+            :style="{ height: comic.height || '190px' }"
+          />
 
-          <div class="card-body d-flex flex-column justify-content-between text-center">
-            <p class="card-title fw-bold mb-1" :title="comic.title">
-              {{ comic.title }}
-            </p>
+          <div class="card-body text-center">
+            <p class="card-title fw-bold mb-1" :title="comic.title">{{ comic.title }}</p>
 
             <div class="price">
               <span class="new-price">{{
@@ -92,9 +96,10 @@ const router = useRouter();
 const cartStore = useCartStore();
 
 function formatPrice(value) {
-  return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
-    value
-  );
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(value);
 }
 
 function addToCart(comic) {
@@ -114,81 +119,78 @@ function goToDetail(comic) {
 <style scoped>
 .title-container {
   margin-bottom: 1rem;
-  margin-top: -0.95rem;
+  margin-top: -1rem;
 }
 
 .title-text {
-  font-size: 1.6rem;
-  letter-spacing: 2px;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
   color: #198754;
-  transition: color 0.3s ease;
-  cursor: default;
 }
 
-.title-text:hover {
-  color: #0b5e33;
-}
-
-/* Xếp dọc, căn giữa, max width 600px */
 .comic-list {
   display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+/* Card */
+.card {
+  width: 300px;
+  border-radius: 12px;
+  height: 200px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
+  background-color: #fff;
+  height: 350px;
+  display: flex;
   flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  max-width: 600px;
   margin: 0 auto;
 }
 
-/* Card truyện tranh */
-.card {
-  width: 100%;
-  min-height: 480px; /* chiều cao cố định để đều nhau */
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #e0e0e0;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  cursor: pointer;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-}
-
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.17);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
 }
 
-/* Hình ảnh */
 .card-img-top {
   width: 100%;
-  height: 360px;
+  max-width: 200px;
+  height: auto; /* cho ảnh theo tỉ lệ gốc */
+  border-radius: 8px;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.3s ease;
+  margin: 0 auto; /* căn giữa ảnh trong card */
+  display: block;
 }
 
 .card:hover .card-img-top {
   transform: scale(1.05);
 }
 
-/* Nội dung card */
+/* Nội dung */
 .card-body {
-  padding: 1rem 1.25rem;
+  padding: 0.7rem 1rem;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  flex-grow: 1;
   text-align: center;
 }
 
 .card-title {
+  font-size: 1rem;
   font-weight: 700;
-  font-size: 1.25rem;
   color: #333;
+  line-height: 1.3;
+  margin-bottom: 0.4rem;
 
-  /* Giới hạn 2 dòng, tràn dấu "..." */
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -196,12 +198,11 @@ function goToDetail(comic) {
 }
 
 .price {
-  margin-top: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  font-size: 1.1rem;
+  gap: 6px;
+  font-size: 0.9rem;
 }
 
 .new-price {
@@ -211,10 +212,10 @@ function goToDetail(comic) {
 
 .discount-badge {
   background-color: #d32f2f;
-  color: white;
-  font-size: 12px;
+  color: #fff;
+  font-size: 11px;
   font-weight: 600;
-  padding: 2px 6px;
+  padding: 2px 5px;
   border-radius: 6px;
 }
 
@@ -222,39 +223,47 @@ function goToDetail(comic) {
 .btn-add-cart {
   background: #d32f2f;
   border: none;
-  border-radius: 30px;
-  padding: 8px 0;
+  border-radius: 25px;
+  padding: 5px 0;
   font-weight: 600;
-  font-size: 0.95rem;
-  box-shadow: 0 4px 10px rgb(211 47 47 / 0.4);
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  cursor: pointer;
+  font-size: 0.85rem;
+  width: 75%;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(211, 47, 47, 0.3);
+  transition: all 0.3s ease;
 }
-
 .btn-add-cart:hover {
   background: #b71c1c;
-  box-shadow: 0 6px 14px rgb(183 28 28 / 0.6);
   transform: scale(1.05);
-}
-
-.btn-add-cart:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.5);
+  box-shadow: 0 6px 12px rgba(183, 28, 28, 0.4);
 }
 
 /* Responsive */
-@media (max-width: 991px) {
-  .card-img-top {
-    height: 280px;
+@media (max-width: 768px) {
+  .card {
+    width: 100%; /* trên mobile rộng full */
   }
-}
-@media (max-width: 576px) {
   .card-img-top {
-    height: 200px;
+    height: 160px !important;
+  }
+  .card-title {
+    font-size: 0.9rem;
   }
   .btn-add-cart {
-    font-size: 0.9rem;
-    padding: 7px 0;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .comic-list {
+    max-width: 90%;
+  }
+  .card-img-top {
+    height: 140px !important;
+  }
+  .btn-add-cart {
+    font-size: 0.75rem;
+    padding: 4px 0;
   }
 }
 </style>
