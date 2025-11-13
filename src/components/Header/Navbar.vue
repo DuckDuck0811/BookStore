@@ -1,72 +1,74 @@
 <template>
   <nav
-    class="navbar navbar-expand-lg navbar-light bg-white shadow-sm rounded-4 py-3 px-4"
+    class="navbar navbar-expand-lg shadow-sm rounded-4 py-3 px-4 top-nav"
+    :class="{ 'dark-mode': isDark }"
   >
     <div class="container d-flex align-items-center justify-content-between">
       <!-- Logo -->
       <router-link to="/" class="navbar-brand d-flex align-items-center">
-        <img src="/logo.png" alt="Logo" width="110" class="me-2" />
-        <span class="fs-4 fw-bold text-success">MyShop</span>
+        <img src="/logo.png" alt="Logo" width="110" class="me-2 logo-animate" />
+        <span class="fs-4 fw-bold brand-text">BookZone</span>
       </router-link>
 
       <!-- Search -->
       <form
         @submit.prevent="search"
-        class="d-flex flex-grow-1 mx-4 position-relative"
+        class="search-wrapper flex-grow-1 mx-4 position-relative"
         style="max-width: 600px"
       >
+        <i class="bi bi-search search-icon"></i>
         <input
           type="search"
-          class="form-control rounded-pill ps-4 pe-5 shadow-sm"
-          placeholder="Tìm kiếm sản phẩm..."
+          class="search-input form-control ps-5 pe-5 rounded-pill shadow-sm"
+          placeholder="Tìm kiếm sách, tác giả, thể loại..."
           v-model="keyword"
           aria-label="Search"
           autocomplete="off"
         />
-        <button
-          type="submit"
-          class="btn btn-success position-absolute top-50 end-0 translate-middle-y rounded-pill px-4"
-          style="height: 38px; margin-right: 6px"
-          aria-label="Tìm kiếm"
-        >
-          <i class="bi bi-search fs-5"></i>
+        <button type="submit" class="search-btn" aria-label="Tìm kiếm">
+          <i class="bi bi-arrow-right-circle-fill"></i>
         </button>
       </form>
 
-      <!-- User & Cart -->
+      <!-- Right Side -->
       <ul
         class="navbar-nav d-flex align-items-center gap-3 mb-0 flex-nowrap"
-        style="min-width: 200px"
+        style="min-width: 230px"
       >
+        <!-- Dark mode toggle -->
         <li class="nav-item">
+          <button
+            class="btn btn-outline-success rounded-circle theme-toggle"
+            @click="toggleTheme"
+            title="Chuyển chế độ"
+          >
+            <i
+              :class="isDark ? 'bi bi-brightness-high' : 'bi bi-moon-stars'"
+              class="fs-5"
+            ></i>
+          </button>
+        </li>
+
+        <!-- Cart -->
+        <li class="nav-item position-relative">
           <router-link
             to="/cart"
-            class="nav-link d-flex align-items-center text-dark position-relative"
-            aria-label="Giỏ hàng"
+            class="nav-link text-dark d-flex align-items-center position-relative cart-link"
           >
             <i class="bi bi-cart-fill fs-5 me-2"></i>
             <span class="fw-semibold">Giỏ hàng</span>
-            <!-- Badge số lượng sp trong giỏ hàng -->
-            <!--
-            <span
-              v-if="cartCount > 0"
-              class="badge bg-danger rounded-circle position-absolute top-0 start-100 translate-middle p-1"
-              >{{ cartCount }}</span
-            >
-            -->
           </router-link>
         </li>
 
+        <!-- User -->
         <template v-if="auth.user">
           <li class="nav-item dropdown">
             <a
               href="#"
               class="nav-link d-flex align-items-center gap-2 text-success dropdown-toggle"
               id="userDropdown"
-              role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-              style="user-select: none"
             >
               <img
                 v-if="auth.user.avatar"
@@ -77,26 +79,22 @@
               />
               <i v-else class="bi bi-person-circle fs-4"></i>
               <span class="fw-semibold text-truncate" style="max-width: 120px">
-                Xin chào, {{ auth.user.username }}
+                {{ auth.user.username }}
               </span>
             </a>
-            <ul
-              class="dropdown-menu dropdown-menu-end shadow rounded-3"
-              aria-labelledby="userDropdown"
-            >
+            <ul class="dropdown-menu dropdown-menu-end shadow rounded-3 animate-dropdown">
               <li>
-                <router-link class="dropdown-item" to="/profile"
-                  >Thông tin cá nhân</router-link
-                >
+                <router-link class="dropdown-item" to="/profile">
+                  <i class="bi bi-person-lines-fill me-2"></i>Thông tin cá nhân
+                </router-link>
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>
                 <button
                   class="dropdown-item text-danger fw-semibold"
                   @click="auth.logout()"
-                  type="button"
                 >
-                  <i class="bi bi-box-arrow-right me-2"></i> Đăng xuất
+                  <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
                 </button>
               </li>
             </ul>
@@ -134,7 +132,17 @@ const keyword = ref("");
 const emit = defineEmits(["search"]);
 const auth = useAuthStore();
 
-onMounted(() => auth.loadUser());
+const isDark = ref(false);
+onMounted(() => {
+  auth.loadUser();
+  const theme = localStorage.getItem("theme");
+  if (theme === "dark") isDark.value = true;
+});
+
+const toggleTheme = () => {
+  isDark.value = !isDark.value;
+  localStorage.setItem("theme", isDark.value ? "dark" : "light");
+};
 
 const search = () => {
   emit("search", keyword.value.trim());
@@ -142,37 +150,163 @@ const search = () => {
 </script>
 
 <style scoped>
-.navbar-nav .nav-link:hover,
-.navbar-nav .dropdown-item:hover {
-  color: #0f5132 !important;
-  background-color: #d1e7dd;
-  transition: background-color 0.3s ease;
-  border-radius: 0.375rem;
-  cursor: pointer;
+/* Navbar background */
+.top-nav {
+  background: linear-gradient(90deg, #ffffff, #f5f8ff);
+  border: 1px solid #e6e6e6;
+  transition: all 0.3s ease;
+}
+.dark-mode {
+  background: linear-gradient(90deg, #1f1f1f, #2b2b2b);
+  color: #f8f9fa;
 }
 
-.dropdown-menu {
-  border: none;
-  box-shadow: 0 6px 12px rgb(0 0 0 / 0.15);
-}
-
-.nav-link.dropdown-toggle {
-  cursor: pointer;
+/* Brand */
+.brand-text {
+  color: #198754;
   transition: color 0.3s ease;
 }
-
-.text-truncate {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.brand-text:hover {
+  color: #0d6efd;
 }
 
-/* Responsive */
+/* Logo animation */
+.logo-animate {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.logo-animate:hover {
+  transform: rotate(-5deg) scale(1.05);
+  filter: drop-shadow(0 0 4px #28a745);
+}
+
+/* search bar */
+.search-wrapper {
+  position: relative;
+  transition: all 0.3s ease;
+}
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+.search-input {
+  height: 44px;
+  border: 1.5px solid #cde4d3;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+.search-input:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 12px rgba(25, 135, 84, 0.3);
+  padding-left: 52px;
+}
+.search-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  font-size: 1.6rem;
+  color: #198754;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.search-btn:hover {
+  transform: translateY(-50%) rotate(15deg) scale(1.15);
+  color: #0d6efd;
+}
+.search-input:focus ~ .search-icon {
+  color: #198754;
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Dark mode */
+.dark-mode .search-input {
+  background-color: #2b2b2b;
+  border-color: #444;
+  color: #f8f9fa;
+}
+.dark-mode .search-icon {
+  color: #bbb;
+}
+.dark-mode .search-btn {
+  color: #00b37a;
+}
+
+/* Cart */
+.cart-link {
+  transition: transform 0.25s ease;
+}
+.cart-link:hover {
+  transform: translateY(-2px);
+}
+.cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -10px;
+  font-size: 10px;
+  border-radius: 50%;
+  padding: 3px 6px;
+  animation: bounce 1.5s infinite;
+}
+@keyframes bounce {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Dropdown animation */
+.animate-dropdown {
+  animation: fadeIn 0.25s ease;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark mode dropdown */
+.dark-mode .dropdown-menu {
+  background-color: #2b2b2b;
+  color: #fff;
+}
+.dark-mode .dropdown-item:hover {
+  background-color: #343a40;
+}
+
+/* Theme toggle */
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.theme-toggle:hover {
+  transform: rotate(15deg) scale(1.1);
+  box-shadow: 0 0 10px rgba(25, 135, 84, 0.4);
+}
+
 @media (max-width: 768px) {
   .navbar .container {
     flex-wrap: wrap;
   }
-  form.d-flex {
+  form.search-wrapper {
     order: 3;
     width: 100% !important;
     margin-top: 0.75rem;
@@ -182,7 +316,6 @@ const search = () => {
     order: 2;
     width: 100%;
     justify-content: center;
-    margin-bottom: 0.5rem;
   }
 }
 </style>

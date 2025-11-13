@@ -70,7 +70,7 @@
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header bg-info text-white">
+          <div class="modal-header bg-primary text-white">
             <h5 class="modal-title" id="forgotEmailModalLabel">Nhập Email</h5>
             <button
               type="button"
@@ -108,7 +108,7 @@
       </div>
     </div>
 
-    <!-- Modal 2: Nhập OTP -->
+    <!-- Nhập OTP -->
     <div
       v-if="showOtpModal"
       class="modal-backdrop fade show"
@@ -125,7 +125,7 @@
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header bg-info text-white">
+          <div class="modal-header bg-primary text-white">
             <h5 class="modal-title" id="otpModalLabel">Nhập OTP</h5>
             <button
               type="button"
@@ -155,7 +155,7 @@
       </div>
     </div>
 
-    <!-- Modal 3: Nhập mật khẩu mới -->
+    <!--Nhập mật khẩu mới -->
     <div
       v-if="showNewPasswordModal"
       class="modal-backdrop fade show"
@@ -172,7 +172,7 @@
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header bg-info text-white">
+          <div class="modal-header bg-primary text-white">
             <h5 class="modal-title" id="newPasswordModalLabel">Nhập mật khẩu mới</h5>
             <button
               type="button"
@@ -236,7 +236,7 @@ const sendingOtp = ref(false);
 
 onMounted(() => auth.loadUser());
 
-// --- Login ---
+//Login
 const handleLogin = async () => {
   try {
     const res = await fetch("http://localhost:3000/accounts");
@@ -291,7 +291,6 @@ const openForgotEmailModal = () => {
 
 const closeForgotEmailModal = () => {
   showForgotEmailModal.value = false;
-  resetEmailForm();
 };
 
 const openOtpModal = () => {
@@ -314,7 +313,6 @@ const closeNewPasswordModal = () => {
   resetNewPasswordForm();
 };
 
-// --- Reset form functions ---
 function resetEmailForm() {
   forgotEmail.value = "";
 }
@@ -411,12 +409,12 @@ const sendOtp = async () => {
   }
 };
 
-// --- Xử lý nhập OTP ---
+//Xử lý nhập OTP
 const onOtpInput = () => {
   otpInput.value = otpInput.value.replace(/\D/g, "");
 };
 
-// --- Xác nhận OTP ---
+//Xác nhận OTP
 const verifyOtp = () => {
   console.log("OTP nhập vào:", `"${otpInput.value}"`);
   console.log("OTP gửi đi:", `"${otpSent.value}"`);
@@ -440,36 +438,38 @@ const submitNewPassword = async () => {
   }
 
   try {
-    const resAccounts = await fetch("http://localhost:3000/accounts");
-    if (!resAccounts.ok) {
-      alert("Lỗi khi tải danh sách tài khoản");
+    const res = await fetch("http://localhost:3000/accounts");
+    if (!res.ok) {
+      alert("Không thể tải danh sách tài khoản!");
       return;
     }
-    const accounts = await resAccounts.json();
-    const user = accounts.find(
+
+    const accounts = await res.json();
+    const index = accounts.findIndex(
       (u) => u.email.trim().toLowerCase() === forgotEmail.value.trim().toLowerCase()
     );
 
-    if (!user) {
+    if (index === -1) {
       alert("Không tìm thấy tài khoản để cập nhật!");
       return;
     }
+    accounts[index].password = newPassword.value;
 
-    const updatedUser = { ...user, password: newPassword.value };
+    await Promise.all(
+      accounts.map((acc) =>
+        fetch(`http://localhost:3000/accounts/${acc.id}`, { method: "DELETE" })
+      )
+    );
 
-    console.log("Cập nhật mật khẩu cho user ID:", user.id);
-    console.log("Dữ liệu gửi PUT:", updatedUser);
-
-    const resUpdate = await fetch(`http://localhost:3000/accounts/${user.id}`, {
-      method: "PUT", // đổi PATCH thành PUT
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedUser),
-    });
-
-    if (!resUpdate.ok) {
-      alert("Cập nhật mật khẩu thất bại");
-      return;
-    }
+    await Promise.all(
+      accounts.map((acc) =>
+        fetch("http://localhost:3000/accounts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(acc),
+        })
+      )
+    );
 
     alert("Đổi mật khẩu thành công! Bạn có thể đăng nhập lại.");
     closeNewPasswordModal();

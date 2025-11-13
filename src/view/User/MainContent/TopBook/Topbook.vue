@@ -1,55 +1,53 @@
 <template>
   <div>
-    <h5 class="fw-bold mb-3 text-uppercase text-center text-md-start">
-      Sách Khoa Học Viễn Tưởng
-    </h5>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h5 class="fw-bold title">Sách Khoa Học Viễn Tưởng</h5>
+    </div>
 
-    <!-- Nếu không tìm thấy dữ liệu -->
-    <div v-if="filteredBooks.length === 0" class="text-center text-muted">
+    <!-- Loading -->
+    <div v-if="loading" class="text-center text-muted py-5 fs-5">Đang tải dữ liệu...</div>
+
+    <!-- No Data -->
+    <div v-else-if="filteredBooks.length === 0" class="text-center text-muted fs-5">
       Không tìm thấy sách khoa học viễn tưởng nào phù hợp.
     </div>
 
-    <!-- Danh sách sách -->
-    <div class="row g-3" v-else>
+    <!-- Book List -->
+    <div class="row g-4" v-else>
       <div
-        class="col-12 col-sm-6 col-md-4 col-lg-3"
+        class="col-sm-6 col-md-4 col-lg-3"
         v-for="book in filteredBooks"
         :key="book.id"
       >
         <div
-          class="card position-relative product-card"
-          :style="{ height: book.cardHeight }"
+          class="card product-card h-100"
           @click="goToDetail(book)"
-          style="cursor: pointer"
+          role="button"
+          tabindex="0"
+          @keydown.enter="goToDetail(book)"
         >
-          <div class="card product-card h-100 shadow-sm">
+          <div class="img-wrapper">
             <img
               :src="book.img"
-              class="card-img-top"
               :alt="book.title"
-              :style="{
-                width: '100%',
-                height: '300px',
-                objectFit: 'cover',
-                borderTopLeftRadius: '.5rem',
-                borderTopRightRadius: '.5rem',
-              }"
+              class="card-img-top book-img"
+              loading="lazy"
             />
+          </div>
 
-            <div class="card-body text-center">
-              <p class="card-text fw-semibold">{{ book.title }}</p>
-              <div class="price">
-                <del>{{ book.oldPrice }}</del>
-                <span class="new-price">{{ book.newPrice }}</span>
-                <span class="discount">{{ book.discount }}</span>
-              </div>
+          <div class="card-body d-flex flex-column justify-content-between text-center">
+            <p class="card-text book-title mb-2" :title="book.title">{{ book.title }}</p>
+            <div class="price">
+              <del v-if="book.oldPrice" class="old-price">{{ book.oldPrice }}</del>
+              <span class="new-price">{{ book.newPrice }}</span>
             </div>
-
-            <div class="overlay d-flex justify-content-center align-items-end">
-              <button class="btn btn-danger mb-4 add-btn" @click.stop="addToCart(book)">
-                Thêm vô giỏ hàng
-              </button>
-            </div>
+            <button
+              class="btn btn-danger btn-add-cart mt-3"
+              @click.stop="addToCart(book)"
+              aria-label="Thêm vô giỏ hàng"
+            >
+              Thêm vô giỏ hàng
+            </button>
           </div>
         </div>
       </div>
@@ -61,21 +59,21 @@
 import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "@/stores/CartStore";
-import { useAuthStore } from "@/stores/Authstore"; 
+import { useAuthStore } from "@/stores/Authstore";
 import { toast } from "vue3-toastify";
-import axios from "axios"; 
+import axios from "axios";
 
-const router = useRouter();
-const cartStore = useCartStore();
-const authStore = useAuthStore(); 
-const books = ref([]);
-const loading = ref(true);
-// Nhận từ props
 const props = defineProps({
   searchKeyword: String,
 });
 
-// Lấy dữ liệu sách khoa học viễn tưởng
+const cartStore = useCartStore();
+const authStore = useAuthStore();
+const router = useRouter();
+
+const books = ref([]);
+const loading = ref(true);
+
 onMounted(async () => {
   try {
     const res = await axios.get("http://localhost:3000/topbook");
@@ -88,7 +86,6 @@ onMounted(async () => {
   }
 });
 
-// Lọc sách theo từ khóa tìm kiếm
 const filteredBooks = computed(() => {
   if (!props.searchKeyword) return books.value;
   return books.value.filter((book) =>
@@ -96,19 +93,16 @@ const filteredBooks = computed(() => {
   );
 });
 
-// Kiểm tra đăng nhập
 function checkLogin() {
   return authStore.isLoggedIn || !!authStore.user;
 }
 
-// Thêm vào giỏ hàng
 function addToCart(book) {
   if (!checkLogin()) {
     toast.info("Vui lòng đăng nhập để thêm sản phẩm!", { autoClose: 2000 });
     router.push({ name: "Login", query: { redirect: "/cart" } });
     return;
   }
-
   const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
   cartStore.addToCart({
     id: book.id,
@@ -117,77 +111,125 @@ function addToCart(book) {
     img: book.img,
     quantity: 1,
   });
-
-  // Thông báo đã được hiển thị từ CartStore.addToCart()
 }
 
-// Chuyển đến trang chi tiết sách
 function goToDetail(book) {
   router.push(`/topbook/${book.id}`);
 }
 </script>
 
 <style scoped>
-.price {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  margin-top: 4px;
-  flex-wrap: wrap;
-}
-
-.price del {
-  font-size: 14px;
-  color: #555;
-}
-
-.price .new-price {
-  color: #d32f2f;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.price .discount {
-  background-color: #d32f2f;
-  color: #fff;
-  font-size: 12px;
-  padding: 2px 6px;
-  border-radius: 4px;
+.section-title {
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  color: #198754;
+  text-transform: uppercase;
 }
 
 .product-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgb(0 0 0 / 0.1);
+  cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
 }
-
+.product-card:focus,
 .product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  outline: none;
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgb(0 0 0 / 0.18);
 }
 
-.product-card .overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+.img-wrapper {
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  max-height: 280px;
+}
+.book-img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.product-card:hover .book-img {
+  transform: scale(1.05);
 }
 
-.product-card:hover .overlay {
-  opacity: 1;
+.card-body {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
 }
 
-.add-btn {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.3s ease;
+.book-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #333;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.product-card:hover .add-btn {
-  opacity: 1;
-  transform: translateY(0);
+.price {
+  margin-top: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 1rem;
+}
+
+.old-price {
+  color: #888;
+  font-size: 0.875rem;
+  text-decoration: line-through;
+}
+
+.new-price {
+  color: #d32f2f;
+  font-weight: 700;
+}
+
+.btn-add-cart {
+  background: #d32f2f;
+  border: none;
+  border-radius: 30px;
+  padding: 8px 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 10px rgb(211 47 47 / 0.4);
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn-add-cart:hover {
+  background: #b71c1c;
+  box-shadow: 0 6px 14px rgb(183 28 28 / 0.6);
+  transform: scale(1.05);
+}
+
+.btn-add-cart:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .book-img {
+    height: 250px;
+  }
+}
+@media (max-width: 576px) {
+  .book-img {
+    height: 200px;
+  }
+  .btn-add-cart {
+    font-size: 0.9rem;
+    padding: 7px 0;
+  }
 }
 </style>
