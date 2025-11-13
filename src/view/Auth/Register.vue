@@ -37,7 +37,7 @@
           />
         </div>
 
-        <button type="submit" class="btn btn-success w-100">Đăng ký</button>
+        <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
       </form>
 
       <div class="text-center mt-3">
@@ -84,7 +84,7 @@ const handleRegister = async (e) => {
       email: email.value,
       password: password.value,
       role: "user",
-      status: "active", 
+      status: "active",
     };
 
     await fetch(API_URL, {

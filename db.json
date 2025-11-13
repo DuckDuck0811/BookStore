@@ -412,6 +412,14 @@
       "password": "123",
       "role": "user",
       "status": "Active"
+    },
+    {
+      "id": "AC004",
+      "username": "duckk",
+      "email": "duc08112k7@gmail.com",
+      "password": "123",
+      "role": "user",
+      "status": "active"
     }
   ],
   "orders": [
@@ -471,6 +479,31 @@
       "total": 157500,
       "date": "2025-11-12",
       "status": "Đã giao thành công"
+    },
+    {
+      "id": "DH004",
+      "customer": {
+        "name": "Duck",
+        "address": "Thụy Phương, Bắc Từ Liêm, Hà Nội",
+        "phone": "0877438292"
+      },
+      "items": [
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        },
+        {
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 1
+        }
+      ],
+      "total": 247500,
+      "date": "2025-11-13",
+      "status": "Đang xử lý"
     }
   ],
   "detectiveNovels": [
