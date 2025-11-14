@@ -1,119 +1,164 @@
 <template>
   <div class="container mt-4">
     <h3 class="mb-4">Thanh toán</h3>
-    <!-- Form thanh toán -->
-    <form @submit.prevent="handleOrder">
+
+    <form @submit.prevent="handleOrder" novalidate>
+      <!-- Họ và tên -->
       <div class="mb-3">
-        <label class="form-label">Họ và tên</label>
+        <label for="name" class="form-label">Họ và tên</label>
         <input
-          v-model="name"
+          v-model.trim="name"
           type="text"
+          id="name"
           class="form-control"
+          :class="{ 'is-invalid': errors.name }"
           placeholder="Nhập họ tên"
+          @blur="validateName"
+          required
         />
+        <div class="invalid-feedback" v-if="errors.name">{{ errors.name }}</div>
       </div>
-      <!-- Thanh toán -->
+
+      <!-- Số điện thoại -->
       <div class="mb-3">
-        <label class="form-label">Số điện thoại</label>
+        <label for="phone" class="form-label">Số điện thoại</label>
         <input
-          v-model="phone"
+          v-model.trim="phone"
           type="tel"
+          id="phone"
           class="form-control"
+          :class="{ 'is-invalid': errors.phone }"
           placeholder="Nhập số điện thoại"
+          @blur="validatePhone"
+          required
         />
+        <div class="invalid-feedback" v-if="errors.phone">{{ errors.phone }}</div>
       </div>
 
       <!-- Địa chỉ giao hàng -->
       <div class="mb-3">
-        <label class="form-label">Địa chỉ giao hàng</label>
+        <label for="address" class="form-label">Địa chỉ giao hàng</label>
         <textarea
-          v-model="address"
+          v-model.trim="address"
+          id="address"
           class="form-control"
-          rows="2"
+          :class="{ 'is-invalid': errors.address }"
+          rows="3"
           placeholder="Nhập địa chỉ chi tiết"
+          @blur="validateAddress"
+          required
         ></textarea>
+        <div class="invalid-feedback" v-if="errors.address">{{ errors.address }}</div>
       </div>
 
-      <!-- Danh sách sản phẩm cart.item và sẽ hiện tên sản phẩm và số lượng sản phẩm đặt hàng -->
+      <!-- Danh sách sản phẩm -->
       <div class="mb-3">
         <label class="form-label fw-bold">Sản phẩm</label>
         <ul class="list-group">
-          <li v-for="item in cart.items" :key="item.id" class="list-group-item">
-            {{ item.title }} × {{ item.quantity }}
+          <li
+            v-for="item in cart.items"
+            :key="item.id"
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            {{ item.title }}
+            <span class="badge bg-primary rounded-pill">{{ item.quantity }}</span>
           </li>
         </ul>
       </div>
 
-      <!-- Tổng số tiền của sản phẩm đặt hàng và có định dạng tiền VND -->
+      <!-- Tổng tiền -->
       <div class="text-end fw-bold fs-5 mb-3 text-danger">
         Tổng: {{ cart.totalPrice.toLocaleString() }}₫
       </div>
 
       <!-- Nút đặt hàng -->
       <div class="text-end">
-        <button type="submit" class="btn btn-success">Đặt hàng</button>
+        <button type="submit" class="btn btn-success" :disabled="hasErrors">
+          Đặt hàng
+        </button>
       </div>
     </form>
-    <br />
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, reactive, computed } from "vue";
 import { useCartStore } from "../../../stores/CartStore";
 
 const cart = useCartStore();
-// lấy dữ liệu sản phẩm trong giỏ hàng
 
 const name = ref("");
-const address = ref("");
 const phone = ref("");
-// name, address, phone: lưu thông tin nhập của khách hàng.
+const address = ref("");
+
+const errors = reactive({
+  name: "",
+  phone: "",
+  address: "",
+});
+
+const validateName = () => {
+  if (!name.value) {
+    errors.name = "Vui lòng nhập họ và tên";
+  } else if (name.value.length < 3 || name.value.length > 50) {
+    errors.name = "Họ và tên phải từ 3 đến 50 ký tự";
+  } else if (!/^[A-Za-zÀ-ỹà-ỹ\s]+$/.test(name.value)) {
+    errors.name = "Họ và tên chỉ được chứa chữ và khoảng trắng";
+  } else {
+    errors.name = "";
+  }
+};
+
+const validatePhone = () => {
+  if (!phone.value) {
+    errors.phone = "Vui lòng nhập số điện thoại";
+  } else if (phone.value.length < 10 || phone.value.length > 11) {
+    errors.phone = "Số điện thoại phải có 10 hoặc 11 số";
+  } else if (!/^\d+$/.test(phone.value)) {
+    errors.phone = "Số điện thoại chỉ được chứa chữ số";
+  } else {
+    errors.phone = "";
+  }
+};
+
+const validateAddress = () => {
+  if (!address.value) {
+    errors.address = "Vui lòng nhập địa chỉ giao hàng";
+  } else if (address.value.length < 10 || address.value.length > 100) {
+    errors.address = "Địa chỉ phải từ 10 đến 100 ký tự";
+  } else if (!/^[a-zA-ZÀ-ỹ0-9\s,\.]+$/.test(address.value)) {
+    errors.address = "Địa chỉ chỉ được chứa chữ, số, dấu phẩy, chấm và khoảng trắng";
+  } else {
+    errors.address = "";
+  }
+};
+
+const hasErrors = computed(
+  () => errors.name !== "" || errors.phone !== "" || errors.address !== ""
+);
 
 const handleOrder = async () => {
-  if (!name.value || !address.value || !phone.value) {
-    alert("Vui lòng điền đầy đủ thông tin");
-    return;
-  }
-  // validate phần form nhập liệu
+  validateName();
+  validatePhone();
+  validateAddress();
 
-  if (phone.value.length < 10 || phone.value.length > 11 || !/^\d+$/.test(phone.value)) {
-    alert("Số điện thoại không hợp lệ");
-    return;
-  }
-  // validate số điện thoại
-
-  // Validate họ và tên
-  if (
-    name.value.length < 3 ||
-    name.value.length > 50 ||
-    !/^[A-Za-zÀ-ỹà-ỹ\s]+$/.test(name.value)
-  ) {
-    alert(
-      "Họ và tên phải từ 3-50 ký tự và chỉ được nhập chữ" || "Họ và tên không hợp lệ"
-    );
-    return;
-  }
-
-  const add = address.value.trim();
-  if (add.length < 10 || add.length > 100 || !/^[a-zA-ZÀ-ỹ0-9\s,]+$/.test(add)) {
-    alert(
-      "Địa chỉ phải từ 10-100 ký tự và chỉ được phép dùng chữ, số, khoảng trắng và dấu ,"
-    );
+  if (hasErrors.value) {
     return;
   }
 
   const customerInfo = {
     name: name.value,
-    address: address.value,
     phone: phone.value,
+    address: address.value,
   };
-  //tạo đối tượng customerInfo để lưu thông tin khách hàng
 
-  const result = await cart.postOrder(customerInfo);
-  console.log("Order created:", result);
-
-  window.location.href = "/thank-you";
-  //Sau khi thành công sẽ chuyển hướng đến trang cảm ơn
+  try {
+    const result = await cart.postOrder(customerInfo);
+    console.log("Order created:", result);
+    window.location.href = "/thank-you";
+  } catch (error) {
+    alert("Đã có lỗi xảy ra khi đặt hàng. Vui lòng thử lại.");
+    console.error(error);
+  }
 };
 </script>

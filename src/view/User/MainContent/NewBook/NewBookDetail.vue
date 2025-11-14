@@ -17,7 +17,7 @@
 
     <!-- Quyển chính -->
     <div class="product-detail">
-      <button class="btn back-btn" @click="$router.back()">Quay lại</button>
+      <button class="btn back-btn" @click="$router.push('/home')">Quay lại</button>
 
       <div class="detail-body">
         <!-- Ảnh sách -->
@@ -100,7 +100,8 @@ async function loadAllBooks() {
 
 async function loadBookDetail(id) {
   try {
-    const res = await axios.get(`http://localhost:3000/newBooks/${id}`);
+    const realId = Number(id);
+    const res = await axios.get(`http://localhost:3000/newBooks/${realId}`);
     bookData.value = res.data;
   } catch (error) {
     alert("Không thể tải chi tiết sách!");
@@ -136,7 +137,7 @@ function buyNow(book) {
 }
 
 function goToBook(id) {
-  router.push(`/book/${id}`);
+  router.push(`/newbook/${Number(id)}`);
 }
 
 onMounted(async () => {

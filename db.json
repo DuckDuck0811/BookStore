@@ -349,6 +349,104 @@
       "height": "300px",
       "cardHeight": "500px",
       "description": "Một thiên tài toán học lập kế hoạch hoàn hảo để che giấu tội ác của người phụ nữ mình yêu. Câu chuyện mở ra cuộc đấu trí căng thẳng giữa hung thủ và vị thám tử thiên tài, hé lộ sự hy sinh, tình yêu, và những tính toán vượt ngoài dự đoán của độc giả."
+    },
+    {
+      "id": "28",
+      "img": "dune.jpg",
+      "title": "Dune",
+      "oldPrice": "180,000₫",
+      "newPrice": "150,000₫",
+      "discount": "-17%",
+      "aspect": "3/4",
+      "category": "Science fiction",
+      "cardHeight": "500px",
+      "width": "100%",
+      "height": "300px",
+      "description": "Trong hành tinh sa mạc Arrakis, Paul Atreides phải đối mặt với các thế lực chính trị và môi trường khắc nghiệt để bảo vệ tương lai của gia đình và hành tinh."
+    },
+    {
+      "id": "29",
+      "img": "foundation.jpg",
+      "title": "Foundation",
+      "oldPrice": "160,000₫",
+      "newPrice": "130,000₫",
+      "discount": "-19%",
+      "aspect": "3/4",
+      "category": "Science fiction",
+      "cardHeight": "500px",
+      "width": "100%",
+      "height": "300px",
+      "description": "Cuộc hành trình xây dựng Đế chế vũ trụ và những bí mật đằng sau tương lai của nhân loại qua các thế hệ."
+    },
+    {
+      "id": "30",
+      "img": "neuromancer.jpg",
+      "title": "Neuromancer",
+      "oldPrice": "150,000₫",
+      "newPrice": "120,000₫",
+      "discount": "-20%",
+      "aspect": "3/4",
+      "category": "Science fiction",
+      "cardHeight": "500px",
+      "width": "100%",
+      "height": "300px",
+      "description": "Một tác phẩm cyberpunk kinh điển kể về hacker Case trong thế giới tương lai đầy rẫy công nghệ và âm mưu."
+    },
+    {
+      "id": "31",
+      "img": "the-girl-with-dragon-tattoo.jpg",
+      "title": "The Girl with the Dragon Tattoo",
+      "oldPrice": "140,000₫",
+      "newPrice": "110,000₫",
+      "discount": "-21%",
+      "aspect": "3/4",
+      "category": "Detective",
+      "width": "100%",
+      "height": "300px",
+      "cardHeight": "500px",
+      "description": "Một nhà báo và một hacker hợp tác để điều tra vụ mất tích bí ẩn của một cô gái từ nhiều thập kỷ trước."
+    },
+    {
+      "id": "32",
+      "img": "gone-girl.jpg",
+      "title": "Gone Girl",
+      "oldPrice": "130,000₫",
+      "newPrice": "100,000₫",
+      "discount": "-23%",
+      "aspect": "3/4",
+      "category": "Detective",
+      "width": "100%",
+      "height": "300px",
+      "cardHeight": "500px",
+      "description": "Một vụ mất tích kỳ lạ khiến cảnh sát và dư luận đặt ra nhiều giả thuyết gây sốc về mối quan hệ của cặp đôi chính."
+    },
+    {
+      "id": "33",
+      "img": "in-the-woods.jpg",
+      "title": "In the Woods",
+      "oldPrice": "120,000₫",
+      "newPrice": "90,000₫",
+      "discount": "-25%",
+      "aspect": "3/4",
+      "category": "Detective",
+      "width": "100%",
+      "height": "300px",
+      "cardHeight": "500px",
+      "description": "Một thám tử điều tra một vụ giết người tại một thị trấn nhỏ, nơi anh có liên quan đến một bí mật đau thương trong quá khứ."
+    },
+    {
+      "id": "34",
+      "img": "the-silent-patient.jpg",
+      "title": "The Silent Patient",
+      "oldPrice": "135,000₫",
+      "newPrice": "105,000₫",
+      "discount": "-22%",
+      "aspect": "3/4",
+      "category": "Detective",
+      "width": "100%",
+      "height": "300px",
+      "cardHeight": "500px",
+      "description": "Một nữ họa sĩ bỗng nhiên im lặng sau khi bị cáo buộc giết chồng, thám tử tâm lý học quyết tâm khám phá sự thật đằng sau sự im lặng ấy."
     }
   ],
   "categories": [
@@ -419,7 +517,7 @@
       "email": "duc08112k7@gmail.com",
       "password": "123",
       "role": "user",
-      "status": "active"
+      "status": "Active"
     },
     {
       "id": "AC005",
@@ -427,7 +525,7 @@
       "email": "ghgh@gmail.com",
       "password": "123",
       "role": "user",
-      "status": "active"
+      "status": "Inactive"
     }
   ],
   "orders": [
@@ -448,7 +546,7 @@
       ],
       "total": 150000,
       "date": "2025-11-08",
-      "status": "Đang giao hàng"
+      "status": "Đã giao thành công"
     },
     {
       "id": "DH002",
@@ -511,6 +609,37 @@
       ],
       "total": 247500,
       "date": "2025-11-13",
+      "status": "Đang giao hàng"
+    },
+    {
+      "id": "DH005",
+      "customer": {
+        "name": "Duck",
+        "phone": "0877438292",
+        "address": "Hà Nội, Việt Nam"
+      },
+      "items": [
+        {
+          "productId": "1",
+          "title": "Harry Potter và Hòn Đá Phù Thủy",
+          "price": 90000,
+          "quantity": 100
+        },
+        {
+          "productId": "19",
+          "title": "Hunter x Hunter",
+          "price": 32000,
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        }
+      ],
+      "total": 9129500,
+      "date": "2025-11-14",
       "status": "Đang xử lý"
     }
   ],
@@ -626,6 +755,62 @@
       "height": "300px",
       "cardHeight": "500px",
       "description": "Thomas tỉnh dậy trong một thang máy, mất hết ký ức, và xuất hiện ở một mê cung khổng lồ cùng nhiều cậu bé khác. Họ tự tổ chức cuộc sống, tìm lối ra khỏi mê cung và đối mặt với sinh vật nguy hiểm. Thomas phải khám phá sự thật về tổ chức bí ẩn WICKED và vai trò của chính mình trong thí nghiệm tàn khốc này."
+    },
+    {
+      "id": "31",
+      "img": "/the-girl-with-dragon-tattoo.jpg",
+      "title": "The Girl with the Dragon Tattoo",
+      "oldPrice": "140,000₫",
+      "newPrice": "110,000₫",
+      "discount": "-21%",
+      "aspect": "3/4",
+      "category": "Detective",
+      "width": "100%",
+      "height": "300px",
+      "cardHeight": "500px",
+      "description": "Một nhà báo và một hacker hợp tác để điều tra vụ mất tích bí ẩn của một cô gái từ nhiều thập kỷ trước."
+    },
+    {
+      "id": "32",
+      "img": "/gone-girl.jpg",
+      "title": "Gone Girl",
+      "oldPrice": "130,000₫",
+      "newPrice": "100,000₫",
+      "discount": "-23%",
+      "aspect": "3/4",
+      "category": "Detective",
+      "width": "100%",
+      "height": "300px",
+      "cardHeight": "500px",
+      "description": "Một vụ mất tích kỳ lạ khiến cảnh sát và dư luận đặt ra nhiều giả thuyết gây sốc về mối quan hệ của cặp đôi chính."
+    },
+    {
+      "id": "33",
+      "img": "/in-the-woods.jpg",
+      "title": "In the Woods",
+      "oldPrice": "120,000₫",
+      "newPrice": "90,000₫",
+      "discount": "-25%",
+      "aspect": "3/4",
+      "category": "Detective",
+      "width": "100%",
+      "height": "300px",
+      "cardHeight": "500px",
+      "description": "Một thám tử điều tra một vụ giết người tại một thị trấn nhỏ, nơi anh có liên quan đến một bí mật đau thương trong quá khứ."
+    },
+    {
+      "id": "34",
+      "img": "/the-silent-patient.jpg",
+      "title": "The Silent Patient",
+      "oldPrice": "135,000₫",
+      "newPrice": "105,000₫",
+      "discount": "-22%",
+      "aspect": "3/4",
+      "category": "Detective",
+      "width": "100%",
+      "height": "300px",
+      "cardHeight": "500px",
+      "description": "Một nữ họa sĩ bỗng nhiên im lặng sau khi bị cáo buộc giết chồng, thám tử tâm lý học quyết tâm khám phá sự thật đằng sau sự im lặng ấy."
     }
   ],
   "newBooks": [
@@ -812,6 +997,62 @@
       "width": "100%",
       "height": "300px",
       "description": "Katniss Everdeen tình nguyện thay em gái tham gia Hunger Games – cuộc đấu sinh tử truyền hình trực tiếp giữa các quận. Trong đấu trường khốc liệt, cô vừa phải tìm cách sinh tồn vừa trở thành biểu tượng phản kháng của cả quốc gia, khơi dậy hy vọng cho những con người bị áp bức."
+    },
+    {
+      "id": "10",
+      "img": "/divergent1.jpg",
+      "title": "Divergent",
+      "oldPrice": "140,000₫",
+      "newPrice": "105,000₫",
+      "discount": "-25%",
+      "aspect": "3/4",
+      "category": "Science fiction",
+      "cardHeight": "500px",
+      "width": "100%",
+      "height": "300px",
+      "description": "Trong một xã hội chia thành các phe phái dựa trên tính cách, Tris Prior phát hiện mình là Divergent – người không thuộc bất kỳ phe nào – và trở thành mối đe dọa cho chế độ. Cô phải che giấu thân phận, vượt qua những thử thách khắc nghiệt trong khóa huấn luyện và đối mặt với âm mưu lật đổ chính quyền."
+    },
+    {
+      "id": "28",
+      "img": "/dune.jpg",
+      "title": "Dune",
+      "oldPrice": "180,000₫",
+      "newPrice": "150,000₫",
+      "discount": "-17%",
+      "aspect": "3/4",
+      "category": "Science fiction",
+      "cardHeight": "500px",
+      "width": "100%",
+      "height": "300px",
+      "description": "Trong hành tinh sa mạc Arrakis, Paul Atreides phải đối mặt với các thế lực chính trị và môi trường khắc nghiệt để bảo vệ tương lai của gia đình và hành tinh."
+    },
+    {
+      "id": "29",
+      "img": "/foundation.jpg",
+      "title": "Foundation",
+      "oldPrice": "160,000₫",
+      "newPrice": "130,000₫",
+      "discount": "-19%",
+      "aspect": "3/4",
+      "category": "Science fiction",
+      "cardHeight": "500px",
+      "width": "100%",
+      "height": "300px",
+      "description": "Cuộc hành trình xây dựng Đế chế vũ trụ và những bí mật đằng sau tương lai của nhân loại qua các thế hệ."
+    },
+    {
+      "id": "30",
+      "img": "/neuromancer.jpg",
+      "title": "Neuromancer",
+      "oldPrice": "150,000₫",
+      "newPrice": "120,000₫",
+      "discount": "-20%",
+      "aspect": "3/4",
+      "category": "Science fiction",
+      "cardHeight": "500px",
+      "width": "100%",
+      "height": "300px",
+      "description": "Một tác phẩm cyberpunk kinh điển kể về hacker Case trong thế giới tương lai đầy rẫy công nghệ và âm mưu."
     }
   ]
 }

@@ -59,6 +59,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "@/stores/CartStore";
+import { useAuthStore } from "@/stores/Authstore";
 import { toast } from "vue3-toastify";
 import axios from "axios";
 
@@ -67,6 +68,7 @@ const props = defineProps({
 });
 
 const cartStore = useCartStore();
+const authStore = useAuthStore();
 const router = useRouter();
 
 const books = ref([]);
@@ -91,18 +93,28 @@ const filteredBooks = computed(() => {
   );
 });
 
+function checkLogin() {
+  return authStore.isLoggedIn || !!authStore.user;
+}
+
 function addToCart(book) {
+  if (!checkLogin()) {
+    toast.info("Vui lòng đăng nhập để thêm sản phẩm!", { autoClose: 2000 });
+    router.push({ name: "Login", query: { redirect: "/cart" } });
+    return;
+  }
+  const priceNumber = Number(String(book.newPrice).replace(/[^\d]/g, "")) || 0;
   cartStore.addToCart({
     id: book.id,
     title: book.title,
-    price: Number(book.newPrice.replace(/[^\d]/g, "")),
+    price: priceNumber,
     img: book.img,
+    quantity: 1,
   });
-  // Thông báo đã được hiển thị từ CartStore.addToCart()
 }
 
 function goToDetail(book) {
-  router.push(`/san-pham/${book.id}`);
+  router.push(`/detectiveNovel/${book.id}`);
 }
 </script>
 

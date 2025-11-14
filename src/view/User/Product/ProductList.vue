@@ -183,7 +183,7 @@ function addToCart(book) {
 }
 </script>
 
-<style scoped>  
+<style scoped>
 .new-price {
   font-size: 1.1rem;
 }

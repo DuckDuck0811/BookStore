@@ -99,7 +99,7 @@ const handleRegister = async (e) => {
       email: email.value.trim(),
       password: password.value,
       role: "user",
-      status: "active",
+      status: "Active",
     };
 
     // POST user mới

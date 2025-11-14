@@ -13,6 +13,8 @@ import Newbook from "@/view/User/MainContent/Newbook/Newbook.vue";
 import Topbook from "@/view/User/MainContent/TopBook/Topbook.vue";
 import TopbookDetail from "@/view/User/MainContent/TopBook/TopbookDetail.vue";
 import Profile from "@/view/User/Profile/Profile.vue";
+import GioiThieu from "@/view/User/Introduce/GioiThieu.vue";
+import Contact from "@/view/User/Contact/Contact.vue";
 import { useAuthStore } from "@/stores/Authstore";
 
 // admin
@@ -52,20 +54,27 @@ const routes = [
 
   // Product detail
   {
-    path: "/san-pham/:id",
+    path: "/products",
+    name: "ProductList",
+    component: ProductList,
+    meta: { layout: "default" },
+  },
+  {
+    path: "/detectiveNovel/:id",
     name: "DetectiveDetail",
     component: DetectiveDetail,
     meta: { layout: "default" },
   },
 
-  // Alias cho /book/:id
+  // Route chung cho sách dạng /book/:id
   {
     path: "/book/:id",
     name: "BookDetailAlias",
-    component: DetectiveDetail,
+    component: NewBookDetail,
     meta: { layout: "default" },
   },
 
+  // Nhóm Newbook
   {
     path: "/newbook",
     name: "Newbook",
@@ -78,10 +87,12 @@ const routes = [
     component: NewBookDetail,
     meta: { layout: "default" },
   },
+
+  // Nhóm Topbook
   {
     path: "/topbook",
     name: "Topbook",
-    component: Newbook,
+    component: Topbook,
     meta: { layout: "default" },
   },
   {
@@ -90,6 +101,7 @@ const routes = [
     component: TopbookDetail,
     meta: { layout: "default" },
   },
+
   // Cart page
   {
     path: "/cart",
@@ -128,6 +140,20 @@ const routes = [
     name: "Register",
     component: Register,
     meta: { layout: "auth" },
+  },
+
+  {
+    path: "/about",
+    name: "GioiThieu",
+    component: GioiThieu,
+    meta: { layout: "default" },
+  },
+
+  {
+    path: "/contact",
+    name: "Contact",
+    component: Contact,
+    meta: { layout: "default" },
   },
 
   // admin

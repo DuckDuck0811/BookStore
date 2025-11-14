@@ -4,16 +4,11 @@
     <div class="top-bar d-flex justify-content-between align-items-center px-4">
       <!-- Logo + Menu -->
       <div class="d-flex align-items-center gap-3">
-        <div class="logo d-flex align-items-center">
-          <img src="/logo.png" alt="logo" class="logo-img me-2" />
-          <span class="fw-bold fs-5 text-primary">BookZone</span>
-        </div>
-
         <div class="menu d-flex align-items-center">
           <router-link to="/" class="nav-link">Home</router-link>
-          <router-link to="/san-pham" class="nav-link">Sản phẩm</router-link>
-          <router-link to="/gioi-thieu" class="nav-link">Giới thiệu</router-link>
-          <router-link to="/lien-he" class="nav-link">Liên hệ</router-link>
+          <router-link to="/products" class="nav-link">Sản phẩm</router-link>
+          <router-link to="/about" class="nav-link">Giới thiệu</router-link>
+          <router-link to="/contact" class="nav-link">Liên hệ</router-link>
         </div>
       </div>
 
@@ -28,7 +23,7 @@
     <!-- Marquee -->
     <div class="marquee-container px-4">
       <div class="marquee-text">
-        🌟 Trang sách online uy tín, đa dạng thể loại, giao hàng nhanh chóng! 🌟
+        Trang sách online uy tín, đa dạng thể loại, giao hàng nhanh chóng!
       </div>
     </div>
   </div>
