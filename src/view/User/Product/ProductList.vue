@@ -13,47 +13,25 @@
         <!-- Danh sách sách -->
         <div class="row g-3" v-else>
           <div class="col-md-3" v-for="book in paginatedBooks" :key="book.id">
-            <div
-              class="card shadow-sm product-card"
-              :style="{ height: book.cardHeight || '500px' }"
-              @click="viewBookDetail(book)"
-            >
+            <div class="card shadow-sm product-card" @click="viewBookDetail(book)">
               <!-- Ảnh -->
-              <img
-                :src="resolveImage(book.img)"
-                :style="{
-                  width: book.width || '100%',
-                  height: book.height || '300px',
-                  objectFit: book.objectFit || 'contain',
-                  padding: '10px',
-                  background: '#fff',
-                  display: 'block',
-                  margin: 'auto',
-                }"
-                alt="book"
-              />
+              <img :src="resolveImage(book.img)" alt="book" />
 
               <!-- Nội dung -->
               <div class="card-body text-center">
-                <p class="card-text fw-semibold">{{ book.title }}</p>
+                <p class="card-text">{{ book.title }}</p>
                 <div class="price">
-                  <del class="text-muted me-2">{{ book.oldPrice }}</del>
-                  <span class="new-price text-danger fw-bold">
-                    {{ book.newPrice }}
-                  </span>
-                  <span class="discount badge bg-danger ms-2">
-                    {{ book.discount }}
-                  </span>
+                  <del v-if="book.oldPrice" class="text-muted me-2">{{
+                    book.oldPrice
+                  }}</del>
+                  <span class="new-price">{{ book.newPrice }}</span>
+                  <span v-if="book.discount" class="discount">{{ book.discount }}</span>
                 </div>
               </div>
 
               <!-- Overlay -->
-              <div class="overlay d-flex justify-content-center align-items-end">
-                <button
-                  class="btn btn-danger mb-4"
-                  style="height: 40px; width: 170px"
-                  @click.stop="addToCart(book)"
-                >
+              <div class="overlay d-flex justify-content-center align-items-center">
+                <button class="btn btn-danger" @click.stop="addToCart(book)">
                   Thêm vào giỏ hàng
                 </button>
               </div>
@@ -106,10 +84,7 @@ import { ref, computed, watch, onMounted } from "vue";
 import { useProductStore } from "../../../stores/ProductStore";
 import ProductDetail from "./ProductDetail.vue";
 import { useCartStore } from "@/stores/CartStore";
-import { toast } from "vue3-toastify";
-import { useRouter } from "vue-router";
 
-const router = useRouter();
 const cartStore = useCartStore();
 const productStore = useProductStore();
 
@@ -179,34 +154,109 @@ function addToCart(book) {
     price: Number(book.newPrice.replace(/[^\d]/g, "")),
     img: resolveImage(book.img),
   });
-  // Thông báo đã được hiển thị từ CartStore.addToCart()
 }
 </script>
 
 <style scoped>
-.new-price {
-  font-size: 1.1rem;
-}
-.discount {
-  font-size: 0.9rem;
-}
 .product-card {
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
+
 .product-card:hover {
-  transform: scale(1.03);
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
 }
-.product-card .overlay {
+
+.product-card img {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  object-fit: contain;
+  max-height: 280px;
+  width: 100%;
+  background: #fff;
+  padding: 10px;
+  display: block;
+  margin: 0 auto;
+}
+
+.card-body {
+  flex-grow: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+  min-height: 48px; /* để tên sách cao bằng nhau */
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.price del {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.new-price {
+  color: #e74c3c;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.discount {
+  font-size: 0.8rem;
+  background-color: #e74c3c;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.overlay {
   position: absolute;
-  inset: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   opacity: 0;
   transition: opacity 0.3s ease;
-  background: rgba(0, 0, 0, 0.1);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
+
 .product-card:hover .overlay {
   opacity: 1;
+}
+
+.overlay button {
+  height: 36px;
+  width: 150px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 20px;
+  border: none;
 }
 </style>
