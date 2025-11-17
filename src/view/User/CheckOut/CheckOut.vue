@@ -76,6 +76,8 @@
         <button type="submit" class="btn btn-success" :disabled="hasErrors">
           Đặt hàng
         </button>
+        <br>
+        <br>
       </div>
     </form>
   </div>

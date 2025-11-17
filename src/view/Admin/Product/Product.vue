@@ -73,11 +73,7 @@
           <td class="text-center">{{ (currentPage - 1) * pageSize + index + 1 }}</td>
           <td class="text-center">
             <img
-              :src="
-                item.img?.startsWith('data:')
-                  ? item.img
-                  : '/' + (item.img || 'default.jpg')
-              "
+              :src="item.img?.startsWith('data:') ? item.img : item.img || 'default.jpg'"
               alt="cover"
               style="width: 80px; height: auto"
             />
@@ -267,7 +263,7 @@
                 :src="
                   detailProduct.img?.startsWith('data:')
                     ? detailProduct.img
-                    : '/' + (detailProduct.img || 'default.jpg')
+                    : detailProduct.img || 'default.jpg'
                 "
                 alt="Image"
                 class="img-fluid rounded"
@@ -494,7 +490,7 @@ const onFileChange = (e) => {
   const file = e.target.files[0];
   if (!file) return;
   newProduct.value.img = file.name;
-  previewImage.value = "/" + file.name;
+  previewImage.value = file.name;
 };
 
 const removeProduct = async (id) => {

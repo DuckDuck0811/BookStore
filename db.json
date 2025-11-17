@@ -641,6 +641,139 @@
       "total": 9129500,
       "date": "2025-11-14",
       "status": "Đang xử lý"
+    },
+    {
+      "id": "DH006",
+      "customer": {
+        "name": "Duck",
+        "phone": "0877438292",
+        "address": "Hà Nội, Việt Nam"
+      },
+      "items": [
+        {
+          "productId": "1",
+          "title": "Harry Potter và Hòn Đá Phù Thủy",
+          "price": 90000,
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        },
+        {
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 1
+        },
+        {
+          "productId": "4",
+          "title": "The Lord of the Rings: The Two Towers",
+          "price": 157500,
+          "quantity": 1
+        },
+        {
+          "productId": "8",
+          "title": "The Hunger Games",
+          "price": 120000,
+          "quantity": 1
+        },
+        {
+          "productId": "7",
+          "title": "Percy Jackson: The Lightning Thief",
+          "price": 112500,
+          "quantity": 1
+        },
+        {
+          "productId": "6",
+          "title": "The Hobbit",
+          "price": 135000,
+          "quantity": 1
+        },
+        {
+          "productId": "5",
+          "title": "The Lord of the Rings: Return of the King",
+          "price": 165000,
+          "quantity": 1
+        },
+        {
+          "productId": "10",
+          "title": "Divergent",
+          "price": 105000,
+          "quantity": 1
+        },
+        {
+          "productId": "28",
+          "title": "Dune",
+          "price": 150000,
+          "quantity": 1
+        },
+        {
+          "productId": "29",
+          "title": "Foundation",
+          "price": 130000,
+          "quantity": 1
+        },
+        {
+          "productId": "30",
+          "title": "Neuromancer",
+          "price": 120000,
+          "quantity": 1
+        },
+        {
+          "productId": "24",
+          "title": "Thiên Thần và Ác Quỷ - Dan Brown",
+          "price": 157500,
+          "quantity": 1
+        },
+        {
+          "productId": "23",
+          "title": "Mật Mã Da Vinci - Dan Brown",
+          "price": 150000,
+          "quantity": 1
+        },
+        {
+          "productId": "22",
+          "title": "Sherlock Holmes: Dấu Bộ Tứ",
+          "price": 97500,
+          "quantity": 1
+        },
+        {
+          "productId": "21",
+          "title": "Sherlock Holmes: Vụ Án Ở Boscombe",
+          "price": 90000,
+          "quantity": 1
+        },
+        {
+          "productId": "25",
+          "title": "Án Mạng Trên Sông Nile - Agatha Christie",
+          "price": 135000,
+          "quantity": 1
+        },
+        {
+          "productId": "26",
+          "title": "Mười Người Da Đen Nhỏ - Agatha Christie",
+          "price": 112500,
+          "quantity": 1
+        },
+        {
+          "productId": "27",
+          "title": "Phía Sau Nghi Can X - Higashino Keigo",
+          "price": 127500,
+          "quantity": 1
+        },
+        {
+          "productId": "9",
+          "title": "The Maze Runner",
+          "price": 127500,
+          "quantity": 1
+        }
+      ],
+      "total": 2530000,
+      "date": "2025-11-17",
+      "status": "Đang xử lý"
     }
   ],
   "detectiveNovels": [
