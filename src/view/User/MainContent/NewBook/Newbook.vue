@@ -26,7 +26,7 @@
         role="button"
         @keydown.enter="goToDetail(comic)"
       >
-        <div class="card product-card" :style="{ height: comic.cardHeight || '350px' }">
+        <div class="card product-card">
           <img
             :src="comic.img"
             class="card-img-top"
@@ -154,13 +154,12 @@ function goToDetail(comic) {
 .card {
   width: 300px;
   border-radius: 12px;
-  height: 200px;
+  height: 430px;
   overflow: hidden;
   border: 1px solid #ddd;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
   transition: all 0.25s ease;
   background-color: #fff;
-  height: 350px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -174,11 +173,10 @@ function goToDetail(comic) {
 .card-img-top {
   width: 100%;
   max-width: 200px;
-  height: auto; /* cho ảnh theo tỉ lệ gốc */
+  height: 190px; /* cố định chiều cao */
   border-radius: 8px;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-  margin: 0 auto; /* căn giữa ảnh trong card */
+  object-fit: cover; /* giữ tỉ lệ và cắt ảnh nếu cần */
+  margin: 0 auto;
   display: block;
 }
 
@@ -192,7 +190,7 @@ function goToDetail(comic) {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   text-align: center;
 }
 

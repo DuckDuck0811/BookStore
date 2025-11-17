@@ -15,6 +15,7 @@ import TopbookDetail from "@/view/User/MainContent/TopBook/TopbookDetail.vue";
 import Profile from "@/view/User/Profile/Profile.vue";
 import GioiThieu from "@/view/User/Introduce/GioiThieu.vue";
 import Contact from "@/view/User/Contact/Contact.vue";
+import ProductDetail from "@/view/User/Product/ProductDetail.vue";
 import { useAuthStore } from "@/stores/Authstore";
 
 // admin
@@ -25,12 +26,10 @@ import Revenue from "@/view/Admin/Satistical/Revenue.vue";
 import AdminHome from "@/view/Admin/AdminHome.vue";
 import Category from "@/view/Admin/Category/Category.vue";
 import AccountUsers from "@/view/Admin/AccountUsers/AccountUsers.vue";
-// router setup
+
 const routes = [
-  // Default redirect
   { path: "/", redirect: "/home" },
 
-  // Home page
   {
     path: "/home",
     name: "Home",
@@ -38,13 +37,13 @@ const routes = [
     meta: { layout: "default" },
   },
 
-  // Product list
   {
     path: "/san-pham",
     name: "ProductList",
     component: ProductList,
     meta: { layout: "default" },
   },
+
   {
     path: "/profile",
     name: "Profile",
@@ -52,13 +51,20 @@ const routes = [
     meta: { layout: "default" },
   },
 
-  // Product detail
   {
     path: "/products",
     name: "ProductList",
     component: ProductList,
     meta: { layout: "default" },
   },
+
+  {
+    path: "/products/:id",
+    name: "ProductDetail",
+    component: ProductDetail,
+    meta: { layout: "default" },
+  },
+
   {
     path: "/detectiveNovel/:id",
     name: "DetectiveDetail",
@@ -66,15 +72,8 @@ const routes = [
     meta: { layout: "default" },
   },
 
-  // Route chung cho sách dạng /book/:id
-  {
-    path: "/book/:id",
-    name: "BookDetailAlias",
-    component: NewBookDetail,
-    meta: { layout: "default" },
-  },
 
-  // Nhóm Newbook
+  // Newbook giữ nguyên tên
   {
     path: "/newbook",
     name: "Newbook",
@@ -88,7 +87,6 @@ const routes = [
     meta: { layout: "default" },
   },
 
-  // Nhóm Topbook
   {
     path: "/topbook",
     name: "Topbook",
@@ -102,7 +100,6 @@ const routes = [
     meta: { layout: "default" },
   },
 
-  // Cart page
   {
     path: "/cart",
     name: "Cart",
@@ -110,7 +107,6 @@ const routes = [
     meta: { layout: "default", requiresAuth: true, userOnly: true },
   },
 
-  // Checkout page
   {
     path: "/checkout",
     name: "CheckOut",
@@ -118,7 +114,6 @@ const routes = [
     meta: { layout: "default", requiresAuth: true, userOnly: true },
   },
 
-  // Thank you page
   {
     path: "/thank-you",
     name: "ThankYou",
@@ -126,7 +121,6 @@ const routes = [
     meta: { layout: "auth", requiresAuth: true, userOnly: true },
   },
 
-  // Login page
   {
     path: "/login",
     name: "Login",
@@ -134,7 +128,6 @@ const routes = [
     meta: { layout: "auth" },
   },
 
-  // Register page
   {
     path: "/register",
     name: "Register",
@@ -156,7 +149,7 @@ const routes = [
     meta: { layout: "default" },
   },
 
-  // admin
+  // admin routes
   {
     path: "/admin",
     redirect: "/admin/product",
@@ -213,25 +206,21 @@ router.beforeEach((to, from, next) => {
   auth.loadUser();
   const user = auth.user;
 
-  // Nếu trang yêu cầu đăng nhập mà chưa đăng nhập
   if (to.meta.requiresAuth && !user) {
     next({ name: "Login" });
     return;
   }
 
-  // Nếu đã đăng nhập mà vào login/register
   if ((to.name === "Login" || to.name === "Register") && user) {
     next({ name: "Home" });
     return;
   }
 
-  // Nếu không phải admin mà vào trang admin
   if (to.meta.requiresAdmin && user?.role !== "admin") {
     next({ name: "Home" });
     return;
   }
 
-  // Nếu là admin mà vào trang user-only
   if (to.meta.userOnly && user?.role === "admin") {
     next({ name: "Bestseller" });
     return;
