@@ -91,9 +91,7 @@ function goToCheckout() {
 }
 
 function confirmRemove(id) {
-  if (window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")) {
-    cartStore.removeItem(id);
-  }
+  cartStore.removeItem(id);
 }
 </script>
 

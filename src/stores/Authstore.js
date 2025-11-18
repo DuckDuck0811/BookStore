@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import router from "@/router/router.js";
-
+import { toast } from "vue3-toastify";
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null,
@@ -52,7 +52,7 @@ export const useAuthStore = defineStore("auth", {
           localStorage.removeItem("currentUser");
         }
 
-        alert("Đăng nhập thành công!");
+        toast.success("Đăng nhập thành công!", { autoClose: 2000 });
         return true;
       } catch (error) {
         console.error("Lỗi khi đăng nhập:", error);
@@ -66,7 +66,12 @@ export const useAuthStore = defineStore("auth", {
       this.user = null;
       localStorage.removeItem("currentUser");
       sessionStorage.removeItem("currentUser");
-      router.push({ name: "Home" });
+
+      toast.success("Đăng xuất thành công!", { autoClose: 1000 });
+
+      setTimeout(() => {
+        router.push({ name: "Home" });
+      }, 1200);
     },
 
     // Chặn truy cập nếu chưa đăng nhập

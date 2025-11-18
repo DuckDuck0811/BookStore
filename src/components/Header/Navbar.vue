@@ -35,20 +35,6 @@
         class="navbar-nav d-flex align-items-center gap-3 mb-0 flex-nowrap"
         style="min-width: 230px"
       >
-        <!-- Dark mode toggle -->
-        <li class="nav-item">
-          <button
-            class="btn btn-outline-success rounded-circle theme-toggle"
-            @click="toggleTheme"
-            title="Chuyển chế độ"
-          >
-            <i
-              :class="isDark ? 'bi bi-brightness-high' : 'bi bi-moon-stars'"
-              class="fs-5"
-            ></i>
-          </button>
-        </li>
-
         <!-- Cart -->
         <li class="nav-item position-relative">
           <router-link

@@ -481,9 +481,9 @@
       "description": "Truyện tình cảm"
     },
     {
-      "id": "CT007",
       "name": "History",
-      "description": "Sách lịch sử."
+      "description": "Sách lịch sử.",
+      "id": "CT007"
     }
   ],
   "accounts": [
@@ -499,7 +499,7 @@
       "id": "AC002",
       "username": "user",
       "email": "ductmth04341@fpt.edu.vn",
-      "password": "321",
+      "password": "123",
       "role": "user",
       "status": "Active"
     },
@@ -525,7 +525,7 @@
       "email": "ghgh@gmail.com",
       "password": "123",
       "role": "user",
-      "status": "Inactive"
+      "status": "Active"
     }
   ],
   "orders": [

@@ -40,6 +40,7 @@
             <div class="price">
               <del v-if="book.oldPrice" class="old-price">{{ book.oldPrice }}</del>
               <span class="new-price">{{ book.newPrice }}</span>
+              <span v-if="book.discount" class="discount">{{ book.discount }}</span>
             </div>
             <button
               class="btn btn-danger btn-add-cart mt-3"
@@ -164,6 +165,14 @@ function goToDetail(book) {
   flex-direction: column;
   justify-content: space-between;
   flex-grow: 1;
+}
+
+.discount {
+  background-color: #d32f2f;
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  color: #fff;
 }
 
 .book-title {

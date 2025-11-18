@@ -163,7 +163,6 @@ function addToCart(book) {
     img: book.img,
     quantity: 1,
   });
-  toast.success("Đã thêm vào giỏ hàng!");
 }
 </script>
 

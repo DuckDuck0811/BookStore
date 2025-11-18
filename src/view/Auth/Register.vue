@@ -52,7 +52,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-
+import { toast } from "vue3-toastify";
 const username = ref("");
 const email = ref("");
 const password = ref("");
@@ -108,9 +108,10 @@ const handleRegister = async (e) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newUser),
     });
-
-    alert("Đăng ký thành công! Mời bạn đăng nhập.");
-    router.push("/login");
+    toast.success("Đăng ký thành công! Vui lòng đăng nhập.", { autoClose: 2000 });
+    setTimeout(() => {
+      router.push("/login");
+    }, 2000);
   } catch (error) {
     console.error(error);
     alert("Không thể kết nối tới server!");

@@ -215,7 +215,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/Authstore";
-
+import { toast } from "vue3-toastify";
 const username = ref("");
 const password = ref("");
 const remember = ref(false);
@@ -241,7 +241,7 @@ const handleLogin = async () => {
   try {
     const res = await fetch("http://localhost:3000/accounts");
     if (!res.ok) {
-      alert("Không thể tải danh sách tài khoản");
+      toast.error("Không thể tải danh sách tài khoản", { autoClose: 3000 });
       return;
     }
     const accounts = await res.json();
@@ -250,13 +250,13 @@ const handleLogin = async () => {
     );
 
     if (!user) {
-      alert("Sai tên đăng nhập hoặc mật khẩu!");
+      toast.error("Sai tên đăng nhập hoặc mật khẩu!", { autoClose: 3000 });
       return;
     }
 
     const status = (user.status || "").toLowerCase().trim();
     if (status !== "active") {
-      alert("Tài khoản này đã bị khóa hoặc chưa kích hoạt!");
+      toast.error("Tài khoản này đã bị khóa hoặc chưa kích hoạt!", { autoClose: 3000 });
       return;
     }
 
@@ -269,14 +269,14 @@ const handleLogin = async () => {
       sessionStorage.setItem("currentUser", JSON.stringify(user));
       localStorage.removeItem("currentUser");
     }
-
-    alert("Đăng nhập thành công!");
-
-    if (user.role === "admin") {
-      router.push("/admin/home");
-    } else {
-      router.push("/home");
-    }
+    toast.success("Đăng nhập thành công!", { autoClose: 500 });
+    setTimeout(() => {
+      if (user.role === "admin") {
+        router.push("/admin/home");
+      } else {
+        router.push("/home");
+      }
+    }, 1000);
   } catch (error) {
     console.error("Lỗi khi đăng nhập:", error);
     alert("Không thể kết nối tới máy chủ!");
@@ -382,23 +382,22 @@ const sendOtp = async () => {
         email: forgotEmail.value,
         subject: "Mã xác thực đặt lại mật khẩu",
         html: `
-          <p>Chào bạn,</p>
-          <p>Mã xác thực đặt lại mật khẩu của bạn là: <strong>${otp}</strong></p>
-          <p>Vui lòng không chia sẻ mã này với bất kỳ ai.</p>
-          <p>Nếu bạn không yêu cầu mã này, vui lòng bỏ qua email này.</p>
-        `,
+            <p>Chào bạn,</p>
+            <p>Mã xác thực đặt lại mật khẩu của bạn là: <strong>${otp}</strong></p>
+            <p>Vui lòng không chia sẻ mã này với bất kỳ ai.</p>
+            <p>Nếu bạn không yêu cầu mã này, vui lòng bỏ qua email này.</p>
+          `,
       }),
     });
 
     if (!resSendMail.ok) {
       const errorData = await resSendMail.json();
-      alert(errorData.error || "Gửi mail thất bại");
+      toast.error(`Lỗi khi gửi email: ${errorData.message || resSendMail.statusText}`);
       sendingOtp.value = false;
       return;
     }
 
-    alert("Mã xác thực đã được gửi tới email của bạn.");
-
+    toast.success("Mã OTP đã được gửi tới email của bạn!");
     closeForgotEmailModal();
     openOtpModal();
   } catch (error) {
@@ -471,7 +470,7 @@ const submitNewPassword = async () => {
       )
     );
 
-    alert("Đổi mật khẩu thành công! Bạn có thể đăng nhập lại.");
+    toast.success("Cập nhật mật khẩu thành công!");
     closeNewPasswordModal();
     resetAllForms();
   } catch (error) {

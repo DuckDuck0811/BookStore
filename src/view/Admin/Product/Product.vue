@@ -319,8 +319,9 @@
 import { ref, computed, onMounted } from "vue";
 import { useProductStore } from "@/stores/ProductStore";
 import { useCategoryStore } from "@/stores/Category";
-import { Toast } from "bootstrap";
-
+import { toast } from "vue3-toastify";
+import Toast from "bootstrap/js/dist/toast";
+import { Modal } from "bootstrap";
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
 
@@ -424,7 +425,7 @@ function goToPage(page) {
   currentPage.value = page;
 }
 
-// --- Form ---
+//  Form
 
 const errors = ref({});
 
@@ -456,17 +457,17 @@ const validateForm = () => {
 
 const saveProduct = async () => {
   if (!validateForm()) {
-    showToast("Vui lòng sửa lỗi trong form!", "danger");
+    toast.warning("Vui lòng sửa lỗi trong form!", { autoClose: 2000 });
     return;
   }
 
   try {
     if (isEdit.value) {
       await productStore.updateProduct(editingId.value, newProduct.value);
-      showToast("Cập nhật sản phẩm thành công!");
+      toast.success("Cập nhật sản phẩm thành công!", { autoClose: 2000 });
     } else {
       await productStore.addProduct(newProduct.value);
-      showToast("Thêm sản phẩm mới thành công!");
+      toast.success("Thêm sản phẩm mới thành công!", { autoClose: 2000 });
     }
     await productStore.fetchProducts();
     resetForm();
@@ -474,8 +475,11 @@ const saveProduct = async () => {
     editingId.value = null;
   } catch (err) {
     console.error(err);
-    showToast("Lỗi khi lưu sản phẩm!", "danger");
+    toast.error("Lỗi khi lưu sản phẩm!", "danger");
   }
+  const modalEl = document.getElementById("addProductModal");
+  const modal = Modal.getInstance(modalEl) || new Modal(modalEl);
+  modal.hide();
 };
 
 const editProduct = (item) => {
@@ -484,6 +488,9 @@ const editProduct = (item) => {
   newProduct.value = { ...item };
   previewImage.value = item.img;
   errors.value = {};
+  const modalEl = document.getElementById("addProductModal");
+  const modal = Modal.getInstance(modalEl) || new Modal(modalEl);
+  modal.show();
 };
 
 const onFileChange = (e) => {
@@ -498,10 +505,10 @@ const removeProduct = async (id) => {
   try {
     await productStore.deleteProduct(id);
     await productStore.fetchProducts();
-    showToast("Xóa sản phẩm thành công!");
+    toast.success("Xóa sản phẩm thành công!", { autoClose: 2000 });
   } catch (err) {
     console.error(err);
-    showToast("Xóa sản phẩm thất bại!", "danger");
+    toast.error("Xóa sản phẩm thất bại!", { autoClose: 2000 });
   }
 };
 
@@ -518,19 +525,5 @@ function openAddForm() {
 
 function viewProduct(item) {
   detailProduct.value = { ...item };
-}
-
-function showToast(message, type = "success") {
-  toastMessage.value = message;
-  if (!toastElement.value) return;
-  toastElement.value.classList.remove(
-    "text-bg-success",
-    "text-bg-danger",
-    "text-bg-warning"
-  );
-  toastElement.value.classList.add(
-    type === "danger" ? "text-bg-danger" : "text-bg-success"
-  );
-  toastInstance.show();
 }
 </script>

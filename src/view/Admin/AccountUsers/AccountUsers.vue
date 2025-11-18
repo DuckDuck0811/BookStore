@@ -336,6 +336,7 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import axios from "axios";
+import { toast } from "vue3-toastify";
 
 const API_URL = "http://localhost:3000/accounts";
 import { getCurrentInstance } from "vue";
@@ -388,7 +389,7 @@ const fetchUsers = async () => {
     users.value = res.data;
   } catch (err) {
     console.error("Lỗi khi tải danh sách tài khoản:", err);
-    showToast("Không thể tải danh sách tài khoản từ API!", "error");
+    toast.error("Không thể tải danh sách tài khoản từ API!", { autoClose: 2000 });
   }
 };
 
@@ -410,19 +411,19 @@ const generateNextUserId = () => {
 
 const saveUser = async () => {
   if (!currentUser.value.username || currentUser.value.username.trim() === "") {
-    showToast("Username không được để trống!", "error");
+    toast.error("Username không được để trống!", { autoClose: 2000 });
     return;
   }
   if (!currentUser.value.email || currentUser.value.email.trim() === "") {
-    showToast("Email không được để trống!", "error");
+    toast.error("Email không được để trống!", { autoClose: 2000 });
     return;
   }
   if (!currentUser.value.password || currentUser.value.password.trim() === "") {
-    showToast("Password không được để trống!", "error");
+    toast.error("Password không được để trống!", { autoClose: 2000 });
     return;
   }
   if (!currentUser.value.role || currentUser.value.role.trim() === "") {
-    showToast("Role không được để trống!", "error");
+    toast.error("Role không được để trống!", { autoClose: 2000 });
     return;
   }
 
@@ -434,7 +435,7 @@ const saveUser = async () => {
   );
 
   if (usernameExists) {
-    showToast("Username đã tồn tại!", "error");
+    toast.error("Username đã tồn tại!", { autoClose: 2000 });
     return;
   }
 
@@ -446,18 +447,18 @@ const saveUser = async () => {
   );
 
   if (emailExists) {
-    showToast("Email đã được sử dụng!", "error");
+    toast.error("Email đã được sử dụng!", { autoClose: 2000 });
     return;
   }
 
   try {
     if (isEdit.value) {
       await axios.put(`${API_URL}/${currentUser.value.id}`, currentUser.value);
-      showToast("Cập nhật tài khoản thành công!", "success");
+      toast.success("Cập nhật tài khoản thành công!", { autoClose: 2000 });
     } else {
       currentUser.value.id = generateNextUserId();
       await axios.post(API_URL, currentUser.value);
-      showToast("Thêm tài khoản thành công!", "success");
+      toast.success("Thêm tài khoản thành công!", { autoClose: 2000 });
     }
 
     await fetchUsers();
@@ -469,7 +470,7 @@ const saveUser = async () => {
     modalInstance.hide();
   } catch (error) {
     console.error(error);
-    showToast("Không thể lưu tài khoản!", "error");
+    toast.error("Không thể lưu tài khoản!", { autoClose: 2000 });
   }
 };
 
@@ -502,12 +503,12 @@ const resetChangePasswordForm = () => {
 
 const changePassword = async () => {
   if (passwordForm.value.newPassword !== passwordForm.value.confirmPassword) {
-    showToast("Mật khẩu mới và xác nhận mật khẩu mới không khớp!", "error");
+    toast.error("Mật khẩu mới và xác nhận mật khẩu mới không khớp!", { autoClose: 2000 });
     return;
   }
 
   if (passwordForm.value.oldPassword !== passwordUser.value.password) {
-    showToast("Mật khẩu cũ không đúng!", "error");
+    toast.error("Mật khẩu cũ không đúng!", { autoClose: 2000 });
     return;
   }
 
@@ -522,7 +523,7 @@ const changePassword = async () => {
       users.value[userIndex].password = passwordForm.value.newPassword;
     }
 
-    showToast("Đổi mật khẩu thành công!", "success");
+    toast.success("Đổi mật khẩu thành công!", { autoClose: 2000 });
 
     const modalEl = document.getElementById("changePasswordModal");
     const modalInstance = bootstrap.Modal.getInstance(modalEl);
@@ -531,7 +532,7 @@ const changePassword = async () => {
     resetChangePasswordForm();
   } catch (error) {
     console.error(error);
-    showToast("Không thể đổi mật khẩu!", "error");
+    toast.error("Không thể đổi mật khẩu!", { autoClose: 2000 });
   }
 };
 
@@ -540,14 +541,14 @@ const deleteUser = async (username) => {
     try {
       const user = users.value.find((u) => u.username === username);
       if (!user) {
-        showToast("Không tìm thấy tài khoản!", "error");
+        toast.error("Không tìm thấy tài khoản!", { autoClose: 2000 });
         return;
       }
       await axios.delete(`${API_URL}/${user.id}`);
       await fetchUsers();
-      showToast("Đã xóa tài khoản!", "success");
+      toast.success("Đã xóa tài khoản!", { autoClose: 2000 });
     } catch {
-      showToast("Không thể xóa tài khoản!", "error");
+      toast.error("Không thể xóa tài khoản!", { autoClose: 2000 });
     }
   }
 };
@@ -557,14 +558,14 @@ const toggleLock = async (user) => {
     const updatedStatus = user.status === "Inactive" ? "Active" : "Inactive";
     await axios.patch(`${API_URL}/${user.id}`, { status: updatedStatus });
     user.status = updatedStatus;
-    showToast(
+    toast.info(
       updatedStatus === "Inactive"
         ? "Tài khoản đã bị khóa!"
         : "Tài khoản đã được mở khóa!",
-      "success"
+      { autoClose: 2000 }
     );
   } catch {
-    showToast("Không thể thay đổi trạng thái tài khoản!", "error");
+    toast.error("Không thể thay đổi trạng thái tài khoản!", { autoClose: 2000 });
   }
 };
 
@@ -591,19 +592,6 @@ const filteredUsers = computed(() => {
     return matchesSearch && matchesRole && matchesStatus;
   });
 });
-
-// Toast functions
-function showToast(message, type = "success") {
-  const toastObj = { message, type };
-  toasts.value.push(toastObj);
-
-  setTimeout(() => {
-    const idx = toasts.value.indexOf(toastObj);
-    if (idx !== -1) {
-      toasts.value.splice(idx, 1);
-    }
-  }, 3000);
-}
 
 function removeToast(index) {
   toasts.value.splice(index, 1);

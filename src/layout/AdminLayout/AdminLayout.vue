@@ -77,8 +77,10 @@ const auth = useAuthStore();
 //Hàm dùng để đăng xuất
 const handleLogout = () => {
   if (confirm("Bạn có chắc muốn đăng xuất không?")) {
-    auth.logout(); //gọi hàm đăng xuất
-    router.push("/login"); //chuyển lại về trang đăng nhập khi đã đăng xuất
+    auth.logout();
+    setTimeout(() => {
+      router.push("/login");
+    }, 1200); 
   }
 };
 </script>

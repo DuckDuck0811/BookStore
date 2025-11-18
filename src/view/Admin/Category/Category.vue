@@ -36,7 +36,7 @@
           <th>Tên loại</th>
           <th>Mô tả</th>
           <th>Số lượng sản phẩm</th>
-          <th>Thao tác</th> 
+          <th>Thao tác</th>
         </tr>
       </thead>
       <tbody>
@@ -92,7 +92,6 @@
                   type="text"
                   class="form-control"
                   placeholder="Nhập tên loại..."
-                  required
                   maxlength="50"
                 />
               </div>
@@ -155,6 +154,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useCategoryStore } from "@/stores/Category";
 import { useProductStore } from "@/stores/ProductStore";
+import { toast } from "vue3-toastify";
 
 const categoryStore = useCategoryStore();
 const productStore = useProductStore();
@@ -234,17 +234,22 @@ const closeModal = () => {
 
 const submitForm = async () => {
   if (!formData.value.name.trim()) {
-    showToast("Tên loại sản phẩm không được để trống!", "error");
+    toast.error("Tên loại sản phẩm không được để trống!", { autoClose: 2000 });
     return;
   }
 
   if (formData.value.name.length > 50) {
-    showToast("Tên loại sản phẩm không được vượt quá 50 ký tự!", "error");
+    toast.error("Tên loại sản phẩm không được vượt quá 50 ký tự!", { autoClose: 2000 });
     return;
   }
 
   if (formData.value.description.length > 255) {
-    showToast("Mô tả không được vượt quá 255 ký tự!", "error");
+    toast.error("Mô tả không được vượt quá 255 ký tự!", { autoClose: 2000 });
+    return;
+  }
+
+  if (!formData.value.description.trim()) {
+    toast.error("Mô tả loại sản phẩm không được để trống!", { autoClose: 2000 });
     return;
   }
 
@@ -254,51 +259,41 @@ const submitForm = async () => {
       (!isEdit.value || cat.id !== editingId.value)
   );
   if (nameExists) {
-    showToast("Tên loại sản phẩm đã tồn tại!", "error");
+    toast.error("Tên loại sản phẩm đã tồn tại. Vui lòng chọn tên khác.", {
+      autoClose: 2000,
+    });
     return;
   }
 
   try {
     if (isEdit.value) {
       await categoryStore.updateCategory(editingId.value, formData.value);
-      showToast("Cập nhật loại sản phẩm thành công!", "success");
+      toast.success("Cập nhật loại sản phẩm thành công!", { autoClose: 2000 });
     } else {
       await categoryStore.addCategory(formData.value);
-      showToast("Thêm loại sản phẩm mới thành công!", "success");
+      toast.success("Thêm loại sản phẩm thành công!", { autoClose: 2000 });
     }
 
     await categoryStore.fetchCategories();
     closeModal();
   } catch (err) {
     console.error("Lỗi khi lưu danh mục:", err);
-    showToast("Không thể lưu danh mục. Kiểm tra lại API!", "error");
   }
 };
 
-// ===== Xóa Category =====
+//  Xóa Category
 const deleteCategory = async (id) => {
   if (confirm("Bạn có chắc muốn xóa loại sản phẩm này?")) {
     try {
       await categoryStore.deleteCategory(id);
       await categoryStore.fetchCategories();
-      showToast("Xóa loại sản phẩm thành công!", "success");
+      toast.success("Xóa loại sản phẩm thành công!", { autoClose: 2000 });
     } catch (err) {
-      showToast("Không thể xóa danh mục (có thể ID không tồn tại trong API).", "error");
+      toast.error("Lỗi khi xóa loại sản phẩm!", { autoClose: 2000 });
+      console.error("Lỗi khi xóa danh mục:", err);
     }
   }
 };
-
-function showToast(message, type = "success") {
-  const toastObj = { message, type };
-  toasts.value.push(toastObj);
-
-  setTimeout(() => {
-    const idx = toasts.value.indexOf(toastObj);
-    if (idx !== -1) {
-      toasts.value.splice(idx, 1);
-    }
-  }, 3000);
-}
 
 function removeToast(index) {
   toasts.value.splice(index, 1);
