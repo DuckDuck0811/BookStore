@@ -72,7 +72,6 @@ const routes = [
     meta: { layout: "default" },
   },
 
-
   // Newbook giữ nguyên tên
   {
     path: "/newbook",

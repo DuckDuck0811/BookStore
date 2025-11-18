@@ -774,6 +774,223 @@
       "total": 2530000,
       "date": "2025-11-17",
       "status": "Đang xử lý"
+    },
+    {
+      "id": "DH007",
+      "customer": {
+        "name": "Duck",
+        "phone": "0877438292",
+        "address": "Hà Nội, Việt Nam"
+      },
+      "items": [
+        {
+          "productId": "19",
+          "title": "Hunter x Hunter",
+          "price": 32000,
+          "quantity": 2
+        },
+        {
+          "productId": "1",
+          "title": "Harry Potter và Hòn Đá Phù Thủy",
+          "price": 90000,
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 2
+        },
+        {
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 2
+        },
+        {
+          "productId": "8",
+          "title": "The Hunger Games",
+          "price": 120000,
+          "quantity": 2
+        },
+        {
+          "productId": "7",
+          "title": "Percy Jackson: The Lightning Thief",
+          "price": 112500,
+          "quantity": 2
+        },
+        {
+          "productId": "6",
+          "title": "The Hobbit",
+          "price": 135000,
+          "quantity": 2
+        },
+        {
+          "productId": "5",
+          "title": "The Lord of the Rings: Return of the King",
+          "price": 165000,
+          "quantity": 2
+        },
+        {
+          "productId": "12",
+          "title": "Naruto",
+          "price": 30000,
+          "quantity": 2
+        },
+        {
+          "productId": "4",
+          "title": "The Lord of the Rings: The Two Towers",
+          "price": 157500,
+          "quantity": 2
+        },
+        {
+          "productId": "15",
+          "title": "Attack on Titan",
+          "price": 35000,
+          "quantity": 3
+        },
+        {
+          "productId": "17",
+          "title": "Demon Slayer",
+          "price": 30000,
+          "quantity": 2
+        },
+        {
+          "productId": "21",
+          "title": "Sherlock Holmes: Vụ Án Ở Boscombe",
+          "price": 90000,
+          "quantity": 2
+        },
+        {
+          "productId": "25",
+          "title": "Án Mạng Trên Sông Nile - Agatha Christie",
+          "price": 135000,
+          "quantity": 2
+        },
+        {
+          "productId": "26",
+          "title": "Mười Người Da Đen Nhỏ - Agatha Christie",
+          "price": 112500,
+          "quantity": 2
+        },
+        {
+          "productId": "22",
+          "title": "Sherlock Holmes: Dấu Bộ Tứ",
+          "price": 97500,
+          "quantity": 2
+        },
+        {
+          "productId": "23",
+          "title": "Mật Mã Da Vinci - Dan Brown",
+          "price": 150000,
+          "quantity": 2
+        },
+        {
+          "productId": "27",
+          "title": "Phía Sau Nghi Can X - Higashino Keigo",
+          "price": 127500,
+          "quantity": 2
+        },
+        {
+          "productId": "9",
+          "title": "The Maze Runner",
+          "price": 127500,
+          "quantity": 1
+        },
+        {
+          "productId": "24",
+          "title": "Thiên Thần và Ác Quỷ - Dan Brown",
+          "price": 157500,
+          "quantity": 2
+        },
+        {
+          "productId": "10",
+          "title": "Divergent",
+          "price": 105000,
+          "quantity": 1
+        },
+        {
+          "productId": "16",
+          "title": "My Hero Academia",
+          "price": 33000,
+          "quantity": 1
+        },
+        {
+          "productId": "18",
+          "title": "Black Clover",
+          "price": 29000,
+          "quantity": 1
+        },
+        {
+          "productId": "14",
+          "title": "Bleach",
+          "price": 27000,
+          "quantity": 1
+        },
+        {
+          "productId": "13",
+          "title": "Dragon Ball",
+          "price": 28000,
+          "quantity": 1
+        },
+        {
+          "productId": "11",
+          "title": "One Piece",
+          "price": 25000,
+          "quantity": 1
+        },
+        {
+          "productId": "20",
+          "title": "Fullmetal Alchemist",
+          "price": 34000,
+          "quantity": 1
+        },
+        {
+          "productId": "31",
+          "title": "The Girl with the Dragon Tattoo",
+          "price": 110000,
+          "quantity": 1
+        },
+        {
+          "productId": "32",
+          "title": "Gone Girl",
+          "price": 100000,
+          "quantity": 1
+        },
+        {
+          "productId": "33",
+          "title": "In the Woods",
+          "price": 90000,
+          "quantity": 1
+        },
+        {
+          "productId": "34",
+          "title": "The Silent Patient",
+          "price": 105000,
+          "quantity": 1
+        },
+        {
+          "productId": "30",
+          "title": "Neuromancer",
+          "price": 120000,
+          "quantity": 1
+        },
+        {
+          "productId": "29",
+          "title": "Foundation",
+          "price": 130000,
+          "quantity": 1
+        },
+        {
+          "productId": "28",
+          "title": "Dune",
+          "price": 150000,
+          "quantity": 1
+        }
+      ],
+      "total": 5207500,
+      "date": "2025-11-18",
+      "status": "Đang xử lý"
     }
   ],
   "detectiveNovels": [

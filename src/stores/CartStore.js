@@ -3,7 +3,7 @@ import { toast } from "vue3-toastify";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
-    items: [], // Giỏ hàng chỉ lưu trong state
+    items: JSON.parse(localStorage.getItem("cartItems") || "[]"),
   }),
 
   getters: {

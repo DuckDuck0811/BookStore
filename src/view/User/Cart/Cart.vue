@@ -28,6 +28,7 @@
               <input
                 type="number"
                 min="1"
+                max="50"
                 v-model.number="item.quantity"
                 class="form-control quantity-input"
                 @input="validateQuantity(item)"
@@ -81,8 +82,10 @@ const cartStore = useCartStore();
 const router = useRouter();
 
 function validateQuantity(item) {
-  if (item.quantity < 1 || isNaN(item.quantity)) {
+  if (isNaN(item.quantity) || item.quantity < 1) {
     item.quantity = 1;
+  } else if (item.quantity > 20) {
+    item.quantity = 20;
   }
 }
 

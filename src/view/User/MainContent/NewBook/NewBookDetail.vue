@@ -17,7 +17,9 @@
 
     <!-- Quyển chính -->
     <div class="product-detail">
-      <button class="btn back-btn" @click="$router.push('/home')">Quay lại</button>
+      <button class="btn btn-secondary back-btn" @click="$router.push('/home')">
+        Quay lại
+      </button>
 
       <div class="detail-body">
         <!-- Ảnh sách -->
@@ -38,7 +40,7 @@
 
           <div class="quantity">
             <label>Số lượng:</label>
-            <input type="number" v-model.number="qty" min="1" />
+            <input type="number" v-model.number="qty" min="1" max="20" />
           </div>
 
           <div class="actions">

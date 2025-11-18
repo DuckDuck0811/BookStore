@@ -1,4 +1,5 @@
 <template>
+  <br />
   <!-- Footer -->
   <footer class="footer bg-gray-dark py-5 text-white mt-auto">
     <div class="container">
@@ -10,13 +11,29 @@
             Trang web mua sách online uy tín, cung cấp đa dạng đầu sách cho mọi đối tượng.
           </p>
           <div class="d-flex gap-3 mt-3">
-            <a href="https://facebook.com" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener"
+              class="social-link"
+              aria-label="Facebook"
+            >
               <i class="bi bi-facebook fs-4"></i>
             </a>
-            <a href="https://zalo.me" target="_blank" rel="noopener" class="social-link" aria-label="Zalo">
+            <a
+              href="https://zalo.me"
+              target="_blank"
+              rel="noopener"
+              class="social-link"
+              aria-label="Zalo"
+            >
               <i class="bi bi-chat-dots fs-4"></i>
             </a>
-            <a href="mailto:support@mybookstore.com" class="social-link" aria-label="Email">
+            <a
+              href="mailto:support@mybookstore.com"
+              class="social-link"
+              aria-label="Email"
+            >
               <i class="bi bi-envelope fs-4"></i>
             </a>
           </div>
@@ -44,23 +61,24 @@
         <!-- Thông tin liên hệ -->
         <div class="col-md-4">
           <h6 class="fw-bold mb-3">Liên hệ</h6>
-          <p class="small mb-2"><i class="bi bi-envelope me-2"></i>support@mybookstore.com</p>
+          <p class="small mb-2">
+            <i class="bi bi-envelope me-2"></i>support@mybookstore.com
+          </p>
           <p class="small mb-2"><i class="bi bi-telephone me-2"></i>023 456 7891</p>
-          <p class="small mb-0"><i class="bi bi-geo-alt me-2"></i>Hà Nội, Việt Nam, Trái Đất</p>
+          <p class="small mb-0">
+            <i class="bi bi-geo-alt me-2"></i>Hà Nội, Việt Nam, Trái Đất
+          </p>
         </div>
       </div>
 
       <hr class="border-light my-4" />
 
-      <div class="text-center small">
-        © 2025 MyBookStore. All rights reserved.
-      </div>
+      <div class="text-center small">© 2025 MyBookStore. All rights reserved.</div>
     </div>
   </footer>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style scoped>
 .footer {
