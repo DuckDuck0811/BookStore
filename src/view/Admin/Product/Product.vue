@@ -59,7 +59,7 @@
     <table class="table table-bordered table-hover mb-0 align-middle">
       <thead class="table-primary text-center">
         <tr>
-          <th style="width: 100px">#</th>
+          <th style="width: 100px">ID</th>
           <th style="width: 150px">Image</th>
           <th>Title</th>
           <th style="width: 150px">Category</th>
