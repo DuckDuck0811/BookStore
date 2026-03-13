@@ -1,161 +1,226 @@
 <template>
-  <!-- Content -->
-
-  <!-- Header với tìm kiếm, lọc, sắp xếp và nút thêm -->
-  <div
-    class="card-header bg-white fw-bold d-flex flex-wrap gap-2 align-items-center justify-content-between"
-  >
-    <span>Product</span>
-    <div
-      class="d-flex flex-wrap align-items-center gap-3 mb-3"
-      style="justify-content: space-between"
-    >
-      <!-- Nhóm tìm kiếm + filter + sort -->
-      <div class="d-flex flex-wrap align-items-center gap-2">
-        <input
-          v-model="searchQuery"
-          type="text"
-          class="form-control form-control-sm"
-          placeholder="Tìm kiếm sản phẩm..."
-          style="width: 200px"
-          @input="currentPage = 1"
-        />
-
-        <select
-          v-model="filterCategory"
-          class="form-select form-select-sm"
-          style="width: 180px"
-          @change="currentPage = 1"
-        >
-          <option value="">-- Tất cả loại --</option>
-          <option v-for="cat in categories" :key="cat.id" :value="cat.name">
-            {{ cat.name }}
-          </option>
-        </select>
-
-        <select v-model="sortBy" class="form-select form-select-sm" style="width: 180px">
-          <option value="">-- Sắp xếp --</option>
-          <option value="priceAsc">Giá tăng dần</option>
-          <option value="priceDesc">Giá giảm dần</option>
-          <option value="titleAsc">Tên A-Z</option>
-          <option value="titleDesc">Tên Z-A</option>
-        </select>
+  <div class="product-management">
+    <div class="container-fluid p-4">
+      <!-- Page Header -->
+      <div class="page-header mb-4">
+        <div>
+          <h2 class="fw-bold mb-2">Quản lý sản phẩm</h2>
+          <p class="text-muted mb-0">Quản lý danh sách sản phẩm trong hệ thống</p>
+        </div>
       </div>
 
-      <!-- Nút thêm sản phẩm -->
-      <button
-        class="btn btn-primary btn-sm"
-        data-bs-toggle="modal"
-        data-bs-target="#addProductModal"
-        @click="openAddForm"
-      >
-        + Thêm sản phẩm
-      </button>
-    </div>
-  </div>
+      <!-- Search & Filter Card -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-3">
+              <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input
+                  v-model="searchQuery"
+                  type="text"
+                  class="form-control"
+                  placeholder="Tìm kiếm sản phẩm..."
+                  @input="currentPage = 1"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <select
+                v-model="filterCategory"
+                class="form-select"
+                @change="currentPage = 1"
+              >
+                <option value="">Tất cả loại</option>
+                <option v-for="cat in categories" :key="cat.id" :value="cat.name">
+                  {{ cat.name }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <select v-model="sortBy" class="form-select">
+                <option value="">Sắp xếp theo</option>
+                <option value="priceAsc">Giá tăng dần</option>
+                <option value="priceDesc">Giá giảm dần</option>
+                <option value="titleAsc">Tên A-Z</option>
+                <option value="titleDesc">Tên Z-A</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <button
+                class="btn btn-primary w-100"
+                data-bs-toggle="modal"
+                data-bs-target="#addProductModal"
+                @click="openAddForm"
+              >
+                <i class="bi bi-plus-circle me-2"></i>Thêm sản phẩm
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <!-- Bảng dữ liệu -->
-  <div class="card-body p-0">
-    <table class="table table-bordered table-hover mb-0 align-middle">
-      <thead class="table-primary text-center">
-        <tr>
-          <th style="width: 100px">ID</th>
-          <th style="width: 150px">Image</th>
-          <th>Title</th>
-          <th style="width: 150px">Category</th>
-          <th style="width: 150px">Price</th>
-          <th style="width: 120px">Discount</th>
-          <th style="width: 270px">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, index) in paginatedProducts" :key="item.id">
-          <td class="text-center">{{ (currentPage - 1) * pageSize + index + 1 }}</td>
-          <td class="text-center">
-            <img
-              :src="item.img?.startsWith('data:') ? item.img : item.img || 'default.jpg'"
-              alt="cover"
-              style="width: 80px; height: auto"
-            />
-          </td>
-          <td>{{ item.title }}</td>
-          <td class="text-center">{{ item.category }}</td>
-          <td class="text-center">{{ item.newPrice }}</td>
-          <td class="text-center">{{ item.discount }}</td>
-          <td class="text-center">
-            <button
-              class="btn btn-sm btn-secondary me-1"
-              @click="viewProduct(item)"
-              data-bs-toggle="modal"
-              data-bs-target="#detailProductModal"
-            >
-              View
-            </button>
-            <button
-              class="btn btn-sm btn-info me-1"
-              @click="editProduct(item)"
-              data-bs-toggle="modal"
-              data-bs-target="#addProductModal"
-            >
-              Edit
-            </button>
-            <button class="btn btn-sm btn-danger" @click="removeProduct(item.id)">
-              Delete
-            </button>
-          </td>
-        </tr>
-        <tr v-if="paginatedProducts.length === 0">
-          <td colspan="7" class="text-center text-muted py-3">Không có sản phẩm nào</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Phân trang -->
-  <div class="card-footer d-flex justify-content-center">
-    <nav>
-      <ul class="pagination mb-0">
-        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-          <a class="page-link" href="#" @click.prevent="prevPage">&laquo;</a>
-        </li>
-        <li
-          v-for="page in totalPages"
-          :key="page"
-          class="page-item"
-          :class="{ active: currentPage === page }"
-        >
-          <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
-        </li>
-        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-          <a class="page-link" href="#" @click.prevent="nextPage">&raquo;</a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-
-  <div class="modal fade" id="addProductModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content rounded-3 shadow-lg">
-        <div class="modal-header text-white" style="background: #212529">
-          <h5 class="modal-title fw-bold">
-            {{ isEdit ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm mới" }}
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      <!-- Products Table Card -->
+      <div class="card shadow-sm">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th style="width: 80px">STT</th>
+                  <th style="width: 120px" class="text-center">Hình ảnh</th>
+                  <th>Tên sản phẩm</th>
+                  <th style="width: 150px">Loại</th>
+                  <th style="width: 120px" class="text-end">Giá</th>
+                  <th style="width: 100px" class="text-center">Giảm giá</th>
+                  <th style="width: 200px" class="text-center">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(item, index) in paginatedProducts" :key="item.id">
+                  <td class="fw-semibold">
+                    {{ (currentPage - 1) * pageSize + index + 1 }}
+                  </td>
+                  <td class="text-center">
+                    <img
+                      :src="
+                        item.img?.startsWith('data:')
+                          ? item.img
+                          : item.img || 'https://via.placeholder.com/80'
+                      "
+                      alt="Product"
+                      class="product-img"
+                    />
+                  </td>
+                  <td>
+                    <div class="product-title">{{ item.title }}</div>
+                  </td>
+                  <td>
+                    <span class="badge bg-light text-dark border">{{
+                      item.category
+                    }}</span>
+                  </td>
+                  <td class="text-end fw-semibold text-success">
+                    {{ item.newPrice }}
+                  </td>
+                  <td class="text-center">
+                    <span v-if="item.discount" class="badge bg-danger">{{
+                      item.discount
+                    }}</span>
+                    <span v-else class="text-muted">-</span>
+                  </td>
+                  <td class="text-center">
+                    <button
+                      class="btn btn-sm btn-outline-info me-1"
+                      @click="viewProduct(item)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#detailProductModal"
+                      title="Xem chi tiết"
+                    >
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-warning me-1"
+                      @click="editProduct(item)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addProductModal"
+                      title="Chỉnh sửa"
+                    >
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-danger"
+                      @click="removeProduct(item.id)"
+                      title="Xóa"
+                    >
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="paginatedProducts.length === 0">
+                  <td colspan="7" class="text-center py-5">
+                    <div class="empty-state">
+                      <i class="bi bi-inbox display-1 text-muted mb-3"></i>
+                      <p class="text-muted">Không có sản phẩm nào</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <div class="modal-body">
-          <form @submit.prevent="saveProduct" novalidate>
+        <!-- Pagination -->
+        <div class="card-footer bg-white" v-if="totalPages > 1">
+          <nav>
+            <ul class="pagination justify-content-center mb-0">
+              <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                <a class="page-link" href="#" @click.prevent="prevPage">
+                  <i class="bi bi-chevron-left"></i>
+                </a>
+              </li>
+              <li
+                v-for="page in totalPages"
+                :key="page"
+                class="page-item"
+                :class="{ active: currentPage === page }"
+              >
+                <a class="page-link" href="#" @click.prevent="goToPage(page)">{{
+                  page
+                }}</a>
+              </li>
+              <li
+                class="page-item"
+                :class="{ disabled: currentPage === totalPages }"
+              >
+                <a class="page-link" href="#" @click.prevent="nextPage">
+                  <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div class="modal fade" id="addProductModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold">
+              <i
+                :class="[
+                  'bi',
+                  isEdit ? 'bi-pencil-square' : 'bi-plus-circle',
+                  'me-2',
+                ]"
+              ></i>
+              {{ isEdit ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm mới" }}
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <div class="modal-body">
             <div class="row g-3">
-              <div class="col-md-4 text-center">
-                <div class="border rounded p-2 bg-light">
+              <!-- Image Preview -->
+              <div class="col-md-4">
+                <label class="form-label fw-semibold">Hình ảnh</label>
+                <div class="image-upload-box">
                   <img
                     v-if="previewImage"
                     :src="previewImage"
                     alt="Preview"
-                    class="img-fluid rounded mb-2"
-                    style="max-height: 200px; object-fit: contain"
+                    class="preview-image"
                   />
-                  <div v-else class="text-muted small">Chưa có ảnh</div>
+                  <div v-else class="placeholder-box">
+                    <i class="bi bi-image display-4 text-muted"></i>
+                    <p class="text-muted small mt-2">Chưa có ảnh</p>
+                  </div>
                 </div>
                 <input
                   type="file"
@@ -165,14 +230,17 @@
                 />
               </div>
 
+              <!-- Form Fields -->
               <div class="col-md-8">
                 <div class="mb-3">
-                  <label class="form-label">Title *</label>
+                  <label class="form-label fw-semibold">
+                    Tên sản phẩm <span class="text-danger">*</span>
+                  </label>
                   <input
                     v-model="newProduct.title"
                     type="text"
                     class="form-control"
-                    placeholder="Tên sản phẩm"
+                    placeholder="Nhập tên sản phẩm"
                     :class="{ 'is-invalid': errors.title }"
                   />
                   <div v-if="errors.title" class="invalid-feedback">
@@ -182,7 +250,9 @@
 
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <label class="form-label">Price *</label>
+                    <label class="form-label fw-semibold">
+                      Giá <span class="text-danger">*</span>
+                    </label>
                     <input
                       v-model="newProduct.newPrice"
                       type="text"
@@ -195,7 +265,7 @@
                     </div>
                   </div>
                   <div class="col-md-6 mb-3">
-                    <label class="form-label">Discount</label>
+                    <label class="form-label fw-semibold">Giảm giá</label>
                     <input
                       v-model="newProduct.discount"
                       type="text"
@@ -206,13 +276,15 @@
                 </div>
 
                 <div class="mb-3">
-                  <label class="form-label">Category *</label>
+                  <label class="form-label fw-semibold">
+                    Loại sản phẩm <span class="text-danger">*</span>
+                  </label>
                   <select
                     v-model="newProduct.category"
                     class="form-select"
                     :class="{ 'is-invalid': errors.category }"
                   >
-                    <option disabled value="">-- Chọn loại sản phẩm --</option>
+                    <option disabled value="">Chọn loại sản phẩm</option>
                     <option v-for="cat in categories" :key="cat.id" :value="cat.name">
                       {{ cat.name }}
                     </option>
@@ -223,93 +295,104 @@
                 </div>
 
                 <div class="mb-3">
-                  <label class="form-label">Description</label>
+                  <label class="form-label fw-semibold">Mô tả</label>
                   <textarea
                     v-model="newProduct.description"
                     class="form-control"
                     rows="3"
-                    placeholder="Mô tả sản phẩm"
+                    placeholder="Nhập mô tả sản phẩm"
                   ></textarea>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="text-end mt-3">
-              <button type="submit" class="btn btn-success me-2">
-                {{ isEdit ? "Cập nhật" : "Lưu sản phẩm" }}
-              </button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                Hủy
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal xem chi tiết sản phẩm -->
-  <div class="modal fade" id="detailProductModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-      <div class="modal-content rounded-3 shadow-lg">
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title">{{ detailProduct.title }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-5 text-center">
-              <img
-                :src="
-                  detailProduct.img?.startsWith('data:')
-                    ? detailProduct.img
-                    : detailProduct.img || 'default.jpg'
-                "
-                alt="Image"
-                class="img-fluid rounded"
-                style="max-height: 300px; object-fit: contain"
-              />
-            </div>
-            <div class="col-md-7">
-              <p><strong>Category:</strong> {{ detailProduct.category }}</p>
-              <p><strong>Price:</strong> {{ detailProduct.newPrice }}</p>
-              <p><strong>Discount:</strong> {{ detailProduct.discount }}</p>
-              <p><strong>Description:</strong></p>
-              <p>{{ detailProduct.description || "Không có mô tả" }}</p>
-            </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              <i class="bi bi-x-circle me-2"></i>Hủy
+            </button>
+            <button type="button" class="btn btn-primary" @click="saveProduct">
+              <i
+                :class="[
+                  'bi',
+                  isEdit ? 'bi-check-circle' : 'bi-plus-circle',
+                  'me-2',
+                ]"
+              ></i>
+              {{ isEdit ? "Cập nhật" : "Lưu sản phẩm" }}
+            </button>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            Đóng
-          </button>
-        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Toast thông báo -->
-  <div
-    class="position-fixed top-0 end-0 p-3 mt-3 me-3"
-    style="z-index: 1055"
-    aria-live="polite"
-    aria-atomic="true"
-  >
-    <div
-      ref="toastElement"
-      class="toast align-items-center text-bg-success border-0"
-      role="alert"
-      aria-live="assertive"
-      aria-atomic="true"
-    >
-      <div class="d-flex">
-        <div class="toast-body">{{ toastMessage }}</div>
-        <button
-          type="button"
-          class="btn-close btn-close-white me-2 m-auto"
-          data-bs-dismiss="toast"
-          aria-label="Close"
-        ></button>
+    <!-- Product Detail Modal -->
+    <div class="modal fade" id="detailProductModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold">
+              <i class="bi bi-info-circle me-2"></i>{{ detailProduct.title }}
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-5 text-center">
+                <img
+                  :src="
+                    detailProduct.img?.startsWith('data:')
+                      ? detailProduct.img
+                      : detailProduct.img || 'https://via.placeholder.com/300'
+                  "
+                  alt="Product"
+                  class="img-fluid rounded detail-image"
+                />
+              </div>
+              <div class="col-md-7">
+                <div class="detail-info">
+                  <div class="info-item">
+                    <strong><i class="bi bi-tag me-2"></i>Loại:</strong>
+                    <span class="badge bg-light text-dark border ms-2">{{
+                      detailProduct.category
+                    }}</span>
+                  </div>
+                  <div class="info-item">
+                    <strong><i class="bi bi-currency-dollar me-2"></i>Giá:</strong>
+                    <span class="text-success fw-bold ms-2">{{
+                      detailProduct.newPrice
+                    }}</span>
+                  </div>
+                  <div class="info-item">
+                    <strong><i class="bi bi-percent me-2"></i>Giảm giá:</strong>
+                    <span class="ms-2">{{
+                      detailProduct.discount || "Không có"
+                    }}</span>
+                  </div>
+                  <div class="info-item">
+                    <strong><i class="bi bi-file-text me-2"></i>Mô tả:</strong>
+                    <p class="mt-2 text-muted">
+                      {{ detailProduct.description || "Không có mô tả" }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Đóng
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -320,8 +403,8 @@ import { ref, computed, onMounted } from "vue";
 import { useProductStore } from "@/stores/ProductStore";
 import { useCategoryStore } from "@/stores/Category";
 import { toast } from "vue3-toastify";
-import Toast from "bootstrap/js/dist/toast";
 import { Modal } from "bootstrap";
+
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
 
@@ -341,18 +424,8 @@ const isEdit = ref(false);
 const editingId = ref(null);
 const newProduct = ref(getEmptyProduct());
 const previewImage = ref(null);
-
 const detailProduct = ref(getEmptyProduct());
-
-const toastMessage = ref("");
-let toastInstance = null;
-const toastElement = ref(null);
-
-onMounted(() => {
-  if (toastElement.value) {
-    toastInstance = new Toast(toastElement.value);
-  }
-});
+const errors = ref({});
 
 function getEmptyProduct() {
   return {
@@ -370,7 +443,7 @@ function getEmptyProduct() {
   };
 }
 
-// --- Filter + Sort + Pagination ---
+// Filter + Sort + Pagination
 const filteredProducts = computed(() => {
   return products.value.filter((p) => {
     const matchesSearch = p.title
@@ -409,7 +482,9 @@ const sortedProducts = computed(() => {
 
 const currentPage = ref(1);
 const pageSize = 9;
-const totalPages = computed(() => Math.ceil(sortedProducts.value.length / pageSize));
+const totalPages = computed(() =>
+  Math.ceil(sortedProducts.value.length / pageSize)
+);
 const paginatedProducts = computed(() => {
   const start = (currentPage.value - 1) * pageSize;
   return sortedProducts.value.slice(start, start + pageSize);
@@ -425,10 +500,7 @@ function goToPage(page) {
   currentPage.value = page;
 }
 
-//  Form
-
-const errors = ref({});
-
+// Form validation
 const validateForm = () => {
   errors.value = {};
   let isValid = true;
@@ -445,8 +517,9 @@ const validateForm = () => {
     errors.value.newPrice = "Giá sản phẩm không được để trống";
     isValid = false;
   } else {
-    // Kiểm tra định dạng giá (có thể mở rộng theo định dạng bạn muốn)
-    const priceNum = parseFloat(newProduct.value.newPrice.replace(/[^\d\.]/g, ""));
+    const priceNum = parseFloat(
+      newProduct.value.newPrice.replace(/[^\d\.]/g, "")
+    );
     if (isNaN(priceNum) || priceNum < 0) {
       errors.value.newPrice = "Giá sản phẩm không hợp lệ";
       isValid = false;
@@ -473,13 +546,14 @@ const saveProduct = async () => {
     resetForm();
     isEdit.value = false;
     editingId.value = null;
+
+    const modalEl = document.getElementById("addProductModal");
+    const modal = Modal.getInstance(modalEl) || new Modal(modalEl);
+    modal.hide();
   } catch (err) {
     console.error(err);
-    toast.error("Lỗi khi lưu sản phẩm!", "danger");
+    toast.error("Lỗi khi lưu sản phẩm!", { autoClose: 2000 });
   }
-  const modalEl = document.getElementById("addProductModal");
-  const modal = Modal.getInstance(modalEl) || new Modal(modalEl);
-  modal.hide();
 };
 
 const editProduct = (item) => {
@@ -488,20 +562,22 @@ const editProduct = (item) => {
   newProduct.value = { ...item };
   previewImage.value = item.img;
   errors.value = {};
-  const modalEl = document.getElementById("addProductModal");
-  const modal = Modal.getInstance(modalEl) || new Modal(modalEl);
-  modal.show();
 };
 
 const onFileChange = (e) => {
   const file = e.target.files[0];
   if (!file) return;
-  newProduct.value.img = file.name;
-  previewImage.value = file.name;
+  
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    previewImage.value = event.target.result;
+    newProduct.value.img = event.target.result;
+  };
+  reader.readAsDataURL(file);
 };
 
 const removeProduct = async (id) => {
-  if (!confirm("Bạn có muốn xóa không?")) return;
+  if (!confirm("Bạn có chắc muốn xóa sản phẩm này?")) return;
   try {
     await productStore.deleteProduct(id);
     await productStore.fetchProducts();
@@ -527,3 +603,203 @@ function viewProduct(item) {
   detailProduct.value = { ...item };
 }
 </script>
+
+<style scoped>
+.product-management {
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* Page Header */
+.page-header h2 {
+  color: #2d3748;
+  font-size: 1.75rem;
+}
+
+/* Search Box */
+.search-box {
+  position: relative;
+}
+
+.search-box i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+.search-box .form-control {
+  padding-left: 40px;
+}
+
+/* Card */
+.card {
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+}
+
+/* Table */
+.table thead th {
+  background-color: #f8f9fa;
+  color: #495057;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #dee2e6;
+  padding: 1rem;
+}
+
+.table tbody td {
+  padding: 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Product Image */
+.product-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 0.375rem;
+  border: 1px solid #dee2e6;
+}
+
+.product-title {
+  font-weight: 500;
+  color: #2d3748;
+}
+
+/* Buttons */
+.btn {
+  transition: all 0.2s ease;
+}
+
+.btn-outline-info:hover {
+  color: #fff;
+}
+
+.btn-outline-warning:hover {
+  color: #000;
+}
+
+.btn-outline-danger:hover {
+  color: #fff;
+}
+
+/* Pagination */
+.pagination .page-link {
+  border-radius: 0.375rem;
+  margin: 0 2px;
+  color: #0d6efd;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+/* Modal */
+.modal-content {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  border-bottom: 1px solid #dee2e6;
+  padding: 1.25rem 1.5rem;
+  background: #f8f9fa;
+}
+
+.modal-footer {
+  border-top: 1px solid #dee2e6;
+  padding: 1rem 1.5rem;
+  background: #f8f9fa;
+}
+
+/* Image Upload Box */
+.image-upload-box {
+  border: 2px dashed #dee2e6;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 0.375rem;
+}
+
+.placeholder-box {
+  text-align: center;
+}
+
+/* Detail Modal */
+.detail-image {
+  max-height: 400px;
+  object-fit: contain;
+  border: 1px solid #dee2e6;
+}
+
+.detail-info {
+  padding: 1rem 0;
+}
+
+.info-item {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+/* Empty State */
+.empty-state {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+/* Form */
+.form-control:focus,
+.form-select:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .table thead th,
+  .table tbody td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .product-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .btn-sm {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
+}
+</style>

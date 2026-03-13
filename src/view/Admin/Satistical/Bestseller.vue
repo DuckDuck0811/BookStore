@@ -28,24 +28,24 @@ const calculateMonthlyRevenue = (orders) => {
 };
 
 const fetchRevenueData = async () => {
-    const response = await axios.get("http://localhost:3000/orders");
-    const orders = response.data;
-    const revenues = calculateMonthlyRevenue(orders);
-    const months = [
-      "Tháng 1",
-      "Tháng 2",
-      "Tháng 3",
-      "Tháng 4",
-      "Tháng 5",
-      "Tháng 6",
-      "Tháng 7",
-      "Tháng 8",
-      "Tháng 9",
-      "Tháng 10",
-      "Tháng 11",
-      "Tháng 12",
-    ];
-    renderChart(months, revenues);
+  const response = await axios.get("http://localhost:3000/orders");
+  const orders = response.data;
+  const revenues = calculateMonthlyRevenue(orders);
+  const months = [
+    "Tháng 1",
+    "Tháng 2",
+    "Tháng 3",
+    "Tháng 4",
+    "Tháng 5",
+    "Tháng 6",
+    "Tháng 7",
+    "Tháng 8",
+    "Tháng 9",
+    "Tháng 10",
+    "Tháng 11",
+    "Tháng 12",
+  ];
+  renderChart(months, revenues);
 };
 
 const renderChart = (months, revenues) => {

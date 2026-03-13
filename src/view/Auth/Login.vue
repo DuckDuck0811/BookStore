@@ -293,6 +293,7 @@ const closeForgotEmailModal = () => {
   showForgotEmailModal.value = false;
 };
 
+
 const openOtpModal = () => {
   resetOtpForm();
   showOtpModal.value = true;
@@ -397,7 +398,7 @@ const sendOtp = async () => {
       return;
     }
 
-    toast.success("Mã OTP đã được gửi tới email của bạn!");
+    toast.success("Mã OTP đã được gửi tới email của bạn!", { autoClose: 2000 });
     closeForgotEmailModal();
     openOtpModal();
   } catch (error) {
@@ -470,7 +471,7 @@ const submitNewPassword = async () => {
       )
     );
 
-    toast.success("Cập nhật mật khẩu thành công!");
+    toast.success("Cập nhật mật khẩu thành công!", { autoClose: 2000 });
     closeNewPasswordModal();
     resetAllForms();
   } catch (error) {

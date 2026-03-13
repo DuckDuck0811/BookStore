@@ -117,4 +117,5 @@ const handleRegister = async (e) => {
     alert("Không thể kết nối tới server!");
   }
 };
+
 </script>

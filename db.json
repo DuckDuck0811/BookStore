@@ -498,7 +498,7 @@
     {
       "id": "AC002",
       "username": "user",
-      "email": "ductmth04341@fpt.edu.vn",
+      "email": "duckduck08112007@gmail.com",
       "password": "123",
       "role": "user",
       "status": "Active"
@@ -565,7 +565,7 @@
       ],
       "total": 150000,
       "date": "2025-11-09",
-      "status": "Đang xử lý"
+      "status": "Đang giao hàng"
     },
     {
       "id": "DH003",
@@ -773,7 +773,7 @@
       ],
       "total": 2530000,
       "date": "2025-11-17",
-      "status": "Đang xử lý"
+      "status": "Đang giao hàng"
     },
     {
       "id": "DH007",
@@ -990,6 +990,358 @@
       ],
       "total": 5207500,
       "date": "2025-11-18",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": "DH008",
+      "customer": {
+        "name": "Duck",
+        "phone": "0877438292",
+        "address": "Hà Nội, Việt Nam"
+      },
+      "items": [
+        {
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        }
+      ],
+      "total": 247500,
+      "date": "2025-11-18",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": "DH009",
+      "customer": {
+        "name": "Duck",
+        "phone": "0877438292",
+        "address": "Hà Nội, Việt Nam"
+      },
+      "items": [
+        {
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        },
+        {
+          "productId": "1",
+          "title": "Harry Potter và Hòn Đá Phù Thủy",
+          "price": 90000,
+          "quantity": 1
+        },
+        {
+          "productId": "4",
+          "title": "The Lord of the Rings: The Two Towers",
+          "price": 157500,
+          "quantity": 1
+        }
+      ],
+      "total": 495000,
+      "date": "2025-11-19",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": "DH010",
+      "customer": {
+        "name": "Duck",
+        "phone": "0877438292",
+        "address": "Hà Nội, Việt Nam"
+      },
+      "items": [
+        {
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 2
+        },
+        {
+          "productId": "1",
+          "title": "Harry Potter và Hòn Đá Phù Thủy",
+          "price": 90000,
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        },
+        {
+          "productId": "4",
+          "title": "The Lord of the Rings: The Two Towers",
+          "price": 157500,
+          "quantity": 1
+        },
+        {
+          "productId": "5",
+          "title": "The Lord of the Rings: Return of the King",
+          "price": 165000,
+          "quantity": 1
+        },
+        {
+          "productId": "6",
+          "title": "The Hobbit",
+          "price": 135000,
+          "quantity": 1
+        }
+      ],
+      "total": 945000,
+      "date": "2025-11-19",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": "DH011",
+      "customer": {
+        "name": "Duck",
+        "phone": "0877438292",
+        "address": "Hà Nội, Việt Nam"
+      },
+      "items": [
+        {
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 2
+        },
+        {
+          "productId": "1",
+          "title": "Harry Potter và Hòn Đá Phù Thủy",
+          "price": 90000,
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        },
+        {
+          "productId": "4",
+          "title": "The Lord of the Rings: The Two Towers",
+          "price": 157500,
+          "quantity": 1
+        },
+        {
+          "productId": "5",
+          "title": "The Lord of the Rings: Return of the King",
+          "price": 165000,
+          "quantity": 1
+        },
+        {
+          "productId": "12",
+          "title": "Naruto",
+          "price": 30000,
+          "quantity": 1
+        },
+        {
+          "productId": "6",
+          "title": "The Hobbit",
+          "price": 135000,
+          "quantity": 1
+        },
+        {
+          "productId": "7",
+          "title": "Percy Jackson: The Lightning Thief",
+          "price": 112500,
+          "quantity": 1
+        },
+        {
+          "productId": "8",
+          "title": "The Hunger Games",
+          "price": 120000,
+          "quantity": 1
+        }
+      ],
+      "total": 1207500,
+      "date": "2025-11-19",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": "DH012",
+      "customer": {
+        "name": "admin",
+        "phone": "0877438292",
+        "address": "hgcgfx,hyc"
+      },
+      "items": [
+        {
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 2
+        },
+        {
+          "productId": "1",
+          "title": "Harry Potter và Hòn Đá Phù Thủy",
+          "price": 90000,
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        },
+        {
+          "productId": "4",
+          "title": "The Lord of the Rings: The Two Towers",
+          "price": 157500,
+          "quantity": 1
+        },
+        {
+          "productId": "8",
+          "title": "The Hunger Games",
+          "price": 120000,
+          "quantity": 1
+        }
+      ],
+      "total": 765000,
+      "date": "2025-12-10",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": "DH013",
+      "customer": {
+        "name": "John",
+        "phone": "0321654987",
+        "address": "Hà Nội, Việt Nam"
+      },
+      "items": [
+        {
+          "productId": "1",
+          "title": "Harry Potter và Hòn Đá Phù Thủy",
+          "price": 90000,
+          "quantity": 20
+        }
+      ],
+      "total": 1800000,
+      "date": "2025-12-25",
+      "status": "Đã giao thành công"
+    },
+    {
+      "id": "DH014",
+      "customer": {
+        "name": "sdad",
+        "phone": "0877438292",
+        "address": "sadsadad,sadadas"
+      },
+      "items": [
+        {
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 1
+        }
+      ],
+      "total": 150000,
+      "date": "2026-01-06",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": "DH015",
+      "customer": {
+        "name": "sdad",
+        "phone": "0877438292",
+        "address": "dsfdsfds,adsadad"
+      },
+      "items": [
+        {
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 2
+        },
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        }
+      ],
+      "total": 397500,
+      "date": "2026-01-07",
+      "status": "Đã giao thành công"
+    },
+    {
+      "id": "DH016",
+      "customer": {
+        "name": "sadsadds",
+        "phone": "01234567891",
+        "address": "dasdaasdsa"
+      },
+      "items": [
+        {
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 1
+        },
+        {
+          "productId": "4",
+          "title": "The Lord of the Rings: The Two Towers",
+          "price": 157500,
+          "quantity": 1
+        },
+        {
+          "productId": "5",
+          "title": "The Lord of the Rings: Return of the King",
+          "price": 165000,
+          "quantity": 1
+        }
+      ],
+      "total": 472500,
+      "date": "2026-02-24",
+      "status": "Đang xử lý"
+    },
+    {
+      "id": "DH017",
+      "customer": {
+        "name": "sadasda",
+        "phone": "0877438292",
+        "address": "dasdadadasdadadasdadadasdadadasdadadasdadadasdadadasdada"
+      },
+      "items": [
+        {
+          "productId": "2",
+          "title": "Harry Potter và Phòng Chứa Bí Mật",
+          "price": 97500,
+          "quantity": 1
+        },
+        {
+          "productId": "3",
+          "title": "The Lord of the Rings: Fellowship of the Ring",
+          "price": 150000,
+          "quantity": 1
+        },
+        {
+          "productId": "4",
+          "title": "The Lord of the Rings: The Two Towers",
+          "price": 157500,
+          "quantity": 1
+        },
+        {
+          "productId": "1",
+          "title": "Harry Potter và Hòn Đá Phù Thủy",
+          "price": 90000,
+          "quantity": 1
+        }
+      ],
+      "total": 495000,
+      "date": "2026-03-05",
       "status": "Đang xử lý"
     }
   ],

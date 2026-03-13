@@ -36,6 +36,7 @@ export const useProductStore = defineStore("products", {
 
     async updateProduct(id, updated) {
       try {
+        alert("Cập nhật sản phẩm thành công!");
         const response = await axios.put(`${API_URL}/${id}`, updated);
         const index = this.products.findIndex((p) => p.id === id);
         if (index !== -1) this.products[index] = response.data;
@@ -49,6 +50,7 @@ export const useProductStore = defineStore("products", {
         const strId = String(id);
         await axios.delete(`${API_URL}/${strId}`);
         this.products = this.products.filter((p) => String(p.id) !== strId);
+        alert("Xóa sản phẩm thành công!");
       } catch (error) {
         console.error("Lỗi khi xóa sản phẩm:", error);
       }

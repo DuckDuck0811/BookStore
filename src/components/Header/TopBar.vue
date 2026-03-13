@@ -8,7 +8,7 @@
           <router-link to="/" class="nav-link">Home</router-link>
           <router-link to="/products" class="nav-link">Sản phẩm</router-link>
           <router-link to="/about" class="nav-link">Giới thiệu</router-link>
-          <router-link to="/contact" class="nav-link">Liên hệ</router-link>
+          <!-- <router-link to="/contact" class="nav-link">Liên hệ</router-link> -->
         </div>
       </div>
 

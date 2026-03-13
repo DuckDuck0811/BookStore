@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run mailserver\"",
     "server": "json-server --watch db.json --port 3000",
+    "server:mssql": "node server.js",
     "client": "vite",
     "mailserver": "node index.js"
   },
@@ -20,8 +21,9 @@
     "chart.js": "^4.5.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0",
+    "express": "^5.2.1",
     "json-server": "^1.0.0-beta.3",
+    "mssql": "^12.2.0",
     "nodemailer": "^7.0.10",
     "pinia": "^3.0.3",
     "vue": "^3.5.18",

@@ -71,9 +71,9 @@
             Điện thoại: <strong>0123 456 789</strong>
           </p>
 
-          <button class="btn btn-gradient mt-4 px-4 py-2" @click="contactUs">
+          <!-- <button class="btn btn-gradient mt-4 px-4 py-2" @click="contactUs">
             Liên hệ ngay
-          </button>
+          </button> -->
         </div>
       </div>
     </div>

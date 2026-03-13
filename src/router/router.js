@@ -14,7 +14,7 @@ import Topbook from "@/view/User/MainContent/TopBook/Topbook.vue";
 import TopbookDetail from "@/view/User/MainContent/TopBook/TopbookDetail.vue";
 import Profile from "@/view/User/Profile/Profile.vue";
 import GioiThieu from "@/view/User/Introduce/GioiThieu.vue";
-import Contact from "@/view/User/Contact/Contact.vue";
+// import Contact from "@/view/User/Contact/Contact.vue";
 import ProductDetail from "@/view/User/Product/ProductDetail.vue";
 import { useAuthStore } from "@/stores/Authstore";
 
@@ -26,6 +26,7 @@ import Revenue from "@/view/Admin/Satistical/Revenue.vue";
 import AdminHome from "@/view/Admin/AdminHome.vue";
 import Category from "@/view/Admin/Category/Category.vue";
 import AccountUsers from "@/view/Admin/AccountUsers/AccountUsers.vue";
+import Dashboard from "@/view/Admin/Dashboard/Dashboard.vue";
 
 const routes = [
   { path: "/", redirect: "/home" },
@@ -141,12 +142,12 @@ const routes = [
     meta: { layout: "default" },
   },
 
-  {
-    path: "/contact",
-    name: "Contact",
-    component: Contact,
-    meta: { layout: "default" },
-  },
+  // {
+  //   path: "/contact",
+  //   name: "Contact",
+  //   component: Contact,
+  //   meta: { layout: "default" },
+  // },
 
   // admin routes
   {
@@ -191,6 +192,12 @@ const routes = [
     path: "/admin/account-users",
     name: "AccountUsers",
     component: AccountUsers,
+    meta: { requiresAdmin: true },
+  },
+  {
+    path: "/admin/Dashboard",
+    name: "Dashboard",
+    component: Dashboard,
     meta: { requiresAdmin: true },
   },
 ];

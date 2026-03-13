@@ -10,6 +10,8 @@ import * as bootstrap from "bootstrap/dist/js/bootstrap.esm.js";
 import Vue3Toastify from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
+
+
 const app = createApp(App);
 const pinia = createPinia();
 
